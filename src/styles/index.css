@@ -1,0 +1,59 @@
+@import 'tailwindcss';
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  /* Custom Text Colors */
+  --color-text-white: #fcfcfc;
+  --color-text-300: #969cab;
+  --color-text-500: #445764;
+  --color-text-700: #304e54;
+  --color-text-800: #27272a;
+  --color-text-900: #111a29;
+  --color-text-brown: #382d1c;
+  --color-text-start-reflection: #2f7cf5;
+  --color-text-end-reflection: #00a519;
+  --color-text-table: #11181c;
+
+  /* Custom Background Colors */
+  --color-bg-blue-100: #e8fbfb;
+  --color-bg-blue-200: #c8f6ff;
+  --color-bg-blue-300: #b4ebf5;
+  --color-bg-blue-500: #30ccd6;
+  --color-bg-white: #ffffff;
+  --color-bg-yellow-100: #faf5ed;
+  --color-bg-yellow-500: #ffc800;
+  --color-bg-grey-25: #fafafa;
+  --color-bg-grey-50: #f4f4f5;
+  --color-bg-grey-100: #f4f4f5;
+  --color-bg-grey-200: #ccd5dd;
+  --color-bg-error-100: #f5e1e6;
+
+  /* Custom Border Colors */
+  --color-border-grey-100: #ccd5dd;
+  --color-border-grey-300: #bec4d3;
+  --color-border-blue-500: #30ccd6;
+
+  /* Custom Validation Colors */
+  --color-validation-blue-300: #b4ebf2;
+  --color-validation-blue-800: #1e96a5;
+  --color-validation-red-500: #f37570;
+  --color-validation-red-700: #e11932;
+  --color-validation-white-300: #ffd7dc;
+  --color-validation-yellow-500: #fddc66;
+  --color-validation-yellow-900: #e1aa28;
+  --color-validation-peach: #f084a0;
+}
