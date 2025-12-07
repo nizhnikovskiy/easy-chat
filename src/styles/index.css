@@ -57,3 +57,7 @@
   --color-validation-yellow-900: #e1aa28;
   --color-validation-peach: #f084a0;
 }
+
+button,a {
+  cursor: pointer;
+}

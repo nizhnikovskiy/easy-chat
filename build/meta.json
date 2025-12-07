@@ -1,0 +1,1385 @@
+{
+  "about": {
+    "homepage": "https://www.ladle.dev",
+    "github": "https://github.com/tajo/ladle",
+    "version": 1
+  },
+  "stories": {
+    "chat-input--auto-grow-textarea": {
+      "name": "Auto grow textarea",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 217,
+      "locEnd": 230,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "AutoGrowTextarea",
+      "meta": {}
+    },
+    "chat-input--basic": {
+      "name": "Basic",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 5,
+      "locEnd": 18,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "Basic",
+      "meta": {}
+    },
+    "chat-input--complete-with-all-features": {
+      "name": "Complete with all features",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 85,
+      "locEnd": 124,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "CompleteWithAllFeatures",
+      "meta": {}
+    },
+    "chat-input--custom-styling": {
+      "name": "Custom styling",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 186,
+      "locEnd": 215,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "CustomStyling",
+      "meta": {}
+    },
+    "chat-input--disabled-state": {
+      "name": "Disabled state",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 176,
+      "locEnd": 184,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "DisabledState",
+      "meta": {}
+    },
+    "chat-input--loading-state": {
+      "name": "Loading state",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 166,
+      "locEnd": 174,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "LoadingState",
+      "meta": {}
+    },
+    "chat-input--with-character-counter": {
+      "name": "With character counter",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 151,
+      "locEnd": 164,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "WithCharacterCounter",
+      "meta": {}
+    },
+    "chat-input--with-custom-send-button": {
+      "name": "With custom send button",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 126,
+      "locEnd": 149,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "WithCustomSendButton",
+      "meta": {}
+    },
+    "chat-input--with-media-upload": {
+      "name": "With media upload",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 20,
+      "locEnd": 44,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "WithMediaUpload",
+      "meta": {}
+    },
+    "chat-input--with-voice-input": {
+      "name": "With voice input",
+      "levels": [
+        "Chat input"
+      ],
+      "locStart": 46,
+      "locEnd": 83,
+      "filePath": "src/components/chat-input/ChatInput.stories.tsx",
+      "namedExport": "WithVoiceInput",
+      "meta": {}
+    },
+    "chat-list--combined-with-chat-left": {
+      "name": "Combined with chat left",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 195,
+      "locEnd": 240,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "CombinedWithChatLeft",
+      "meta": {}
+    },
+    "chat-list--combined-with-chat-right": {
+      "name": "Combined with chat right",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 242,
+      "locEnd": 287,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "CombinedWithChatRight",
+      "meta": {}
+    },
+    "chat-list--custom-styling": {
+      "name": "Custom styling",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 289,
+      "locEnd": 307,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "CustomStyling",
+      "meta": {}
+    },
+    "chat-list--default": {
+      "name": "Default",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 146,
+      "locEnd": 154,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "Default",
+      "meta": {}
+    },
+    "chat-list--empty-chat-list": {
+      "name": "Empty chat list",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 309,
+      "locEnd": 315,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "EmptyChatList",
+      "meta": {}
+    },
+    "chat-list--left-position": {
+      "name": "Left position",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 179,
+      "locEnd": 185,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "LeftPosition",
+      "meta": {}
+    },
+    "chat-list--right-position": {
+      "name": "Right position",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 187,
+      "locEnd": 193,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "RightPosition",
+      "meta": {}
+    },
+    "chat-list--with-active-chat": {
+      "name": "With active chat",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 169,
+      "locEnd": 177,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "WithActiveChat",
+      "meta": {}
+    },
+    "chat-list--with-unread-messages": {
+      "name": "With unread messages",
+      "levels": [
+        "Chat list"
+      ],
+      "locStart": 156,
+      "locEnd": 167,
+      "filePath": "src/components/chat-list/ChatList.stories.tsx",
+      "namedExport": "WithUnreadMessages",
+      "meta": {}
+    },
+    "chat-skeleton--default": {
+      "name": "Default",
+      "levels": [
+        "Chat skeleton"
+      ],
+      "locStart": 5,
+      "locEnd": 11,
+      "filePath": "src/components/chat-skeleton/ChatSkeleton.stories.tsx",
+      "namedExport": "Default",
+      "meta": {}
+    },
+    "chat-skeleton--few-messages": {
+      "name": "Few messages",
+      "levels": [
+        "Chat skeleton"
+      ],
+      "locStart": 13,
+      "locEnd": 19,
+      "filePath": "src/components/chat-skeleton/ChatSkeleton.stories.tsx",
+      "namedExport": "FewMessages",
+      "meta": {}
+    },
+    "chat-skeleton--many-messages": {
+      "name": "Many messages",
+      "levels": [
+        "Chat skeleton"
+      ],
+      "locStart": 21,
+      "locEnd": 27,
+      "filePath": "src/components/chat-skeleton/ChatSkeleton.stories.tsx",
+      "namedExport": "ManyMessages",
+      "meta": {}
+    },
+    "chat-skeleton--with-chat-background": {
+      "name": "With chat background",
+      "levels": [
+        "Chat skeleton"
+      ],
+      "locStart": 37,
+      "locEnd": 53,
+      "filePath": "src/components/chat-skeleton/ChatSkeleton.stories.tsx",
+      "namedExport": "WithChatBackground",
+      "meta": {}
+    },
+    "chat-skeleton--without-input": {
+      "name": "Without input",
+      "levels": [
+        "Chat skeleton"
+      ],
+      "locStart": 29,
+      "locEnd": 35,
+      "filePath": "src/components/chat-skeleton/ChatSkeleton.stories.tsx",
+      "namedExport": "WithoutInput",
+      "meta": {}
+    },
+    "chat--completed-history": {
+      "name": "Completed history",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 103,
+      "locEnd": 133,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "CompletedHistory",
+      "meta": {}
+    },
+    "chat--default": {
+      "name": "Default",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 19,
+      "locEnd": 75,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "Default",
+      "meta": {}
+    },
+    "chat--empty-chat": {
+      "name": "Empty chat",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 179,
+      "locEnd": 214,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "EmptyChat",
+      "meta": {}
+    },
+    "chat--loading-skeleton": {
+      "name": "Loading skeleton",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 434,
+      "locEnd": 483,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "LoadingSkeleton",
+      "meta": {}
+    },
+    "chat--with-context-menu-disabled": {
+      "name": "With context menu disabled",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 654,
+      "locEnd": 702,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithContextMenuDisabled",
+      "meta": {}
+    },
+    "chat--with-context-menu-enabled": {
+      "name": "With context menu enabled",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 487,
+      "locEnd": 566,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithContextMenuEnabled",
+      "meta": {}
+    },
+    "chat--with-custom-background": {
+      "name": "With custom background",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 378,
+      "locEnd": 432,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithCustomBackground",
+      "meta": {}
+    },
+    "chat--with-custom-context-menu-items": {
+      "name": "With custom context menu items",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 570,
+      "locEnd": 650,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithCustomContextMenuItems",
+      "meta": {}
+    },
+    "chat--with-date-separators": {
+      "name": "With date separators",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 251,
+      "locEnd": 323,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithDateSeparators",
+      "meta": {}
+    },
+    "chat--with-moment-capture": {
+      "name": "With moment capture",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 135,
+      "locEnd": 177,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithMomentCapture",
+      "meta": {}
+    },
+    "chat--with-new-message-animation": {
+      "name": "With new message animation",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 325,
+      "locEnd": 376,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithNewMessageAnimation",
+      "meta": {}
+    },
+    "chat--with-pending-message": {
+      "name": "With pending message",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 77,
+      "locEnd": 101,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithPendingMessage",
+      "meta": {}
+    },
+    "chat--with-typing-effect": {
+      "name": "With typing effect",
+      "levels": [
+        "Chat"
+      ],
+      "locStart": 216,
+      "locEnd": 249,
+      "filePath": "src/components/chat/Chat.stories.tsx",
+      "namedExport": "WithTypingEffect",
+      "meta": {}
+    },
+    "message-context-menu--default-menu": {
+      "name": "Default menu",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 36,
+      "locEnd": 57,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "DefaultMenu",
+      "meta": {}
+    },
+    "message-context-menu--edge-positioning-test": {
+      "name": "Edge positioning test",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 365,
+      "locEnd": 409,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "EdgePositioning",
+      "meta": {}
+    },
+    "message-context-menu--interactive-demo": {
+      "name": "Interactive demo",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 299,
+      "locEnd": 361,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "InteractiveDemo",
+      "meta": {}
+    },
+    "message-context-menu--long-menu": {
+      "name": "Long menu",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 218,
+      "locEnd": 295,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "LongMenu",
+      "meta": {}
+    },
+    "message-context-menu--with-disabled-items": {
+      "name": "With disabled items",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 164,
+      "locEnd": 214,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "WithDisabledItems",
+      "meta": {}
+    },
+    "message-context-menu--with-dividers": {
+      "name": "With dividers",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 104,
+      "locEnd": 160,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "WithDividers",
+      "meta": {}
+    },
+    "message-context-menu--without-icons": {
+      "name": "Without icons",
+      "levels": [
+        "Message context menu"
+      ],
+      "locStart": 61,
+      "locEnd": 100,
+      "filePath": "src/components/message-context-menu/MessageContextMenu.stories.tsx",
+      "namedExport": "WithoutIcons",
+      "meta": {}
+    },
+    "assistant-message--basic--no-actions-": {
+      "name": "No actions ",
+      "levels": [
+        "Assistant message",
+        "Basic"
+      ],
+      "locStart": 46,
+      "locEnd": 56,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "Basic",
+      "meta": {}
+    },
+    "assistant-message--conversation-example": {
+      "name": "Conversation example",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 214,
+      "locEnd": 248,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "Conversation",
+      "meta": {}
+    },
+    "assistant-message--custom-actions": {
+      "name": "Custom actions",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 112,
+      "locEnd": 159,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "CustomActions",
+      "meta": {}
+    },
+    "assistant-message--disabled-actions": {
+      "name": "Disabled actions",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 324,
+      "locEnd": 367,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "DisabledActions",
+      "meta": {}
+    },
+    "assistant-message--grouped-messages": {
+      "name": "Grouped messages",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 252,
+      "locEnd": 287,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "GroupedMessages",
+      "meta": {}
+    },
+    "assistant-message--icon--only-actions": {
+      "name": "Only actions",
+      "levels": [
+        "Assistant message",
+        "Icon"
+      ],
+      "locStart": 163,
+      "locEnd": 210,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "IconOnlyActions",
+      "meta": {}
+    },
+    "assistant-message--long-message": {
+      "name": "Long message",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 94,
+      "locEnd": 108,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "LongMessage",
+      "meta": {}
+    },
+    "assistant-message--minimal-style": {
+      "name": "Minimal style",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 388,
+      "locEnd": 400,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "MinimalStyle",
+      "meta": {}
+    },
+    "assistant-message--text-copy-disabled": {
+      "name": "Text copy disabled",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 371,
+      "locEnd": 384,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "TextCopyDisabled",
+      "meta": {}
+    },
+    "assistant-message--with-custom-avatar-color": {
+      "name": "With custom avatar color",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 307,
+      "locEnd": 320,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "WithCustomAvatar",
+      "meta": {}
+    },
+    "assistant-message--with-standard-actions": {
+      "name": "With standard actions",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 60,
+      "locEnd": 72,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "WithStandardActions",
+      "meta": {}
+    },
+    "assistant-message--with-timestamp": {
+      "name": "With timestamp",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 76,
+      "locEnd": 90,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "WithTimestamp",
+      "meta": {}
+    },
+    "assistant-message--without-avatar": {
+      "name": "Without avatar",
+      "levels": [
+        "Assistant message"
+      ],
+      "locStart": 291,
+      "locEnd": 303,
+      "filePath": "src/components/message/AssistantMessage.stories.tsx",
+      "namedExport": "WithoutAvatar",
+      "meta": {}
+    },
+    "message--conversation-example": {
+      "name": "Conversation example",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 111,
+      "locEnd": 119,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "ConversationExample",
+      "meta": {}
+    },
+    "message--conversation-with-context-menus": {
+      "name": "Conversation with context menus",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 399,
+      "locEnd": 451,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "ConversationWithContextMenus",
+      "meta": {}
+    },
+    "message--conversation-with-copy-protection": {
+      "name": "Conversation with copy protection",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 301,
+      "locEnd": 307,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "ConversationWithCopyProtection",
+      "meta": {}
+    },
+    "message--conversation-with-read-status": {
+      "name": "Conversation with read status",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 219,
+      "locEnd": 237,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "ConversationWithReadStatus",
+      "meta": {}
+    },
+    "message--copyable-vs-non--copyable-comparison": {
+      "name": "Copyable comparison",
+      "levels": [
+        "Message",
+        "Copyable vs non"
+      ],
+      "locStart": 311,
+      "locEnd": 334,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "CopyableVsNonCopyable",
+      "meta": {}
+    },
+    "message--custom-avatar-colors": {
+      "name": "Custom avatar colors",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 74,
+      "locEnd": 82,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "CustomAvatarColors",
+      "meta": {}
+    },
+    "message--custom-context-menu-actions": {
+      "name": "Custom context menu actions",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 455,
+      "locEnd": 504,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "CustomContextMenuActions",
+      "meta": {}
+    },
+    "message--full-conversation-with-groups": {
+      "name": "Full conversation with groups",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 143,
+      "locEnd": 162,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "FullConversationWithGroups",
+      "meta": {}
+    },
+    "message--long-text-message": {
+      "name": "Long text message",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 86,
+      "locEnd": 107,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "LongTextMessage",
+      "meta": {}
+    },
+    "message--message-group--left-": {
+      "name": "Left ",
+      "levels": [
+        "Message",
+        "Message group"
+      ],
+      "locStart": 123,
+      "locEnd": 129,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "MessageGroupLeft",
+      "meta": {}
+    },
+    "message--message-group--right-": {
+      "name": "Right ",
+      "levels": [
+        "Message",
+        "Message group"
+      ],
+      "locStart": 133,
+      "locEnd": 139,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "MessageGroupRight",
+      "meta": {}
+    },
+    "message--message-group-with-read-status": {
+      "name": "Message group with read status",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 241,
+      "locEnd": 280,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "MessageGroupWithReadStatus",
+      "meta": {}
+    },
+    "message--read-status--read": {
+      "name": "Read",
+      "levels": [
+        "Message",
+        "Read status"
+      ],
+      "locStart": 166,
+      "locEnd": 180,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithReadStatusRead",
+      "meta": {}
+    },
+    "message--read-status--sent": {
+      "name": "Sent",
+      "levels": [
+        "Message",
+        "Read status"
+      ],
+      "locStart": 184,
+      "locEnd": 198,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithReadStatusSent",
+      "meta": {}
+    },
+    "message--read-status--without-timestamp": {
+      "name": "Without timestamp",
+      "levels": [
+        "Message",
+        "Read status"
+      ],
+      "locStart": 202,
+      "locEnd": 215,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithReadStatusNoTimestamp",
+      "meta": {}
+    },
+    "message--text-copy-disabled": {
+      "name": "Text copy disabled",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 284,
+      "locEnd": 297,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithCopyDisabled",
+      "meta": {}
+    },
+    "message--text-formatting--basic": {
+      "name": "Basic",
+      "levels": [
+        "Message",
+        "Text formatting"
+      ],
+      "locStart": 509,
+      "locEnd": 517,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "TextFormattingBasic",
+      "meta": {}
+    },
+    "message--text-formatting--combined": {
+      "name": "Combined",
+      "levels": [
+        "Message",
+        "Text formatting"
+      ],
+      "locStart": 521,
+      "locEnd": 544,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "TextFormattingCombined",
+      "meta": {}
+    },
+    "message--text-formatting--conversation": {
+      "name": "Conversation",
+      "levels": [
+        "Message",
+        "Text formatting"
+      ],
+      "locStart": 581,
+      "locEnd": 596,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "TextFormattingConversation",
+      "meta": {}
+    },
+    "message--text-formatting--links": {
+      "name": "Links",
+      "levels": [
+        "Message",
+        "Text formatting"
+      ],
+      "locStart": 548,
+      "locEnd": 577,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "TextFormattingLinks",
+      "meta": {}
+    },
+    "message--text-formatting--long-message": {
+      "name": "Long message",
+      "levels": [
+        "Message",
+        "Text formatting"
+      ],
+      "locStart": 600,
+      "locEnd": 615,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "TextFormattingLongMessage",
+      "meta": {}
+    },
+    "message--with-avatar--left-": {
+      "name": "Left ",
+      "levels": [
+        "Message",
+        "With avatar"
+      ],
+      "locStart": 6,
+      "locEnd": 10,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithAvatarLeft",
+      "meta": {}
+    },
+    "message--with-avatar--right-": {
+      "name": "Right ",
+      "levels": [
+        "Message",
+        "With avatar"
+      ],
+      "locStart": 14,
+      "locEnd": 18,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithAvatarRight",
+      "meta": {}
+    },
+    "message--with-context-menu": {
+      "name": "With context menu",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 379,
+      "locEnd": 395,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithContextMenu",
+      "meta": {}
+    },
+    "message--with-timestamp": {
+      "name": "With timestamp",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 56,
+      "locEnd": 61,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithTimestamp",
+      "meta": {}
+    },
+    "message--with-username": {
+      "name": "With username",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 38,
+      "locEnd": 43,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithUsername",
+      "meta": {}
+    },
+    "message--without-avatar--left-": {
+      "name": "Left ",
+      "levels": [
+        "Message",
+        "Without avatar"
+      ],
+      "locStart": 22,
+      "locEnd": 26,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithoutAvatarLeft",
+      "meta": {}
+    },
+    "message--without-avatar--right-": {
+      "name": "Right ",
+      "levels": [
+        "Message",
+        "Without avatar"
+      ],
+      "locStart": 30,
+      "locEnd": 34,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithoutAvatarRight",
+      "meta": {}
+    },
+    "message--without-timestamp": {
+      "name": "Without timestamp",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 65,
+      "locEnd": 70,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithoutTimestamp",
+      "meta": {}
+    },
+    "message--without-username": {
+      "name": "Without username",
+      "levels": [
+        "Message"
+      ],
+      "locStart": 47,
+      "locEnd": 52,
+      "filePath": "src/components/message/Message.stories.tsx",
+      "namedExport": "WithoutUsername",
+      "meta": {}
+    },
+    "static-message--chat-history-example": {
+      "name": "Chat history example",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 66,
+      "locEnd": 74,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "ChatHistory",
+      "meta": {}
+    },
+    "static-message--default-static-message": {
+      "name": "Default static message",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 6,
+      "locEnd": 10,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "DefaultStaticMessage",
+      "meta": {}
+    },
+    "static-message--different-alignments": {
+      "name": "Different alignments",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 78,
+      "locEnd": 85,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "DifferentAlignments",
+      "meta": {}
+    },
+    "static-message--long-text": {
+      "name": "Long text",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 23,
+      "locEnd": 35,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "LongText",
+      "meta": {}
+    },
+    "static-message--minimal-style": {
+      "name": "Minimal style",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 57,
+      "locEnd": 62,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "MinimalStyle",
+      "meta": {}
+    },
+    "static-message--short-text": {
+      "name": "Short text",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 14,
+      "locEnd": 19,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "ShortText",
+      "meta": {}
+    },
+    "static-message--with-copy-protection": {
+      "name": "With copy protection",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 89,
+      "locEnd": 103,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "WithCopyProtection",
+      "meta": {}
+    },
+    "static-message--with-custom-avatar": {
+      "name": "With custom avatar",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 48,
+      "locEnd": 53,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "WithCustomAvatar",
+      "meta": {}
+    },
+    "static-message--without-avatar": {
+      "name": "Without avatar",
+      "levels": [
+        "Static message"
+      ],
+      "locStart": 39,
+      "locEnd": 44,
+      "filePath": "src/components/message/StaticMessage.stories.tsx",
+      "namedExport": "WithoutAvatar",
+      "meta": {}
+    },
+    "typing-assistant-message--default": {
+      "name": "Default",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 6,
+      "locEnd": 18,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "Default",
+      "meta": {}
+    },
+    "typing-assistant-message--fast-typing": {
+      "name": "Fast typing",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 87,
+      "locEnd": 98,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "FastTyping",
+      "meta": {}
+    },
+    "typing-assistant-message--grouped-messages": {
+      "name": "Grouped messages",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 113,
+      "locEnd": 137,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "GroupedMessages",
+      "meta": {}
+    },
+    "typing-assistant-message--long-message": {
+      "name": "Long message",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 72,
+      "locEnd": 85,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "LongMessage",
+      "meta": {}
+    },
+    "typing-assistant-message--no-avatar": {
+      "name": "No avatar",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 156,
+      "locEnd": 160,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "NoAvatar",
+      "meta": {}
+    },
+    "typing-assistant-message--slow-typing": {
+      "name": "Slow typing",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 100,
+      "locEnd": 111,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "SlowTyping",
+      "meta": {}
+    },
+    "typing-assistant-message--with-actions": {
+      "name": "With actions",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 20,
+      "locEnd": 57,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "WithActions",
+      "meta": {}
+    },
+    "typing-assistant-message--with-context-menu": {
+      "name": "With context menu",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 162,
+      "locEnd": 179,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "WithContextMenu",
+      "meta": {}
+    },
+    "typing-assistant-message--with-formatting": {
+      "name": "With formatting",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 59,
+      "locEnd": 70,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "WithFormatting",
+      "meta": {}
+    },
+    "typing-assistant-message--with-timestamp-and-read-status": {
+      "name": "With timestamp and read status",
+      "levels": [
+        "Typing assistant message"
+      ],
+      "locStart": 139,
+      "locEnd": 154,
+      "filePath": "src/components/message/TypingAssistantMessage.stories.tsx",
+      "namedExport": "WithTimestampAndReadStatus",
+      "meta": {}
+    },
+    "typing-message--default-typing-animation": {
+      "name": "Default typing animation",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 6,
+      "locEnd": 18,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "DefaultTypingAnimation",
+      "meta": {}
+    },
+    "typing-message--fast-typing-15ms-": {
+      "name": "Fast typing 15ms ",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 22,
+      "locEnd": 35,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FastTyping",
+      "meta": {}
+    },
+    "typing-message--formatted-typing--bold": {
+      "name": "Bold",
+      "levels": [
+        "Typing message",
+        "Formatted typing"
+      ],
+      "locStart": 167,
+      "locEnd": 181,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FormattedTypingBold",
+      "meta": {}
+    },
+    "typing-message--formatted-typing--code": {
+      "name": "Code",
+      "levels": [
+        "Typing message",
+        "Formatted typing"
+      ],
+      "locStart": 203,
+      "locEnd": 217,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FormattedTypingCode",
+      "meta": {}
+    },
+    "typing-message--formatted-typing--combined": {
+      "name": "Combined",
+      "levels": [
+        "Typing message",
+        "Formatted typing"
+      ],
+      "locStart": 239,
+      "locEnd": 253,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FormattedTypingCombined",
+      "meta": {}
+    },
+    "typing-message--formatted-typing--italic": {
+      "name": "Italic",
+      "levels": [
+        "Typing message",
+        "Formatted typing"
+      ],
+      "locStart": 185,
+      "locEnd": 199,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FormattedTypingItalic",
+      "meta": {}
+    },
+    "typing-message--formatted-typing--links": {
+      "name": "Links",
+      "levels": [
+        "Typing message",
+        "Formatted typing"
+      ],
+      "locStart": 221,
+      "locEnd": 235,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FormattedTypingLinks",
+      "meta": {}
+    },
+    "typing-message--formatted-typing--long-message": {
+      "name": "Long message",
+      "levels": [
+        "Typing message",
+        "Formatted typing"
+      ],
+      "locStart": 257,
+      "locEnd": 271,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "FormattedTypingLong",
+      "meta": {}
+    },
+    "typing-message--long-text-typing": {
+      "name": "Long text typing",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 56,
+      "locEnd": 69,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "LongTextTyping",
+      "meta": {}
+    },
+    "typing-message--minimal-typing": {
+      "name": "Minimal typing",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 122,
+      "locEnd": 126,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "MinimalTyping",
+      "meta": {}
+    },
+    "typing-message--multiple-typing-messages": {
+      "name": "Multiple typing messages",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 112,
+      "locEnd": 118,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "MultipleTypingMessages",
+      "meta": {}
+    },
+    "typing-message--single-typing-message": {
+      "name": "Single typing message",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 104,
+      "locEnd": 108,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "ConversationWithTyping",
+      "meta": {}
+    },
+    "typing-message--slow-typing-80ms-": {
+      "name": "Slow typing 80ms ",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 39,
+      "locEnd": 52,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "SlowTyping",
+      "meta": {}
+    },
+    "typing-message--user-typing-message": {
+      "name": "User typing message",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 96,
+      "locEnd": 100,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "UserTypingMessage",
+      "meta": {}
+    },
+    "typing-message--with-completion-callback": {
+      "name": "With completion callback",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 73,
+      "locEnd": 92,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "WithCompletionCallback",
+      "meta": {}
+    },
+    "typing-message--with-copy-disabled": {
+      "name": "With copy disabled",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 148,
+      "locEnd": 162,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "WithCopyDisabled",
+      "meta": {}
+    },
+    "typing-message--with-custom-avatar": {
+      "name": "With custom avatar",
+      "levels": [
+        "Typing message"
+      ],
+      "locStart": 130,
+      "locEnd": 144,
+      "filePath": "src/components/message/TypingMessage.stories.tsx",
+      "namedExport": "WithCustomAvatar",
+      "meta": {}
+    }
+  }
+}

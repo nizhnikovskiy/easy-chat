@@ -1,0 +1,31 @@
+# Source files
+src/
+
+# Development files
+.ladle/
+.github/
+build/
+node_modules/
+public/
+
+# Configuration files
+vite.config.ts
+tsconfig.*.json
+.ladlerc.js
+tailwind.config.js
+postcss.config.js
+eslint.config.js
+
+# Development resources
+*.stories.tsx
+*.test.tsx
+*.test.ts
+index.html
+
+# Documentation (keep README.md)
+.git/
+.gitignore
+
+# Build artifacts
+*.log
+*.tsbuildinfo
