@@ -5,8 +5,6 @@ import ChatInput from '@/components/chat-input';
 import { Message, TypingMessage } from '@/components/message';
 import DateSeparator from '@/components/date-separator';
 import { MdContentCopy, MdEdit, MdDelete } from 'react-icons/md';
-import chatBgImage from '@/assets/images/chat/chat-bg.webp';
-import chatBgDarkImage from '@/assets/images/chat/chat-bg-dark.webp';
 import '@/styles/Chat.animations.css';
 
 // Mock useReflection hook for standalone usage
@@ -22,6 +20,7 @@ interface ChatProps {
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   isHistoryCompleted?: boolean;
   backgroundImage?: string;
+  backgroundImageDark?: string;
   contextMenuConfig?: ContextMenuConfig;
   onEditMessage?: (messageId: string, newContent: string) => void;
   onDeleteMessage?: (messageId: string) => void;
@@ -35,7 +34,8 @@ const Chat: FC<ChatProps> = ({
   onSendMessage,
   messagesEndRef,
   isHistoryCompleted = false,
-  backgroundImage = chatBgImage,
+  backgroundImage,
+  backgroundImageDark,
   contextMenuConfig,
   onEditMessage,
   onDeleteMessage,
@@ -122,13 +122,13 @@ const Chat: FC<ChatProps> = ({
     return historyMsg.role !== ('user' as MessageRole) && !historyMsg.isTypingComplete;
   };
 
-  const bgStyle = {
-    backgroundImage: `url("${theme === 'dark' ? chatBgDarkImage : backgroundImage}")`,
+  const bgStyle = backgroundImage || backgroundImageDark ? {
+    backgroundImage: `url("${theme === 'dark' && backgroundImageDark ? backgroundImageDark : backgroundImage}")`,
     backgroundRepeat: 'repeat',
     width: '100%',
     height: '100%',
     backgroundSize: 'cover',
-  };
+  } : {};
 
   const handleImageUpload = (file: File | null) => {
     setSelectedImage(file);

@@ -24,14 +24,20 @@ export default defineConfig({
     },
     rollupOptions: {
       // Externalize dependencies that shouldn't be bundled
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'react-icons', /^react-icons\/.*/],
+      external: (id) => {
+        return (
+          id === 'react' ||
+          id === 'react-dom' ||
+          id === 'react/jsx-runtime' ||
+          id.startsWith('react-icons/')
+        );
+      },
       output: {
         // Provide global variables for UMD build
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
-          'react-icons': 'ReactIcons',
         },
         // Preserve modules for better tree-shaking
         preserveModules: false,
