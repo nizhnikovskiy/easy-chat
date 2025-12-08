@@ -36,3 +36,6 @@ export type { ChatInputProps, SendButtonProps, MediaButtonProps, VoiceButtonProp
 
 // Types - Context Menu
 export type { ContextMenuItem, MessageContextMenuProps } from './types/context-menu';
+
+// Types - Theme
+export type { ChatThemeVariables, ChatThemeStyles } from './styles/theme-variables';

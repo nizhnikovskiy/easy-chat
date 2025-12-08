@@ -194,7 +194,7 @@ const ChatInput: FC<ChatInputProps> = ({
   const isSendDisabled = disabled || isLoading || (!internalValue.trim() && !selectedMedia);
 
   return (
-    <div className={`flex flex-col gap-2 w-full max-w-250 mx-auto p-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'} ${className}`} role='form' aria-label='Message input form'>
+    <div className={`flex flex-col gap-2 w-full max-w-250 mx-auto p-4 ${theme === 'dark' ? 'bg-input-bg-dark' : 'bg-input-bg'} ${className}`} role='form' aria-label='Message input form'>
       {/* Screen reader announcements */}
       <div role='status' aria-live='polite' aria-atomic='true' className='sr-only'>
         {announcement}
@@ -210,7 +210,7 @@ const ChatInput: FC<ChatInputProps> = ({
       {/* Media preview */}
       {selectedMedia && mediaPreview && (
         <div className='relative inline-block mb-2'>
-          <img src={mediaPreview} alt='Selected media preview' className='w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border border-gray-200' />
+          <img src={mediaPreview} alt='Selected media preview' className={`w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border ${theme === 'dark' ? 'border-input-border-dark' : 'border-input-border'}`} />
           <button
             onClick={handleRemoveMedia}
             className='absolute -top-2 -right-2 min-w-[28px] min-h-[28px] w-7 h-7 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors'
@@ -226,8 +226,8 @@ const ChatInput: FC<ChatInputProps> = ({
       <div
         className={`relative flex items-end ${
           theme === 'dark'
-            ? 'bg-gray-800 border-gray-700/50 hover:border-gray-600/70 focus-within:border-gray-500'
-            : 'bg-white border-gray-200/50 hover:border-gray-300/70 focus-within:border-gray-400'
+            ? 'bg-input-bg-dark border-input-border-dark/50 hover:border-input-border-dark/70 focus-within:border-input-border-focus'
+            : 'bg-input-bg border-input-border/50 hover:border-input-border/70 focus-within:border-input-border-focus'
         } rounded-3xl border transition-all ${isMultiLine ? 'pb-13' : ''}`}
       >
         {/* Media upload button - positioned inside on the left */}
@@ -248,7 +248,7 @@ const ChatInput: FC<ChatInputProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 disabled={disabled || isLoading || mediaButton?.disabled}
                 className={`absolute left-2 bottom-1.5 p-2 ${
-                  theme === 'dark' ? 'text-gray-400 border-gray-700 hover:text-gray-200 hover:bg-gray-700' : 'text-gray-500 border-gray-200 hover:text-gray-700 hover:bg-gray-100'
+                  theme === 'dark' ? 'text-input-placeholder-dark border-input-border-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark' : 'text-input-placeholder border-input-border hover:text-input-text hover:bg-menu-hover-bg'
                 } rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed border hover:border-transparent ${mediaButton?.className || ''}`}
                 type='button'
                 aria-label={mediaAriaLabel}
@@ -271,7 +271,7 @@ const ChatInput: FC<ChatInputProps> = ({
           autoFocus={autoFocus}
           rows={1}
           className={`block w-full px-4 py-3 bg-transparent border-0 resize-none focus:outline-none ${
-            theme === 'dark' ? 'text-gray-100 placeholder:text-gray-500 disabled:text-gray-600' : 'text-gray-900 placeholder:text-gray-400 disabled:text-gray-500'
+            theme === 'dark' ? 'text-input-text-dark placeholder:text-input-placeholder-dark disabled:text-input-placeholder-dark/60' : 'text-input-text placeholder:text-input-placeholder disabled:text-input-placeholder/60'
           } text-base min-h-11 ${enableMediaUpload ? 'pl-14' : ''} ${!enableVoiceInput || internalValue.trim() || selectedMedia ? 'pr-14' : 'pr-4'} ${inputClassName}`}
           style={{
             maxHeight: `${24 * maxRows}px`,
@@ -284,7 +284,7 @@ const ChatInput: FC<ChatInputProps> = ({
 
         {/* Character counter */}
         {showCharacterCount && maxLength && (
-          <span className='absolute right-14 bottom-3 text-xs text-gray-400 pointer-events-none' aria-live='polite' aria-atomic='true'>
+          <span className={`absolute right-14 bottom-3 text-xs ${theme === 'dark' ? 'text-input-placeholder-dark' : 'text-input-placeholder'} pointer-events-none`} aria-live='polite' aria-atomic='true'>
             {internalValue.length}/{maxLength}
           </span>
         )}
@@ -301,7 +301,7 @@ const ChatInput: FC<ChatInputProps> = ({
                 onTouchEnd={voiceButton?.onStopRecording}
                 disabled={disabled || isLoading || voiceButton?.disabled}
                 className={`absolute right-2 bottom-1/2 translate-y-1/2 p-2 ${
-                  theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-700 border-gray-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100 border-gray-200'
+                  theme === 'dark' ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark border-input-border-dark' : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg border-input-border'
                 } rounded-full select-none transition-all border disabled:cursor-not-allowed ${voiceButton?.className || ''}`}
                 type='button'
                 aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
@@ -327,11 +327,11 @@ const ChatInput: FC<ChatInputProps> = ({
                 className={`absolute right-2 bottom-1.5 p-2 rounded-full transition-all disabled:cursor-not-allowed overflow-hidden border ${
                   isSendDisabled
                     ? theme === 'dark'
-                      ? 'bg-transparent text-gray-600 border-gray-700'
-                      : 'bg-transparent text-gray-400 border-gray-200'
+                      ? 'bg-transparent text-button-disabled-text border-input-border-dark'
+                      : 'bg-transparent text-button-disabled-text border-input-border'
                     : theme === 'dark'
-                    ? 'bg-blue-600 text-white hover:bg-blue-700 active:scale-95 border-transparent'
-                    : 'bg-black text-white hover:bg-gray-800 active:scale-95 border-transparent'
+                    ? 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95 border-transparent'
+                    : 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95 border-transparent'
                 } ${sendButton?.className || ''}`}
                 type='button'
                 aria-label={sendAriaLabel}

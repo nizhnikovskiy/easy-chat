@@ -66,7 +66,8 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
 
   // Render skeleton if loading
   if (isLoading) {
-    const skeletonColor = theme === 'dark' ? 'bg-gray-600' : 'bg-gray-400';
+    const skeletonColor = theme === 'dark' ? 'bg-skeleton-bg-dark' : 'bg-skeleton-bg';
+    const skeletonShimmer = theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer';
     return (
       <article className={`flex justify-start ${marginBottom} ${className} animate-pulse`} aria-label={ariaLabel || `Loading message from ${username || 'assistant'}`}>
         <div className='flex flex-row items-start gap-2 max-w-[80%] md:max-w-[70%]'>
@@ -78,16 +79,16 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
             {shouldShowUsername && <div className={`h-3 w-16 ${skeletonColor} rounded`} />}
 
             <div className='space-y-2'>
-              <div className={`h-4 ${theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`} style={{ width: randomWidth1 }} />
-              <div className={`h-4 ${theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`} style={{ width: randomWidth2 }} />
+              <div className={`h-4 ${skeletonShimmer} opacity-50 rounded`} style={{ width: randomWidth1 }} />
+              <div className={`h-4 ${skeletonShimmer} opacity-50 rounded`} style={{ width: randomWidth2 }} />
             </div>
 
             {/* Actions menu skeleton */}
             {actions && actions.length > 0 && (
               <div className='flex items-center gap-1 mt-1'>
-                <div className={`h-6 w-16 ${theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`} />
-                <div className={`h-6 w-16 ${theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`} />
-                <div className={`h-6 w-16 ${theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`} />
+                <div className={`h-6 w-16 ${skeletonShimmer} opacity-50 rounded`} />
+                <div className={`h-6 w-16 ${skeletonShimmer} opacity-50 rounded`} />
+                <div className={`h-6 w-16 ${skeletonShimmer} opacity-50 rounded`} />
               </div>
             )}
           </div>
@@ -155,13 +156,13 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
 
           <div className='flex flex-col gap-1 w-full'>
             {shouldShowUsername && username && (
-              <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} px-0`} aria-label='Sender name'>
+              <div className={`text-xs ${theme === 'dark' ? 'text-username-text-dark' : 'text-username-text'} px-0`} aria-label='Sender name'>
                 {username}
               </div>
             )}
 
             <div onContextMenu={handleContextMenu} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className='relative'>
-              <div className={['text-sm md:text-base leading-relaxed break-words', theme === 'dark' ? 'text-gray-200' : 'text-gray-900', disableTextCopy ? 'select-none' : ''].join(' ')}>
+              <div className={['text-sm md:text-base leading-relaxed break-words', theme === 'dark' ? 'text-message-other-text-dark' : 'text-message-other-text', disableTextCopy ? 'select-none' : ''].join(' ')}>
                 {content}
               </div>
 
@@ -169,7 +170,7 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
               {(showTimestamp || showReadStatus) && (
                 <div className='flex items-center gap-1 mt-1'>
                   {showTimestamp && timestamp && (
-                    <time className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`} dateTime={timestamp} aria-label={`Sent at ${timestamp}`}>
+                    <time className={`text-xs ${theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp'}`} dateTime={timestamp} aria-label={`Sent at ${timestamp}`}>
                       {timestamp}
                     </time>
                   )}
@@ -177,12 +178,12 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
                     <div className='flex items-center' aria-label={isRead ? 'Read' : 'Sent'} title={isRead ? 'Read' : 'Sent'}>
                       {isRead && readIcon ? (
                         cloneElement(readIcon, { 
-                          className: theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
                           size: 16 
                         } as any)
                       ) : !isRead && sentIcon ? (
                         cloneElement(sentIcon, { 
-                          className: theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
                           size: 16 
                         } as any)
                       ) : null}
@@ -202,7 +203,7 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
                     disabled={action.disabled}
                     className={`
                       flex items-center gap-1 px-2 py-1 rounded text-xs
-                      ${theme === 'dark' ? 'text-gray-400 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'} 
+                      ${theme === 'dark' ? 'text-message-other-timestamp-dark hover:bg-menu-hover-bg-dark' : 'text-message-other-timestamp hover:bg-menu-hover-bg'} 
                       disabled:opacity-50 disabled:cursor-not-allowed
                       transition-colors duration-150
                       ${action.className || ''}

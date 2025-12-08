@@ -15,20 +15,20 @@ const Button: FC<ButtonProps> = ({ variant = 'primary', size = 'md', fullWidth =
   const variantStyles = {
     primary:
       theme === 'dark'
-        ? 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 focus:ring-blue-500 disabled:bg-gray-700 disabled:text-gray-500'
-        : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 focus:ring-blue-500 disabled:bg-gray-300 disabled:text-gray-500',
+        ? 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:bg-button-primary-bg-hover/90 focus:ring-button-primary-bg disabled:bg-button-disabled-bg disabled:text-button-disabled-text'
+        : 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:bg-button-primary-bg-hover/90 focus:ring-button-primary-bg disabled:bg-button-disabled-bg disabled:text-button-disabled-text',
     secondary:
       theme === 'dark'
-        ? 'bg-gray-700 text-white hover:bg-gray-600 active:bg-gray-500 focus:ring-gray-500 disabled:bg-gray-800 disabled:text-gray-600'
-        : 'bg-gray-500 text-white hover:bg-gray-600 active:bg-gray-700 focus:ring-gray-500 disabled:bg-gray-300 disabled:text-gray-500',
+        ? 'bg-menu-hover-bg-dark text-menu-text-dark hover:bg-menu-hover-bg-dark/80 active:bg-menu-hover-bg-dark/70 focus:ring-menu-bg-dark disabled:bg-button-disabled-bg disabled:text-button-disabled-text'
+        : 'bg-menu-hover-bg text-menu-text hover:bg-menu-hover-bg/80 active:bg-menu-hover-bg/70 focus:ring-menu-bg disabled:bg-button-disabled-bg disabled:text-button-disabled-text',
     outline:
       theme === 'dark'
-        ? 'bg-gray-800 border-2 border-gray-600 text-gray-200 hover:bg-gray-700 active:bg-gray-600 focus:ring-gray-500 disabled:bg-gray-900 disabled:text-gray-600 disabled:border-gray-700'
-        : 'bg-white border-2 border-gray-300 text-gray-700 hover:bg-gray-50 active:bg-gray-100 focus:ring-gray-500 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200',
+        ? 'bg-input-bg-dark border-2 border-input-border-dark text-input-text-dark hover:bg-menu-hover-bg-dark active:bg-menu-hover-bg-dark/80 focus:ring-input-border-focus disabled:bg-input-bg-dark disabled:text-button-disabled-text disabled:border-input-border-dark/50'
+        : 'bg-input-bg border-2 border-input-border text-input-text hover:bg-menu-hover-bg active:bg-menu-hover-bg/80 focus:ring-input-border-focus disabled:bg-button-disabled-bg disabled:text-button-disabled-text disabled:border-input-border/50',
     ghost:
       theme === 'dark'
-        ? 'bg-transparent text-gray-200 hover:bg-gray-800 active:bg-gray-700 focus:ring-gray-500 disabled:text-gray-600'
-        : 'bg-transparent text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:ring-gray-500 disabled:text-gray-400',
+        ? 'bg-transparent text-input-text-dark hover:bg-menu-hover-bg-dark active:bg-menu-hover-bg-dark/80 focus:ring-input-border-focus disabled:text-button-disabled-text'
+        : 'bg-transparent text-input-text hover:bg-menu-hover-bg active:bg-menu-hover-bg/80 focus:ring-input-border-focus disabled:text-button-disabled-text',
   };
 
   // Touch-friendly sizes (minimum 44x44px for mobile)

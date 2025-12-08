@@ -152,6 +152,33 @@ function App() {
 
 For detailed documentation and examples, visit: [https://nizhnikovskiy.github.io/easy-chat/](https://nizhnikovskiy.github.io/easy-chat/)
 
+## Theming
+
+Easy Chat uses **CSS Variables** for complete theme customization. Override these variables to match your brand:
+
+```css
+/* your-app.css */
+@import 'easy-chat/styles';
+
+:root {
+  /* Customize user message colors */
+  --chat-message-user-bg: #8b5cf6; /* Purple */
+  --chat-message-user-text: #ffffff;
+  
+  /* Customize buttons */
+  --chat-button-primary-bg: #8b5cf6;
+  --chat-button-primary-bg-hover: #7c3aed;
+}
+```
+
+**[📖 Complete Theming Guide →](./THEMING.md)**
+
+The theming guide includes:
+- All available CSS variables
+- Multiple theme examples (Purple, Green, Monochrome, etc.)
+- Dark mode customization
+- Best practices and troubleshooting
+
 ## Examples
 
 ### Typing Animation

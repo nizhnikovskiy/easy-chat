@@ -49,7 +49,7 @@ const ChatListItem: FC<ChatListItemProps> = ({
   return (
     <div
       onClick={handleClick}
-      className='flex items-center p-3 cursor-pointer transition-all duration-200 hover:bg-opacity-80 border-b border-gray-200'
+      className='flex items-center p-3 cursor-pointer transition-all duration-200 hover:bg-opacity-80 border-b border-list-item-bg'
       style={{
         backgroundColor: bgColor,
       }}

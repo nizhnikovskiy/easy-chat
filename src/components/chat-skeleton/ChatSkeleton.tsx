@@ -2,20 +2,20 @@ import { FC } from 'react';
 import Message from '@/components/message/Message';
 import AssistantMessage from '@/components/message/AssistantMessage';
 
-const ChatInputSkeleton: FC = () => {
+const ChatInputSkeleton: FC<{ theme?: 'light' | 'dark' }> = ({ theme = 'light' }) => {
   return (
     <div className='w-full px-4 pb-4'>
       <div className='max-w-4xl mx-auto'>
-        <div className='relative bg-gray-200/70 rounded-3xl px-4 py-3 animate-pulse'>
+        <div className={`relative ${theme === 'dark' ? 'bg-skeleton-bg-dark' : 'bg-skeleton-bg'} opacity-70 rounded-3xl px-4 py-3 animate-pulse`}>
           <div className='flex items-center gap-2'>
             {/* Attach button skeleton */}
-            <div className='w-8 h-8 bg-gray-400/50 rounded-full' />
+            <div className={`w-8 h-8 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded-full`} />
 
             {/* Input field skeleton */}
-            <div className='flex-1 h-6 bg-gray-400/50 rounded' />
+            <div className={`flex-1 h-6 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`} />
 
             {/* Send button skeleton */}
-            <div className='w-8 h-8 bg-gray-400/50 rounded-full' />
+            <div className={`w-8 h-8 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded-full`} />
           </div>
         </div>
       </div>
@@ -57,7 +57,7 @@ const ChatSkeleton: FC<ChatSkeletonProps> = ({ messageCount = 5, showInput = tru
           )
         )}
       </div>
-      {showInput && <ChatInputSkeleton />}
+      {showInput && <ChatInputSkeleton theme={theme} />}
     </>
   );
 };

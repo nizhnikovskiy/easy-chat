@@ -221,7 +221,7 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
         ref={menuRef}
         role='menu'
         aria-label='Message context menu'
-        className={`fixed z-9999 min-w-[180px] rounded-lg shadow-lg border py-1 ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+        className={`fixed z-9999 min-w-[180px] rounded-lg shadow-lg border py-1 ${theme === 'dark' ? 'bg-menu-bg-dark border-menu-border-dark' : 'bg-menu-bg border-menu-border'}`}
         style={{
           left: `${adjustedPosition.x}px`,
           top: `${adjustedPosition.y}px`,
@@ -241,11 +241,11 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
               ${
                 item.disabled
                   ? theme === 'dark'
-                    ? 'text-gray-500 cursor-not-allowed'
-                    : 'text-gray-400 cursor-not-allowed'
+                    ? 'text-button-disabled-text cursor-not-allowed'
+                    : 'text-button-disabled-text cursor-not-allowed'
                   : theme === 'dark'
-                  ? 'text-gray-200 hover:bg-gray-700 active:bg-gray-600 cursor-pointer'
-                  : 'text-gray-700 hover:bg-gray-100 active:bg-gray-200 cursor-pointer'
+                  ? 'text-menu-text-dark hover:bg-menu-hover-bg-dark active:bg-menu-hover-bg-dark/80 cursor-pointer'
+                  : 'text-menu-text hover:bg-menu-hover-bg active:bg-menu-hover-bg/80 cursor-pointer'
               }
               ${item.className || ''}
             `}
@@ -254,7 +254,7 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
               {item.icon && <span className='shrink-0 w-4 h-4 flex items-center justify-center'>{item.icon}</span>}
               <span className='flex-1'>{item.label}</span>
             </button>
-            {item.divider && index < items.length - 1 && <div className={`my-1 h-px ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`} role='separator' />}
+            {item.divider && index < items.length - 1 && <div className={`my-1 h-px ${theme === 'dark' ? 'bg-menu-border-dark' : 'bg-menu-border'}`} role='separator' />}
           </div>
         ))}
       </div>

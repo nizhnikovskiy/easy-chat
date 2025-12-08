@@ -15,47 +15,165 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ============================================
+   EASY CHAT THEME VARIABLES
+   ============================================
+   These CSS variables can be overridden in your application
+   to customize the chat components' appearance.
+   ============================================ */
+
+:root {
+  /* ========== Message Bubbles - Light Theme ========== */
+  --chat-message-user-bg: #3b82f6;        /* User message background (blue-500) */
+  --chat-message-user-text: #ffffff;      /* User message text */
+  --chat-message-user-timestamp: #dbeafe; /* User message timestamp (blue-100) */
+  
+  --chat-message-other-bg: #e5e7eb;       /* Other user message background (gray-200) */
+  --chat-message-other-text: #111827;     /* Other user message text (gray-900) */
+  --chat-message-other-timestamp: #6b7280; /* Other user message timestamp (gray-500) */
+  
+  /* ========== Message Bubbles - Dark Theme ========== */
+  --chat-message-user-bg-dark: #1d4ed8;   /* User message background dark (blue-700) */
+  --chat-message-user-text-dark: #ffffff; /* User message text dark */
+  --chat-message-user-timestamp-dark: #93c5fd; /* User message timestamp dark (blue-300) */
+  
+  --chat-message-other-bg-dark: #374151;  /* Other user message background dark (gray-700) */
+  --chat-message-other-text-dark: #f3f4f6; /* Other user message text dark (gray-100) */
+  --chat-message-other-timestamp-dark: #9ca3af; /* Other user message timestamp dark (gray-400) */
+  
+  /* ========== Chat Input ========== */
+  --chat-input-bg: #ffffff;               /* Input background light */
+  --chat-input-bg-dark: #1f2937;          /* Input background dark (gray-800) */
+  --chat-input-text: #111827;             /* Input text light (gray-900) */
+  --chat-input-text-dark: #f9fafb;        /* Input text dark (gray-50) */
+  --chat-input-placeholder: #9ca3af;      /* Placeholder light (gray-400) */
+  --chat-input-placeholder-dark: #6b7280; /* Placeholder dark (gray-500) */
+  --chat-input-border: #d1d5db;           /* Border light (gray-300) */
+  --chat-input-border-dark: #4b5563;      /* Border dark (gray-600) */
+  --chat-input-border-focus: #3b82f6;     /* Border focus (blue-500) */
+  
+  /* ========== Buttons ========== */
+  --chat-button-primary-bg: #3b82f6;      /* Primary button bg (blue-500) */
+  --chat-button-primary-bg-hover: #2563eb; /* Primary button hover (blue-600) */
+  --chat-button-primary-text: #ffffff;    /* Primary button text */
+  --chat-button-disabled-bg: #e5e7eb;     /* Disabled button bg (gray-200) */
+  --chat-button-disabled-text: #9ca3af;   /* Disabled button text (gray-400) */
+  
+  /* ========== Context Menu ========== */
+  --chat-menu-bg: #ffffff;                /* Menu background light */
+  --chat-menu-bg-dark: #374151;           /* Menu background dark (gray-700) */
+  --chat-menu-text: #111827;              /* Menu text light (gray-900) */
+  --chat-menu-text-dark: #f9fafb;         /* Menu text dark (gray-50) */
+  --chat-menu-hover-bg: #f3f4f6;          /* Menu item hover light (gray-100) */
+  --chat-menu-hover-bg-dark: #4b5563;     /* Menu item hover dark (gray-600) */
+  --chat-menu-border: #e5e7eb;            /* Menu border light (gray-200) */
+  --chat-menu-border-dark: #4b5563;       /* Menu border dark (gray-600) */
+  
+  /* ========== Date Separator ========== */
+  --chat-separator-bg: #f3f4f6;           /* Separator background light (gray-100) */
+  --chat-separator-bg-dark: #374151;      /* Separator background dark (gray-700) */
+  --chat-separator-text: #6b7280;         /* Separator text light (gray-500) */
+  --chat-separator-text-dark: #9ca3af;    /* Separator text dark (gray-400) */
+  
+  /* ========== Chat List ========== */
+  --chat-list-item-bg: #ffffff;           /* List item background light */
+  --chat-list-item-bg-dark: #1f2937;      /* List item background dark (gray-800) */
+  --chat-list-item-hover-bg: #f9fafb;     /* List item hover light (gray-50) */
+  --chat-list-item-hover-bg-dark: #374151; /* List item hover dark (gray-700) */
+  --chat-list-item-active-bg: #eff6ff;    /* List item active light (blue-50) */
+  --chat-list-item-active-bg-dark: #1e3a8a; /* List item active dark (blue-900) */
+  --chat-list-item-text: #111827;         /* List item text light (gray-900) */
+  --chat-list-item-text-dark: #f9fafb;    /* List item text dark (gray-50) */
+  
+  /* ========== Skeleton Loading ========== */
+  --chat-skeleton-bg: #e5e7eb;            /* Skeleton background light (gray-200) */
+  --chat-skeleton-bg-dark: #4b5563;       /* Skeleton background dark (gray-600) */
+  --chat-skeleton-shimmer: #f3f4f6;       /* Skeleton shimmer light (gray-100) */
+  --chat-skeleton-shimmer-dark: #6b7280;  /* Skeleton shimmer dark (gray-500) */
+  
+  /* ========== Avatar ========== */
+  --chat-avatar-bg: #9ca3af;              /* Default avatar background (gray-400) */
+  --chat-avatar-text: #ffffff;            /* Avatar text */
+  
+  /* ========== Username ========== */
+  --chat-username-text: #6b7280;          /* Username text light (gray-500) */
+  --chat-username-text-dark: #9ca3af;     /* Username text dark (gray-400) */
+}
+
 @theme {
-  /* Custom Text Colors */
-  --color-text-white: #fcfcfc;
-  --color-text-300: #969cab;
-  --color-text-500: #445764;
-  --color-text-700: #304e54;
-  --color-text-800: #27272a;
-  --color-text-900: #111a29;
-  --color-text-brown: #382d1c;
-  --color-text-start-reflection: #2f7cf5;
-  --color-text-end-reflection: #00a519;
-  --color-text-table: #11181c;
-
-  /* Custom Background Colors */
-  --color-bg-blue-100: #e8fbfb;
-  --color-bg-blue-200: #c8f6ff;
-  --color-bg-blue-300: #b4ebf5;
-  --color-bg-blue-500: #30ccd6;
-  --color-bg-white: #ffffff;
-  --color-bg-yellow-100: #faf5ed;
-  --color-bg-yellow-500: #ffc800;
-  --color-bg-grey-25: #fafafa;
-  --color-bg-grey-50: #f4f4f5;
-  --color-bg-grey-100: #f4f4f5;
-  --color-bg-grey-200: #ccd5dd;
-  --color-bg-error-100: #f5e1e6;
-
-  /* Custom Border Colors */
-  --color-border-grey-100: #ccd5dd;
-  --color-border-grey-300: #bec4d3;
-  --color-border-blue-500: #30ccd6;
-
-  /* Custom Validation Colors */
-  --color-validation-blue-300: #b4ebf2;
-  --color-validation-blue-800: #1e96a5;
-  --color-validation-red-500: #f37570;
-  --color-validation-red-700: #e11932;
-  --color-validation-white-300: #ffd7dc;
-  --color-validation-yellow-500: #fddc66;
-  --color-validation-yellow-900: #e1aa28;
-  --color-validation-peach: #f084a0;
+  /* Map CSS variables to Tailwind utilities */
+  /* Messages */
+  --color-message-user-bg: var(--chat-message-user-bg);
+  --color-message-user-text: var(--chat-message-user-text);
+  --color-message-user-timestamp: var(--chat-message-user-timestamp);
+  --color-message-other-bg: var(--chat-message-other-bg);
+  --color-message-other-text: var(--chat-message-other-text);
+  --color-message-other-timestamp: var(--chat-message-other-timestamp);
+  
+  --color-message-user-bg-dark: var(--chat-message-user-bg-dark);
+  --color-message-user-text-dark: var(--chat-message-user-text-dark);
+  --color-message-user-timestamp-dark: var(--chat-message-user-timestamp-dark);
+  --color-message-other-bg-dark: var(--chat-message-other-bg-dark);
+  --color-message-other-text-dark: var(--chat-message-other-text-dark);
+  --color-message-other-timestamp-dark: var(--chat-message-other-timestamp-dark);
+  
+  /* Input */
+  --color-input-bg: var(--chat-input-bg);
+  --color-input-bg-dark: var(--chat-input-bg-dark);
+  --color-input-text: var(--chat-input-text);
+  --color-input-text-dark: var(--chat-input-text-dark);
+  --color-input-placeholder: var(--chat-input-placeholder);
+  --color-input-placeholder-dark: var(--chat-input-placeholder-dark);
+  --color-input-border: var(--chat-input-border);
+  --color-input-border-dark: var(--chat-input-border-dark);
+  --color-input-border-focus: var(--chat-input-border-focus);
+  
+  /* Buttons */
+  --color-button-primary-bg: var(--chat-button-primary-bg);
+  --color-button-primary-bg-hover: var(--chat-button-primary-bg-hover);
+  --color-button-primary-text: var(--chat-button-primary-text);
+  --color-button-disabled-bg: var(--chat-button-disabled-bg);
+  --color-button-disabled-text: var(--chat-button-disabled-text);
+  
+  /* Menu */
+  --color-menu-bg: var(--chat-menu-bg);
+  --color-menu-bg-dark: var(--chat-menu-bg-dark);
+  --color-menu-text: var(--chat-menu-text);
+  --color-menu-text-dark: var(--chat-menu-text-dark);
+  --color-menu-hover-bg: var(--chat-menu-hover-bg);
+  --color-menu-hover-bg-dark: var(--chat-menu-hover-bg-dark);
+  --color-menu-border: var(--chat-menu-border);
+  --color-menu-border-dark: var(--chat-menu-border-dark);
+  
+  /* Separator */
+  --color-separator-bg: var(--chat-separator-bg);
+  --color-separator-bg-dark: var(--chat-separator-bg-dark);
+  --color-separator-text: var(--chat-separator-text);
+  --color-separator-text-dark: var(--chat-separator-text-dark);
+  
+  /* Chat List */
+  --color-list-item-bg: var(--chat-list-item-bg);
+  --color-list-item-bg-dark: var(--chat-list-item-bg-dark);
+  --color-list-item-hover-bg: var(--chat-list-item-hover-bg);
+  --color-list-item-hover-bg-dark: var(--chat-list-item-hover-bg-dark);
+  --color-list-item-active-bg: var(--chat-list-item-active-bg);
+  --color-list-item-active-bg-dark: var(--chat-list-item-active-bg-dark);
+  --color-list-item-text: var(--chat-list-item-text);
+  --color-list-item-text-dark: var(--chat-list-item-text-dark);
+  
+  /* Skeleton */
+  --color-skeleton-bg: var(--chat-skeleton-bg);
+  --color-skeleton-bg-dark: var(--chat-skeleton-bg-dark);
+  --color-skeleton-shimmer: var(--chat-skeleton-shimmer);
+  --color-skeleton-shimmer-dark: var(--chat-skeleton-shimmer-dark);
+  
+  /* Avatar */
+  --color-avatar-bg: var(--chat-avatar-bg);
+  --color-avatar-text: var(--chat-avatar-text);
+  
+  /* Username */
+  --color-username-text: var(--chat-username-text);
+  --color-username-text-dark: var(--chat-username-text-dark);
 }
 
 button,a {

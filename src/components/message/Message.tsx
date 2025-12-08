@@ -54,8 +54,10 @@ const Message: FC<MessageProps> = ({
   const shouldShowUsername = showUsername && isStandaloneOrFirst;
   const shouldShowTail = isStandaloneOrLast;
 
-  // Bubble styling based on sender and theme
-  const bubbleColorClass = isUser ? (theme === 'dark' ? 'bg-blue-700 text-white' : 'bg-blue-500 text-white') : theme === 'dark' ? 'bg-gray-700 text-gray-100' : 'bg-gray-200 text-gray-900';
+  // Bubble styling based on sender and theme using CSS variables
+  const bubbleColorClass = isUser 
+    ? (theme === 'dark' ? 'bg-message-user-bg-dark text-message-user-text-dark' : 'bg-message-user-bg text-message-user-text')
+    : (theme === 'dark' ? 'bg-message-other-bg-dark text-message-other-text-dark' : 'bg-message-other-bg text-message-other-text');
 
   const tailPosition = shouldShowTail ? (isUser ? 'rounded-br-none' : 'rounded-bl-none') : '';
 
@@ -73,7 +75,7 @@ const Message: FC<MessageProps> = ({
 
   // Default avatar if not provided
   const avatarElement = shouldShowAvatar && (
-    <div className={`shrink-0 w-10 h-10 rounded-full ${avatarBgColor} flex items-center justify-center text-white font-semibold overflow-hidden`} aria-hidden='true'>
+    <div className={`shrink-0 w-10 h-10 rounded-full ${avatarBgColor} flex items-center justify-center text-avatar-text font-semibold overflow-hidden`} aria-hidden='true'>
       {avatarSrc ? (
         <img src={avatarSrc} alt={username || (isUser ? 'User' : 'Other')} className='w-full h-full object-cover' />
       ) : (
@@ -84,8 +86,10 @@ const Message: FC<MessageProps> = ({
 
   // Render skeleton if loading
   if (isLoading) {
-    const skeletonBubbleColor = isUser ? (theme === 'dark' ? 'bg-blue-700' : 'bg-blue-500') : theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300';
-    const skeletonAvatarColor = isUser ? (theme === 'dark' ? 'bg-blue-600' : 'bg-blue-400') : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-400';
+    const skeletonBubbleColor = isUser 
+      ? (theme === 'dark' ? 'bg-message-user-bg-dark' : 'bg-message-user-bg')
+      : (theme === 'dark' ? 'bg-skeleton-bg-dark' : 'bg-skeleton-bg');
+    const skeletonAvatarColor = theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer';
 
     return (
       <article className={`flex ${containerAlign} ${marginBottom} ${className} animate-pulse`} aria-label={ariaLabel || `Loading message from ${isUser ? 'you' : username || 'other'}`}>
@@ -100,11 +104,11 @@ const Message: FC<MessageProps> = ({
             <div className={`w-64 px-4 py-2 rounded-2xl ${skeletonBubbleColor} ${tailPosition}`}>
               <div className='space-y-2'>
                 <div
-                  className={`h-4 ${isUser ? (theme === 'dark' ? 'bg-blue-600/50' : 'bg-blue-400/50') : theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`}
+                  className={`h-4 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`}
                   style={{ width: randomWidth1 }}
                 />
                 <div
-                  className={`h-4 ${isUser ? (theme === 'dark' ? 'bg-blue-600/50' : 'bg-blue-400/50') : theme === 'dark' ? 'bg-gray-600/50' : 'bg-gray-400/50'} rounded`}
+                  className={`h-4 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`}
                   style={{ width: randomWidth2 }}
                 />
               </div>
@@ -183,7 +187,7 @@ const Message: FC<MessageProps> = ({
 
           <div className='flex flex-col gap-1'>
             {shouldShowUsername && username && (
-              <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} px-2 ${isUser ? 'text-right' : 'text-left'}`} aria-label='Sender name'>
+              <div className={`text-xs ${theme === 'dark' ? 'text-username-text-dark' : 'text-username-text'} px-2 ${isUser ? 'text-right' : 'text-left'}`} aria-label='Sender name'>
                 {username}
               </div>
             )}
@@ -214,7 +218,7 @@ const Message: FC<MessageProps> = ({
                 >
                   {showTimestamp && timestamp && (
                     <time
-                      className={`text-xs ${isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}
+                      className={`text-xs ${isUser ? (theme === 'dark' ? 'text-message-user-timestamp-dark' : 'text-message-user-timestamp') : theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp'}`}
                       dateTime={timestamp}
                       aria-label={`Sent at ${timestamp}`}
                     >
@@ -225,12 +229,12 @@ const Message: FC<MessageProps> = ({
                     <div className='flex items-center' aria-label={isRead ? 'Read' : 'Sent'} title={isRead ? 'Read' : 'Sent'}>
                       {isRead && readIcon ? (
                         cloneElement(readIcon, { 
-                          className: isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          className: isUser ? (theme === 'dark' ? 'text-message-user-timestamp-dark' : 'text-message-user-timestamp') : theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
                           size: 16 
                         } as any)
                       ) : !isRead && sentIcon ? (
                         cloneElement(sentIcon, { 
-                          className: isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          className: isUser ? (theme === 'dark' ? 'text-message-user-timestamp-dark' : 'text-message-user-timestamp') : theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
                           size: 16 
                         } as any)
                       ) : null}
