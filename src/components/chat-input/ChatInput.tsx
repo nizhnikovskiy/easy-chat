@@ -217,7 +217,7 @@ const ChatInput: FC<ChatInputProps> = ({
             type='button'
             aria-label='Remove media attachment'
           >
-            {closeIcon ? cloneElement(closeIcon, { size: 14 }) : null}
+            {closeIcon ? cloneElement(closeIcon, { size: 14 } as any) : null}
           </button>
         </div>
       )}
@@ -254,7 +254,7 @@ const ChatInput: FC<ChatInputProps> = ({
                 aria-label={mediaAriaLabel}
                 aria-describedby={error && errorMessage ? errorMessageId.current : undefined}
               >
-                {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 20 }) : null}
+                {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 20 } as any) : null}
               </button>
             )}
           </>
@@ -307,7 +307,7 @@ const ChatInput: FC<ChatInputProps> = ({
                 aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
                 aria-pressed={voiceButton?.isRecording}
               >
-                {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 }) : null}
+                {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
               </button>
             )}
           </>
@@ -351,7 +351,7 @@ const ChatInput: FC<ChatInputProps> = ({
                     }}
                   />
                 ))}
-                {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 }) : null}
+                {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as any) : null}
               </button>
             )}
           </>

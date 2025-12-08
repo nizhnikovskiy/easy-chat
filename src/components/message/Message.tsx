@@ -227,12 +227,12 @@ const Message: FC<MessageProps> = ({
                         cloneElement(readIcon, { 
                           className: isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
                           size: 16 
-                        })
+                        } as any)
                       ) : !isRead && sentIcon ? (
                         cloneElement(sentIcon, { 
                           className: isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
                           size: 16 
-                        })
+                        } as any)
                       ) : null}
                     </div>
                   )}

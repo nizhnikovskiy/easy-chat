@@ -25,12 +25,11 @@
     "LICENSE"
   ],
   "scripts": {
-    "dev": "vite",
+    "ladle": "ladle serve",
     "build": "npm run build:types && npm run build:lib",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:types": "tsc -p tsconfig.lib.json",
     "build:ladle": "ladle build --base /easy-chat/",
-    "ladle": "ladle serve",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"

@@ -179,12 +179,12 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
                         cloneElement(readIcon, { 
                           className: theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
                           size: 16 
-                        })
+                        } as any)
                       ) : !isRead && sentIcon ? (
                         cloneElement(sentIcon, { 
                           className: theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
                           size: 16 
-                        })
+                        } as any)
                       ) : null}
                     </div>
                   )}
