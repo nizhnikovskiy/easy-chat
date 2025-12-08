@@ -26,9 +26,10 @@
   ],
   "scripts": {
     "ladle": "ladle serve",
-    "build": "npm run build:types && npm run build:lib",
+    "build": "npm run build:lib && npm run build:types && npm run post-build",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:types": "tsc -p tsconfig.lib.json",
+    "post-build": "node scripts/post-build.js",
     "build:ladle": "ladle build --base /easy-chat/",
     "lint": "eslint .",
     "preview": "vite preview",

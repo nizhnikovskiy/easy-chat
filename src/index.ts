@@ -1,3 +1,6 @@
+// Import styles to ensure they're bundled
+import './styles/index.css';
+
 // Main components
 export { default as Chat } from './components/chat';
 export { default as ChatInput } from './components/chat-input';
