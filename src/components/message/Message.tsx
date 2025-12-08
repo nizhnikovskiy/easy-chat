@@ -1,5 +1,4 @@
-import { FC, useState, useRef } from 'react';
-import { MdCheck, MdDoneAll } from 'react-icons/md';
+import { FC, useState, useRef, cloneElement } from 'react';
 import { MessageProps } from '@/types/message';
 import MessageContextMenu from '@/components/message-context-menu';
 import { formatText } from '@/utils/formatText';
@@ -36,6 +35,8 @@ const Message: FC<MessageProps> = ({
   isLoading = false,
   isTyping = false,
   theme = 'light',
+  sentIcon,
+  readIcon,
 }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
@@ -222,11 +223,17 @@ const Message: FC<MessageProps> = ({
                   )}
                   {showReadStatus && (
                     <div className='flex items-center' aria-label={isRead ? 'Read' : 'Sent'} title={isRead ? 'Read' : 'Sent'}>
-                      {isRead ? (
-                        <MdDoneAll className={isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} size={16} />
-                      ) : (
-                        <MdCheck className={isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} size={16} />
-                      )}
+                      {isRead && readIcon ? (
+                        cloneElement(readIcon, { 
+                          className: isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          size: 16 
+                        })
+                      ) : !isRead && sentIcon ? (
+                        cloneElement(sentIcon, { 
+                          className: isUser ? (theme === 'dark' ? 'text-blue-200' : 'text-blue-100') : theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          size: 16 
+                        })
+                      ) : null}
                     </div>
                   )}
                 </div>

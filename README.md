@@ -28,7 +28,13 @@ pnpm add easy-chat
 Make sure you have these installed:
 
 ```bash
-npm install react react-dom react-icons
+npm install react react-dom
+```
+
+**Note:** `react-icons` is no longer a peer dependency. You can install it as a regular dependency if you want to use icons in your project:
+
+```bash
+npm install react-icons
 ```
 
 ## Setup
@@ -71,6 +77,8 @@ import 'easy-chat/styles';
 ```tsx
 import { Chat, Message, ChatInput } from 'easy-chat';
 import 'easy-chat/styles';
+import { IoArrowUp, IoAttach, IoClose } from 'react-icons/io5';
+import { MdCheck, MdDoneAll } from 'react-icons/md';
 
 function App() {
   const [messages, setMessages] = useState([
@@ -86,7 +94,16 @@ function App() {
     <div className='h-screen flex flex-col'>
       <div className='flex-1 overflow-y-auto p-4'>
         {messages.map((msg, idx) => (
-          <Message key={idx} content={msg.content} sender={msg.sender} timestamp={msg.timestamp} showTimestamp />
+          <Message 
+            key={idx} 
+            content={msg.content} 
+            sender={msg.sender} 
+            timestamp={msg.timestamp} 
+            showTimestamp
+            showReadStatus={msg.sender === 'user'}
+            sentIcon={<MdCheck />}
+            readIcon={<MdDoneAll />}
+          />
         ))}
       </div>
 
@@ -101,6 +118,10 @@ function App() {
             },
           ]);
         }}
+        sendButton={{ icon: <IoArrowUp /> }}
+        mediaButton={{ icon: <IoAttach /> }}
+        closeIcon={<IoClose />}
+        enableMediaUpload
       />
     </div>
   );
@@ -161,6 +182,78 @@ const contextMenu = [
 
 <Message content='Right-click me!' sender='user' messageId='msg-1' contextMenuItems={contextMenu} />;
 ```
+
+## Icon Usage
+
+Easy Chat components accept icons as props, giving you full control over which icon library to use. Icons are passed with descriptive prop names:
+
+### ChatInput Icons
+
+```tsx
+import { ChatInput } from 'easy-chat';
+import { IoArrowUp, IoAttach, IoMic, IoClose } from 'react-icons/io5';
+
+<ChatInput
+  sendButton={{ icon: <IoArrowUp /> }}
+  mediaButton={{ icon: <IoAttach /> }}
+  voiceButton={{ icon: <IoMic /> }}
+  closeIcon={<IoClose />}
+  enableMediaUpload
+  enableVoiceInput
+/>
+```
+
+### Message Icons (Read Status)
+
+```tsx
+import { Message } from 'easy-chat';
+import { MdCheck, MdDoneAll } from 'react-icons/md';
+
+<Message
+  content="Hello!"
+  sender="user"
+  showReadStatus
+  isRead={true}
+  sentIcon={<MdCheck />}     // Single checkmark (sent)
+  readIcon={<MdDoneAll />}    // Double checkmark (read)
+/>
+```
+
+### Chat Component Icons
+
+The Chat component accepts all icons and passes them to its child components:
+
+```tsx
+import { Chat } from 'easy-chat';
+import { IoArrowUp, IoAttach, IoMic, IoClose } from 'react-icons/io5';
+import { MdContentCopy, MdEdit, MdDelete, MdCheck, MdDoneAll } from 'react-icons/md';
+
+<Chat
+  messages={messages}
+  isPending={false}
+  onSendMessage={handleSend}
+  messagesEndRef={messagesEndRef}
+  // ChatInput icons
+  sendIcon={<IoArrowUp />}
+  attachmentIcon={<IoAttach />}
+  microphoneIcon={<IoMic />}
+  closeIcon={<IoClose />}
+  // Context menu icons
+  copyIcon={<MdContentCopy size={16} />}
+  editIcon={<MdEdit size={16} />}
+  deleteIcon={<MdDelete size={16} />}
+  // Message read status icons
+  sentIcon={<MdCheck />}
+  readIcon={<MdDoneAll />}
+/>
+```
+
+### Why Icons as Props?
+
+- **Flexibility**: Use any icon library (react-icons, lucide-react, heroicons, etc.)
+- **Bundle Size**: Only bundle the icons you actually use
+- **Customization**: Full control over icon size, color, and styling
+- **No Peer Dependencies**: Icons are not bundled with the library
 
 ## TypeScript
 

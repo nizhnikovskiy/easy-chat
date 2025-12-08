@@ -4,7 +4,8 @@ import Chat from './Chat';
 import ChatInput from '@/components/chat-input';
 import ChatSkeleton from '@/components/chat-skeleton';
 import { ChatHistoryMessage, MessageRole } from '@/types/chat';
-import { MdBookmark, MdShare } from 'react-icons/md';
+import { MdBookmark, MdShare, MdContentCopy, MdEdit, MdDelete, MdCheck, MdDoneAll } from 'react-icons/md';
+import { IoArrowUp, IoMic, IoAttach, IoClose } from 'react-icons/io5';
 import { ContextMenuItem } from '@/types/context-menu';
 import chatBgImage from '@/assets/images/chat/chat-bg.webp';
 import chatBgAltImage from '@/assets/images/chat/chat-bg-alt.webp';
@@ -12,6 +13,19 @@ import chatBgAltImage from '@/assets/images/chat/chat-bg-alt.webp';
 // Mock ReflectionContext provider for the story
 const MockReflectionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <>{children}</>;
+};
+
+// Common icon props for Chat component
+const chatIconProps = {
+  sendIcon: <IoArrowUp />,
+  attachmentIcon: <IoAttach />,
+  microphoneIcon: <IoMic />,
+  closeIcon: <IoClose />,
+  copyIcon: <MdContentCopy size={16} />,
+  editIcon: <MdEdit size={16} />,
+  deleteIcon: <MdDelete size={16} />,
+  sentIcon: <MdCheck />,
+  readIcon: <MdDoneAll />,
 };
 
 // ===== ALL CHAT STORIES ARE EXAMPLES (contain full functionality) =====
@@ -68,7 +82,7 @@ export const DefaultExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} />
+        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -96,7 +110,7 @@ export const WithPendingMessageExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={true} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} />
+        <Chat messages={messages} isPending={true} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -130,7 +144,7 @@ export const CompletedHistoryExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={true} />
+        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={true} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -169,7 +183,7 @@ export const EmptyChatExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} />
+        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -206,7 +220,7 @@ export const WithTypingEffectExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} />
+        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -282,7 +296,7 @@ export const WithDateSeparatorsExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} />
+        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -337,7 +351,7 @@ export const WithNewMessageAnimationExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} />
+        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -395,7 +409,7 @@ export const WithCustomBackgroundExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} backgroundImage={chatBgAltImage} />
+        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} backgroundImage={chatBgAltImage} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -669,7 +683,7 @@ export const WithContextMenuDisabledExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} contextMenuConfig={{ enabled: false }} />
+        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} contextMenuConfig={{ enabled: false }} {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -729,7 +743,7 @@ export const DarkThemeDefaultExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} theme='dark' />
+        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} theme='dark' {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -777,7 +791,7 @@ export const DarkThemeWithDateSeparatorsExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} theme='dark' />
+        <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} isHistoryCompleted={false} theme='dark' {...chatIconProps} />
       </div>
     </MockReflectionProvider>
   );
@@ -814,11 +828,11 @@ export const ThemeComparisonExample: Story = () => {
       <div className='grid grid-cols-2 h-screen'>
         <div>
           <div className='text-center font-bold py-2 bg-white border-b'>Light Theme</div>
-          <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef1} isHistoryCompleted={false} theme='light' />
+          <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef1} isHistoryCompleted={false} theme='light' {...chatIconProps} />
         </div>
         <div>
           <div className='text-center font-bold py-2 bg-gray-800 text-white border-b border-gray-700'>Dark Theme</div>
-          <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef2} isHistoryCompleted={false} theme='dark' />
+          <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef2} isHistoryCompleted={false} theme='dark' {...chatIconProps} />
         </div>
       </div>
     </MockReflectionProvider>

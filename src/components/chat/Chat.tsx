@@ -1,10 +1,9 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, ReactElement } from 'react';
 import type { ChatHistoryItem, ChatHistoryMessage, MessageRole } from '@/types/chat';
 import type { ContextMenuConfig, ContextMenuItem } from '@/types/context-menu';
 import ChatInput from '@/components/chat-input';
 import { Message, TypingMessage } from '@/components/message';
 import DateSeparator from '@/components/date-separator';
-import { MdContentCopy, MdEdit, MdDelete } from 'react-icons/md';
 import '@/styles/Chat.animations.css';
 
 // Mock useReflection hook for standalone usage
@@ -26,6 +25,18 @@ interface ChatProps {
   onDeleteMessage?: (messageId: string) => void;
   containerClassName?: string;
   theme?: 'light' | 'dark';
+  // Icon props for ChatInput
+  sendIcon?: ReactElement;
+  attachmentIcon?: ReactElement;
+  microphoneIcon?: ReactElement;
+  closeIcon?: ReactElement;
+  // Icon props for context menu
+  copyIcon?: ReactElement;
+  editIcon?: ReactElement;
+  deleteIcon?: ReactElement;
+  // Icon props for Message read status
+  sentIcon?: ReactElement;
+  readIcon?: ReactElement;
 }
 
 const Chat: FC<ChatProps> = ({
@@ -41,6 +52,15 @@ const Chat: FC<ChatProps> = ({
   onDeleteMessage,
   containerClassName = '',
   theme = 'light',
+  sendIcon,
+  attachmentIcon,
+  microphoneIcon,
+  closeIcon,
+  copyIcon,
+  editIcon,
+  deleteIcon,
+  sentIcon,
+  readIcon,
 }) => {
   useReflection();
   const [message, setMessage] = useState('');
@@ -54,7 +74,7 @@ const Chat: FC<ChatProps> = ({
       {
         id: 'copy',
         label: 'Copy',
-        icon: <MdContentCopy size={16} />,
+        icon: copyIcon,
         onClick: (id?: string) => {
           const idx = parseInt(id?.replace('msg-', '') || '0');
           const msg = messages[idx];
@@ -70,7 +90,7 @@ const Chat: FC<ChatProps> = ({
       defaultItems.push({
         id: 'edit',
         label: 'Edit',
-        icon: <MdEdit size={16} />,
+        icon: editIcon,
         onClick: (id?: string) => {
           if (onEditMessage && id) {
             const idx = parseInt(id.replace('msg-', ''));
@@ -89,7 +109,7 @@ const Chat: FC<ChatProps> = ({
       defaultItems.push({
         id: 'delete',
         label: 'Delete',
-        icon: <MdDelete size={16} />,
+        icon: deleteIcon,
         onClick: (id?: string) => {
           if (onDeleteMessage && id) {
             if (confirm('Are you sure you want to delete this message?')) {
@@ -202,6 +222,8 @@ const Chat: FC<ChatProps> = ({
                 messageId: msgId,
                 contextMenuItems,
                 theme,
+                sentIcon,
+                readIcon,
               };
 
               if (historyMsg.image) {
@@ -262,7 +284,15 @@ const Chat: FC<ChatProps> = ({
               mediaButton={{
                 accept: 'image/*',
                 onUpload: handleImageUpload,
+                icon: attachmentIcon,
               }}
+              sendButton={{
+                icon: sendIcon,
+              }}
+              voiceButton={{
+                icon: microphoneIcon,
+              }}
+              closeIcon={closeIcon}
               placeholder='Enter message...'
               autoFocus={shouldFocus}
               autoGrow={true}

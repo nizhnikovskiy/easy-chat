@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, ReactElement } from 'react';
 
 /**
  * Props for customizing the send button
@@ -6,6 +6,8 @@ import type { ReactNode } from 'react';
 export interface SendButtonProps {
   /** Custom send button component */
   component?: ReactNode;
+  /** Icon for the send button */
+  icon?: ReactElement;
   /** Button label text */
   label?: string;
   /** Button variant */
@@ -24,6 +26,8 @@ export interface SendButtonProps {
 export interface MediaButtonProps {
   /** Custom media button component */
   component?: ReactNode;
+  /** Icon for the media/attachment button */
+  icon?: ReactElement;
   /** Button label text */
   label?: string;
   /** Button variant */
@@ -44,6 +48,8 @@ export interface MediaButtonProps {
 export interface VoiceButtonProps {
   /** Custom voice button component */
   component?: ReactNode;
+  /** Icon for the voice/microphone button */
+  icon?: ReactElement;
   /** Button label when idle */
   idleLabel?: string;
   /** Button label when recording */
@@ -126,4 +132,6 @@ export interface ChatInputProps {
   voiceAriaLabel?: string;
   /** Theme variant for the input */
   theme?: 'light' | 'dark';
+  /** Icon for closing/removing media attachments */
+  closeIcon?: ReactElement;
 }

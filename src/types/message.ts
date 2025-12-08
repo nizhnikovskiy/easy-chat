@@ -35,6 +35,14 @@ export interface MessageProps {
    */
   isRead?: boolean;
   /**
+   * Icon for single checkmark (message sent)
+   */
+  sentIcon?: React.ReactElement;
+  /**
+   * Icon for double checkmark (message read)
+   */
+  readIcon?: React.ReactElement;
+  /**
    * Whether to disable text selection and copying
    * When true, users cannot select or copy the text content of the message
    */

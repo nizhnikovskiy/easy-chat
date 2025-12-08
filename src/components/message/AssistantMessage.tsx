@@ -1,5 +1,4 @@
-import { FC, useState } from 'react';
-import { MdCheck, MdDoneAll } from 'react-icons/md';
+import { FC, useState, cloneElement } from 'react';
 import { AssistantMessageProps } from '@/types/message';
 import MessageContextMenu from '@/components/message-context-menu';
 
@@ -35,6 +34,8 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
   actions = [],
   isLoading = false,
   theme = 'light',
+  sentIcon,
+  readIcon,
 }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
@@ -174,11 +175,17 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
                   )}
                   {showReadStatus && (
                     <div className='flex items-center' aria-label={isRead ? 'Read' : 'Sent'} title={isRead ? 'Read' : 'Sent'}>
-                      {isRead ? (
-                        <MdDoneAll className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} size={16} />
-                      ) : (
-                        <MdCheck className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} size={16} />
-                      )}
+                      {isRead && readIcon ? (
+                        cloneElement(readIcon, { 
+                          className: theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          size: 16 
+                        })
+                      ) : !isRead && sentIcon ? (
+                        cloneElement(sentIcon, { 
+                          className: theme === 'dark' ? 'text-gray-400' : 'text-gray-500',
+                          size: 16 
+                        })
+                      ) : null}
                     </div>
                   )}
                 </div>

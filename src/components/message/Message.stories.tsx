@@ -1,6 +1,6 @@
 import type { Story } from '@ladle/react';
 import Message from './Message';
-import { MdContentCopy, MdEdit, MdDelete, MdSelectAll } from 'react-icons/md';
+import { MdContentCopy, MdEdit, MdDelete, MdSelectAll, MdCheck, MdDoneAll } from 'react-icons/md';
 import { ContextMenuItem } from '@/types/context-menu';
 import chatBgImage from '@/assets/images/chat/chat-bg.webp';
 import chatBgDarkImage from '@/assets/images/chat/chat-bg-dark.webp';
@@ -26,7 +26,7 @@ export const ThemeComparison: Story = () => (
         <div className='space-y-4'>
           <Message content='Hello from light theme!' sender='user' showAvatar={true} theme='light' />
           <Message content='This is a response in light theme' sender='other' showAvatar={true} username='Assistant' showUsername={true} theme='light' />
-          <Message content='With timestamps and read status' sender='user' showAvatar={true} showTimestamp={true} timestamp='10:30' showReadStatus={true} isRead={true} theme='light' />
+          <Message content='With timestamps and read status' sender='user' showAvatar={true} showTimestamp={true} timestamp='10:30' showReadStatus={true} isRead={true} theme='light' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@ export const ThemeComparison: Story = () => (
         <div className='space-y-4'>
           <Message content='Hello from dark theme!' sender='user' showAvatar={true} theme='dark' />
           <Message content='This is a response in dark theme' sender='other' showAvatar={true} username='Assistant' showUsername={true} theme='dark' />
-          <Message content='With timestamps and read status' sender='user' showAvatar={true} showTimestamp={true} timestamp='10:30' showReadStatus={true} isRead={true} theme='dark' />
+          <Message content='With timestamps and read status' sender='user' showAvatar={true} showTimestamp={true} timestamp='10:30' showReadStatus={true} isRead={true} theme='dark' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
         </div>
       </div>
     </div>
@@ -77,6 +77,8 @@ export const DarkThemeConversation: Story = () => (
         showReadStatus={true}
         isRead={true}
         theme='dark'
+        sentIcon={<MdCheck />}
+        readIcon={<MdDoneAll />}
       />
       <Message content="That's wonderful to hear!" sender='other' showAvatar={false} showUsername={false} showTimestamp={true} timestamp='14:21' theme='dark' />
       <Message content='Want to grab coffee later?' sender='other' showAvatar={false} showUsername={false} showTimestamp={true} timestamp='14:22' theme='dark' />
@@ -402,7 +404,7 @@ GroupPositionStandaloneDark.storyName = 'Group Position - Standalone - Dark';
 // Read status stories - demonstrate ONLY read status feature
 export const WithReadStatusRead: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <Message content='Message that has been read' sender='user' showReadStatus={true} isRead={true} />
+    <Message content='Message that has been read' sender='user' showReadStatus={true} isRead={true} sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 
@@ -410,7 +412,7 @@ WithReadStatusRead.storyName = 'Read Status - Read';
 
 export const WithReadStatusReadDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <Message content='Message that has been read' sender='user' showReadStatus={true} isRead={true} theme='dark' />
+    <Message content='Message that has been read' sender='user' showReadStatus={true} isRead={true} theme='dark' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 
@@ -418,7 +420,7 @@ WithReadStatusReadDark.storyName = 'Read Status - Read - Dark';
 
 export const WithReadStatusSent: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <Message content='Message that has been sent but not read' sender='user' showReadStatus={true} isRead={false} />
+    <Message content='Message that has been sent but not read' sender='user' showReadStatus={true} isRead={false} sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 
@@ -426,7 +428,7 @@ WithReadStatusSent.storyName = 'Read Status - Sent';
 
 export const WithReadStatusSentDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <Message content='Message that has been sent but not read' sender='user' showReadStatus={true} isRead={false} theme='dark' />
+    <Message content='Message that has been sent but not read' sender='user' showReadStatus={true} isRead={false} theme='dark' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 
@@ -434,7 +436,7 @@ WithReadStatusSentDark.storyName = 'Read Status - Sent - Dark';
 
 export const WithReadStatusNoTimestamp: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <Message content='Read status without timestamp' sender='user' showTimestamp={false} showReadStatus={true} isRead={true} />
+    <Message content='Read status without timestamp' sender='user' showTimestamp={false} showReadStatus={true} isRead={true} sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 
@@ -442,7 +444,7 @@ WithReadStatusNoTimestamp.storyName = 'Read Status - Without Timestamp';
 
 export const WithReadStatusNoTimestampDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <Message content='Read status without timestamp' sender='user' showTimestamp={false} showReadStatus={true} isRead={true} theme='dark' />
+    <Message content='Read status without timestamp' sender='user' showTimestamp={false} showReadStatus={true} isRead={true} theme='dark' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 
@@ -771,10 +773,12 @@ export const ReadStatusConversationExample: Story = () => (
       timestamp='14:21'
       showReadStatus={true}
       isRead={true}
+      sentIcon={<MdCheck />}
+      readIcon={<MdDoneAll />}
     />
     <Message content="That's wonderful to hear!" sender='other' showAvatar={false} showUsername={false} showTimestamp={true} timestamp='14:21' />
     <Message content='Want to grab coffee later?' sender='other' showAvatar={true} showUsername={false} showTimestamp={true} timestamp='14:22' />
-    <Message content='Sure! What time works for you?' sender='user' showAvatar={true} username='You' showUsername={false} showTimestamp={true} timestamp='14:23' showReadStatus={true} isRead={false} />
+    <Message content='Sure! What time works for you?' sender='user' showAvatar={true} username='You' showUsername={false} showTimestamp={true} timestamp='14:23' showReadStatus={true} isRead={false} sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
   </div>
 );
 

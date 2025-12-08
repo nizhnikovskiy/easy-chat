@@ -1,5 +1,4 @@
-import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
-import { ArrowUpIcon, MicrophoneIcon, CloseIcon, AttachmentIcon } from '@/components/icons/Icons';
+import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent, MouseEvent, cloneElement } from 'react';
 import type { ChatInputProps } from '@/types/chat-input';
 
 interface Ripple {
@@ -42,6 +41,7 @@ const ChatInput: FC<ChatInputProps> = ({
   mediaAriaLabel = 'Attach media',
   voiceAriaLabel = 'Record voice message',
   theme = 'light',
+  closeIcon,
 }) => {
   const [internalValue, setInternalValue] = useState(value);
   const [selectedMedia, setSelectedMedia] = useState<File | null>(null);
@@ -217,7 +217,7 @@ const ChatInput: FC<ChatInputProps> = ({
             type='button'
             aria-label='Remove media attachment'
           >
-            <CloseIcon size={14} />
+            {closeIcon ? cloneElement(closeIcon, { size: 14 }) : null}
           </button>
         </div>
       )}
@@ -254,7 +254,7 @@ const ChatInput: FC<ChatInputProps> = ({
                 aria-label={mediaAriaLabel}
                 aria-describedby={error && errorMessage ? errorMessageId.current : undefined}
               >
-                <AttachmentIcon size={20} />
+                {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 20 }) : null}
               </button>
             )}
           </>
@@ -307,7 +307,7 @@ const ChatInput: FC<ChatInputProps> = ({
                 aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
                 aria-pressed={voiceButton?.isRecording}
               >
-                <MicrophoneIcon size={20} />
+                {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 }) : null}
               </button>
             )}
           </>
@@ -351,7 +351,7 @@ const ChatInput: FC<ChatInputProps> = ({
                     }}
                   />
                 ))}
-                <ArrowUpIcon size={20} />
+                {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 }) : null}
               </button>
             )}
           </>
