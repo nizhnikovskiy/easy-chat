@@ -1,6 +1,44 @@
 import { FC } from 'react';
 import type { ChatListItemProps } from '@/types/chat-list';
 
+/**
+ * ChatListItem - Individual chat preview in ChatList
+ * 
+ * @component
+ * 
+ * ## Smart Timestamp Formatting
+ * - Today: Time (e.g., "10:30")
+ * - Yesterday: "Yesterday"
+ * - This week: Day name (e.g., "Mon")
+ * - Older: Date (e.g., "Jan 15")
+ * 
+ * ## Unread Badge
+ * Shows count when > 0, displays "99+" when count > 99
+ * 
+ * ## Avatar
+ * Image or fallback circle with initial (first char of name). 48x48px.
+ * Online status: small dot on bottom-right when `isOnline={true}`
+ * 
+ * ## Theming
+ * Colors via props (passed from ChatList): backgroundColor, activeBackgroundColor, textColor, timestampColor, unreadBadgeColor
+ * 
+ * @example
+ * ```tsx
+ * <ChatListItem
+ *   id="1"
+ *   name="John"
+ *   avatar="/john.jpg"
+ *   lastMessage="Hey!"
+ *   timestamp={new Date()}
+ *   unreadCount={2}
+ *   isActive={true}
+ *   isOnline={true}
+ *   onClick={(id) => loadChat(id)}
+ *   backgroundColor="#fff"
+ *   activeBackgroundColor="#f0f0f0"
+ * />
+ * ```
+ */
 const ChatListItem: FC<ChatListItemProps> = ({
   id,
   name,

@@ -4,14 +4,27 @@ import { TypingMessageProps } from '@/types/message';
 import { getFormattedTextAtPosition, getPlainTextLength } from '@/utils/formatText';
 
 /**
- * TypingMessage component - displays a message with typing animation
- *
- * Features:
- * - Character-by-character reveal animation
- * - Full text formatting support (bold, italic, code, etc.)
- * - Configurable typing speed
- * - Callback when typing completes
- * - Extends all base Message features
+ * TypingMessage - Message with character-by-character animation
+ * 
+ * @component
+ * 
+ * ## How It Works
+ * - Calculates plain text length (excludes formatting markup)
+ * - Reveals characters via `setInterval` at `typingSpeed` ms/char
+ * - Applies formatting to visible portion using `formatText` utility
+ * - Shows pulsing cursor during animation
+ * - Calls `onComplete` when finished
+ * - Re-animates if `text` prop changes
+ * 
+ * @example
+ * ```tsx
+ * <TypingMessage
+ *   text="AI response with **bold** and *italic*"
+ *   sender="other"
+ *   typingSpeed={30}  // ms per character
+ *   onComplete={() => scrollToBottom()}
+ * />
+ * ```
  */
 const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, ...messageProps }) => {
   const [visibleLength, setVisibleLength] = useState(0);

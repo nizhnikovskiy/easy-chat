@@ -2,6 +2,33 @@ import { FC } from 'react';
 import ChatListItem from './ChatListItem';
 import type { ChatListProps } from '@/types/chat-list';
 
+/**
+ * ChatList - WhatsApp/Telegram-style chat list sidebar
+ * 
+ * @component
+ * 
+ * ## Structure
+ * Header (title + new chat button) → Search bar → Scrollable chat items → Empty state
+ * 
+ * ## Theming
+ * Dark mode uses hardcoded colors (#1f2937, #374151, etc.)
+ * Light mode uses props: backgroundColor, activeBackgroundColor, textColor, timestampColor, unreadBadgeColor
+ * Border color: #e5e5ea (light) / #374151 (dark)
+ * 
+ * @example
+ * ```tsx
+ * <ChatList
+ *   items={[
+ *     { id: '1', name: 'John', lastMessage: 'Hi', timestamp: new Date(), unreadCount: 2 }
+ *   ]}
+ *   activeChatId="1"
+ *   onChatSelect={(id) => loadChat(id)}
+ *   width="350px"
+ *   position="left"
+ *   theme="light"
+ * />
+ * ```
+ */
 const ChatList: FC<ChatListProps> = ({
   items,
   position = 'left',

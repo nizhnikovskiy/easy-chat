@@ -2,6 +2,11 @@ import { FC } from 'react';
 import Message from '@/components/message/Message';
 import AssistantMessage from '@/components/message/AssistantMessage';
 
+/**
+ * ChatInputSkeleton (Internal)
+ * Loading skeleton for chat input area.
+ * @internal
+ */
 const ChatInputSkeleton: FC<{ theme?: 'light' | 'dark' }> = ({ theme = 'light' }) => {
   return (
     <div className='w-full px-4 pb-4'>
@@ -30,6 +35,31 @@ interface ChatSkeletonProps {
   theme?: 'light' | 'dark';
 }
 
+/**
+ * ChatSkeleton - Loading placeholder for chat interface
+ * 
+ * @component
+ * 
+ * ## Key Behaviors
+ * - Every 3rd message is user message (i % 3 === 0)
+ * - Every 4th message is plain AssistantMessage if `mixedTypes={true}` (i % 4 === 1)
+ * - Random widths (50-90%) for realistic skeleton text lines
+ * - Uses CSS `animate-pulse` for shimmer
+ * 
+ * ## Theming Variables
+ * - `--chat-skeleton-bg` / `--chat-skeleton-bg-dark`
+ * - `--chat-skeleton-shimmer` / `--chat-skeleton-shimmer-dark`
+ * - Also uses message background colors for bubble skeletons
+ * 
+ * @example
+ * ```tsx
+ * {isLoading ? (
+ *   <ChatSkeleton messageCount={8} showInput={true} theme="light" />
+ * ) : (
+ *   <Chat messages={messages} {...props} />
+ * )}
+ * ```
+ */
 const ChatSkeleton: FC<ChatSkeletonProps> = ({ messageCount = 5, showInput = true, mixedTypes = false, theme = 'light' }) => {
   const skeletonMessages = Array.from({ length: messageCount }, (_, i) => ({
     id: `skeleton-${i}`,

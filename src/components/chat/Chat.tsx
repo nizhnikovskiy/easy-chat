@@ -12,6 +12,40 @@ const useReflection = () => {
   return { isReflectionFinished };
 };
 
+/**
+ * Chat - Main chat interface
+ * 
+ * @component
+ * 
+ * ## Key Behaviors
+ * - Last received message shows typing animation (controlled by `initialMessageCount`)
+ * - New messages after mount get slide-in animations
+ * - Auto-scrolls to bottom on new messages
+ * - Context menu items default to copy/edit/delete for user messages, copy-only for others
+ * 
+ * ## Theming Variables
+ * - `--chat-message-user-bg` / `--chat-message-user-bg-dark`
+ * - `--chat-message-user-text` / `--chat-message-user-text-dark`
+ * - `--chat-message-other-bg` / `--chat-message-other-bg-dark`
+ * - `--chat-message-other-text` / `--chat-message-other-text-dark`
+ * - See THEMING.md for complete list
+ * 
+ * @example
+ * ```tsx
+ * <Chat
+ *   messages={messages}
+ *   isPending={isLoading}
+ *   onSendMessage={(msg, img) => handleSend(msg, img)}
+ *   messagesEndRef={messagesEndRef}
+ *   theme="light"
+ *   // Optional
+ *   contextMenuConfig={{ enabled: true }}
+ *   onEditMessage={handleEdit}
+ *   onDeleteMessage={handleDelete}
+ *   backgroundImage="/bg.png"
+ * />
+ * ```
+ */
 interface ChatProps {
   messages: ChatHistoryItem[];
   isPending: boolean;

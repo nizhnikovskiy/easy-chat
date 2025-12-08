@@ -4,15 +4,46 @@ import MessageContextMenu from '@/components/message-context-menu';
 import { formatText } from '@/utils/formatText';
 
 /**
- * Base Message component with customizable appearance and behavior
- *
- * Features:
- * - Left/right alignment based on sender
- * - Optional avatar display
- * - Optional username display
- * - Optional timestamp (Telegram-style in bubble corner)
- * - Accessible with ARIA labels
- * - Responsive design for desktop and mobile
+ * Message - Telegram/WhatsApp-style message bubble
+ * 
+ * @component
+ * 
+ * ## Key Behaviors
+ * - User messages: right-aligned, other messages: left-aligned
+ * - Bubble tail removed for grouped messages (first/middle positions)
+ * - Avatar hidden for grouped messages (middle position)
+ * - Context menu: right-click (desktop) or 500ms long-press (mobile)
+ * - Long-press cancelled if finger moves >10px
+ * - Text formatting via `formatText` utility (supports bold, italic, code, links)
+ * 
+ * ## Message Grouping
+ * Use `groupPosition` to group consecutive messages:
+ * - `standalone`: Full spacing + avatar + tail (default)
+ * - `first`: Shows avatar/username, no tail
+ * - `middle`: No avatar, no tail, minimal spacing
+ * - `last`: Shows avatar + tail, no username
+ * 
+ * ## Theming Variables
+ * - `--chat-message-user-bg` / `--chat-message-user-bg-dark`
+ * - `--chat-message-user-text` / `--chat-message-user-text-dark`
+ * - `--chat-message-other-bg` / `--chat-message-other-bg-dark`
+ * - `--chat-message-other-text` / `--chat-message-other-text-dark`
+ * - `--chat-username-text` / `--chat-avatar-text` / `--chat-skeleton-bg`
+ * 
+ * @example
+ * ```tsx
+ * <Message
+ *   content="Hello!"
+ *   sender="user"
+ *   showTimestamp={true}
+ *   timestamp="10:30"
+ *   showReadStatus={true}
+ *   isRead={true}
+ *   sentIcon={<Check />}
+ *   readIcon={<CheckCheck />}
+ *   contextMenuItems={[{ id: 'copy', label: 'Copy', onClick: () => {} }]}
+ * />
+ * ```
  */
 const Message: FC<MessageProps> = ({
   content,

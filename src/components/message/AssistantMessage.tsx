@@ -3,16 +3,35 @@ import { AssistantMessageProps } from '@/types/message';
 import MessageContextMenu from '@/components/message-context-menu';
 
 /**
- * AssistantMessage component - ChatGPT-style message without bubble
- *
- * Features:
- * - Plain text rendering (no colored bubble/container)
- * - Left alignment only (for assistant/bot messages)
- * - Optional avatar display
- * - Optional username display
- * - Customizable action menu below message
- * - Accessible with ARIA labels
- * - Responsive design for desktop and mobile
+ * AssistantMessage - ChatGPT-style plain text message (no bubble)
+ * 
+ * @component
+ * 
+ * ## Key Differences from Message
+ * - No bubble background (plain text only)
+ * - Always left-aligned
+ * - Action buttons below message instead of context menu
+ * - Timestamp/status inline at end of text (not in bubble corner)
+ * 
+ * ## Theming Variables
+ * - `--chat-message-other-text` / `--chat-message-other-text-dark`
+ * - `--chat-message-other-timestamp` / `--chat-message-other-timestamp-dark`
+ * - `--chat-username-text` / `--chat-avatar-text`
+ * - `--chat-menu-hover-bg` / `--chat-menu-hover-bg-dark` (for action buttons)
+ * - `--chat-skeleton-bg` / `--chat-skeleton-shimmer` (loading state)
+ * 
+ * @example
+ * ```tsx
+ * <AssistantMessage
+ *   content="I can help with that!"
+ *   showAvatar={true}
+ *   username="AI"
+ *   actions={[
+ *     { id: 'copy', label: 'Copy', icon: <Copy />, onClick: () => {} },
+ *     { id: 'regen', label: 'Regenerate', icon: <RefreshCw />, onClick: () => {} }
+ *   ]}
+ * />
+ * ```
  */
 const AssistantMessage: FC<AssistantMessageProps> = ({
   content,

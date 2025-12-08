@@ -2,16 +2,44 @@ import { FC, useEffect, useRef, useCallback, useState } from 'react';
 import { MessageContextMenuProps } from '@/types/context-menu';
 
 /**
- * Context Menu component styled like ChatGPT
- *
- * Features:
- * - ChatGPT-inspired design with subtle shadow and clean typography
- * - Smart positioning with slide-down/slide-up animation
- * - Backdrop with transparency that dims the screen
- * - Click-outside to close
- * - Keyboard navigation (ESC to close)
- * - Fully customizable menu items with icons and dividers
- * - Accessible with proper ARIA labels
+ * MessageContextMenu - ChatGPT-style context menu
+ * 
+ * @component
+ * 
+ * ## Smart Positioning
+ * - Aligns to message bubble based on `sender` (user: left, other: right)
+ * - Positions below/above bubble with 8px gap
+ * - Slides up if in lower half of viewport for better UX
+ * - Stays within viewport bounds (adjusts x/y if needed)
+ * 
+ * ## Interactions
+ * - Click outside or ESC to close
+ * - 10ms delay before click-outside listener (prevents immediate close)
+ * - Backdrop with blur effect
+ * - Slide-down/up animation with bounce (300ms)
+ * 
+ * ## Theming Variables
+ * - `--chat-menu-bg` / `--chat-menu-bg-dark`
+ * - `--chat-menu-border` / `--chat-menu-border-dark`
+ * - `--chat-menu-text` / `--chat-menu-text-dark`
+ * - `--chat-menu-hover-bg` / `--chat-menu-hover-bg-dark`
+ * - `--chat-button-disabled-text`
+ * 
+ * @example
+ * ```tsx
+ * <MessageContextMenu
+ *   isOpen={isOpen}
+ *   position={{ x: 100, y: 200 }}
+ *   items={[
+ *     { id: 'copy', label: 'Copy', icon: <Copy />, onClick: () => {} },
+ *     { id: 'delete', label: 'Delete', onClick: () => {}, divider: true }
+ *   ]}
+ *   onClose={() => setIsOpen(false)}
+ *   messageId="msg-1"
+ *   bubbleRect={bubbleRef.current?.getBoundingClientRect()}
+ *   sender="user"
+ * />
+ * ```
  */
 const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, items, onClose, messageId, bubbleRect, sender, theme = 'light' }) => {
   const menuRef = useRef<HTMLDivElement>(null);

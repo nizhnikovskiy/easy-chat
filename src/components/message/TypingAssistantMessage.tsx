@@ -4,14 +4,22 @@ import { TypingAssistantMessageProps } from '@/types/message';
 import { getFormattedTextAtPosition, getPlainTextLength } from '@/utils/formatText';
 
 /**
- * TypingAssistantMessage component - displays an assistant message with typing animation
- *
- * Features:
- * - Character-by-character reveal animation
- * - Full text formatting support (bold, italic, code, etc.)
- * - Configurable typing speed
- * - Callback when typing completes
- * - Extends all base AssistantMessage features (actions, avatar, etc.)
+ * TypingAssistantMessage - AssistantMessage with typing animation
+ * 
+ * Combines plain-text ChatGPT style with character-by-character animation.
+ * Same animation logic as TypingMessage but renders via AssistantMessage.
+ * 
+ * @example
+ * ```tsx
+ * <TypingAssistantMessage
+ *   text="AI response with typing effect"
+ *   typingSpeed={30}
+ *   onComplete={() => scrollToBottom()}
+ *   actions={[
+ *     { id: 'copy', label: 'Copy', icon: <Copy />, onClick: () => {} }
+ *   ]}
+ * />
+ * ```
  */
 const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, ...messageProps }) => {
   const [visibleLength, setVisibleLength] = useState(0);

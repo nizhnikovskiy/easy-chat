@@ -8,6 +8,40 @@ interface Ripple {
   id: number;
 }
 
+/**
+ * ChatInput - Auto-growing textarea with media upload and voice support
+ * 
+ * @component
+ * 
+ * ## Key Behaviors
+ * - Enter: new line, Ctrl/Cmd+Enter: send message
+ * - Auto-grows up to `maxRows` (default: 10)
+ * - Send button replaces voice button when text/media present
+ * - Ripple effect on send button click
+ * - Multi-line detection at ~52px height threshold
+ * 
+ * ## Theming Variables
+ * - `--chat-input-bg` / `--chat-input-bg-dark`
+ * - `--chat-input-text` / `--chat-input-text-dark`
+ * - `--chat-input-border` / `--chat-input-border-dark`
+ * - `--chat-input-border-focus`
+ * - `--chat-button-primary-bg` / `--chat-button-primary-bg-hover`
+ * - See THEMING.md for complete list
+ * 
+ * @example
+ * ```tsx
+ * <ChatInput
+ *   value={message}
+ *   onChange={setMessage}
+ *   onSend={(text, image) => handleSend(text, image)}
+ *   enableMediaUpload={true}
+ *   mediaButton={{ icon: <Paperclip />, accept: 'image/*' }}
+ *   sendButton={{ icon: <Send /> }}
+ *   closeIcon={<X />}
+ *   theme="light"
+ * />
+ * ```
+ */
 const ChatInput: FC<ChatInputProps> = ({
   value = '',
   onChange,
