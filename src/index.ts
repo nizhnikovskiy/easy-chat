@@ -9,9 +9,6 @@ export { default as MessageContextMenu } from './components/message-context-menu
 // Message components
 export { Message, StaticMessage, TypingMessage, AssistantMessage, TypingAssistantMessage } from './components/message';
 
-// Button component
-export { default as Button } from './components/button';
-
 // Types - Message
 export type { MessageProps, StaticMessageProps, TypingMessageProps, AssistantMessageProps, TypingAssistantMessageProps, AssistantMessageActionItem } from './types/message';
 
