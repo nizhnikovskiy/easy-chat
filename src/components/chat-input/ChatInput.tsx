@@ -76,6 +76,10 @@ const ChatInput: FC<ChatInputProps> = ({
   voiceAriaLabel = 'Record voice message',
   theme = 'light',
   closeIcon,
+  searchButton,
+  studyButton,
+  imageGenerationButton,
+  variant = 'default',
 }) => {
   const [internalValue, setInternalValue] = useState(value);
   const [selectedMedia, setSelectedMedia] = useState<File | null>(null);
@@ -262,14 +266,14 @@ const ChatInput: FC<ChatInputProps> = ({
 
       {/* Input area with integrated buttons */}
       <div
-        className={`relative flex items-end ${
+        className={`relative flex ${variant === 'extended' ? 'flex-col' : 'items-end'} ${
           theme === 'dark'
             ? 'bg-input-bg-dark border-input-border-dark/50 hover:border-input-border-dark/70 focus-within:border-input-border-focus'
             : 'bg-input-bg border-input-border/50 hover:border-input-border/70 focus-within:border-input-border-focus'
-        } rounded-3xl border transition-all ${isMultiLine ? 'pb-13' : ''}`}
+        } rounded-3xl border transition-all ${variant !== 'extended' && isMultiLine ? 'pb-13' : ''}`}
       >
-        {/* Media upload button - positioned inside on the left */}
-        {enableMediaUpload && (
+        {/* Media upload button - Default Variant (Internal) */}
+        {variant !== 'extended' && enableMediaUpload && (
           <>
             <input
               ref={fileInputRef}
@@ -314,7 +318,9 @@ const ChatInput: FC<ChatInputProps> = ({
             theme === 'dark'
               ? 'text-input-text-dark placeholder:text-input-placeholder-dark disabled:text-input-placeholder-dark/60'
               : 'text-input-text placeholder:text-input-placeholder disabled:text-input-placeholder/60'
-          } text-base min-h-11 ${enableMediaUpload ? 'pl-14' : ''} ${!enableVoiceInput || internalValue.trim() || selectedMedia ? 'pr-14' : 'pr-4'} ${inputClassName}`}
+          } text-base min-h-11 ${variant !== 'extended' && enableMediaUpload ? 'pl-14' : ''} ${
+            variant !== 'extended' && (!enableVoiceInput || internalValue.trim() || selectedMedia) ? 'pr-14' : 'pr-4'
+          } ${inputClassName}`}
           style={{
             maxHeight: `${24 * maxRows}px`,
           }}
@@ -335,74 +341,231 @@ const ChatInput: FC<ChatInputProps> = ({
           </span>
         )}
 
-        {/* Voice input button - shows when voice is enabled and no text/media, positioned inside on the right */}
-        {enableVoiceInput && !internalValue.trim() && !selectedMedia && (
+        {/* Default Variant Buttons (Internal) */}
+        {variant !== 'extended' && (
           <>
-            {voiceButton?.component || (
-              <button
-                onMouseDown={voiceButton?.onStartRecording}
-                onMouseUp={voiceButton?.onStopRecording}
-                onMouseLeave={voiceButton?.onStopRecording}
-                onTouchStart={voiceButton?.onStartRecording}
-                onTouchEnd={voiceButton?.onStopRecording}
-                disabled={disabled || isLoading || voiceButton?.disabled}
-                className={`absolute right-2 bottom-1/2 translate-y-1/2 p-2 ${
-                  theme === 'dark'
-                    ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark border-input-border-dark'
-                    : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg border-input-border'
-                } rounded-full select-none transition-all border disabled:cursor-not-allowed ${voiceButton?.className || ''}`}
-                type='button'
-                aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
-                aria-pressed={voiceButton?.isRecording}
-              >
-                {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
-              </button>
+            {/* Voice input button */}
+            {enableVoiceInput && !internalValue.trim() && !selectedMedia && (
+              <>
+                {voiceButton?.component || (
+                  <button
+                    onMouseDown={voiceButton?.onStartRecording}
+                    onMouseUp={voiceButton?.onStopRecording}
+                    onMouseLeave={voiceButton?.onStopRecording}
+                    onTouchStart={voiceButton?.onStartRecording}
+                    onTouchEnd={voiceButton?.onStopRecording}
+                    disabled={disabled || isLoading || voiceButton?.disabled}
+                    className={`absolute right-2 bottom-1/2 translate-y-1/2 p-2 ${
+                      theme === 'dark'
+                        ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark border-input-border-dark'
+                        : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg border-input-border'
+                    } rounded-full select-none transition-all border disabled:cursor-not-allowed ${voiceButton?.className || ''}`}
+                    type='button'
+                    aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
+                    aria-pressed={voiceButton?.isRecording}
+                  >
+                    {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* Send button */}
+            {(!enableVoiceInput || internalValue.trim() || selectedMedia) && (
+              <>
+                {sendButton?.component || (
+                  <button
+                    ref={sendButtonRef}
+                    onClick={(e) => {
+                      createRipple(e);
+                      (sendButton?.onClick || handleSend)();
+                    }}
+                    disabled={sendButton?.disabled !== undefined ? sendButton.disabled : isSendDisabled}
+                    className={`absolute right-2 bottom-1.5 p-2 rounded-full transition-all disabled:cursor-not-allowed overflow-hidden border ${
+                      isSendDisabled
+                        ? theme === 'dark'
+                          ? 'bg-transparent text-button-disabled-text border-input-border-dark'
+                          : 'bg-transparent text-button-disabled-text border-input-border'
+                        : theme === 'dark'
+                        ? 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95 border-transparent'
+                        : 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95 border-transparent'
+                    } ${sendButton?.className || ''}`}
+                    type='button'
+                    aria-label={sendAriaLabel}
+                    aria-disabled={sendButton?.disabled !== undefined ? sendButton.disabled : isSendDisabled}
+                  >
+                    {ripples.map((ripple) => (
+                      <span
+                        key={ripple.id}
+                        className='absolute rounded-full bg-white opacity-30 animate-ripple pointer-events-none'
+                        style={{
+                          left: ripple.x,
+                          top: ripple.y,
+                          width: ripple.size,
+                          height: ripple.size,
+                          animation: 'ripple 600ms ease-out',
+                        }}
+                      />
+                    ))}
+                    {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as any) : null}
+                  </button>
+                )}
+              </>
             )}
           </>
         )}
 
-        {/* Send button - shows when there is text/media OR voice is disabled, positioned inside on the right */}
-        {(!enableVoiceInput || internalValue.trim() || selectedMedia) && (
-          <>
-            {sendButton?.component || (
-              <button
-                ref={sendButtonRef}
-                onClick={(e) => {
-                  createRipple(e);
-                  (sendButton?.onClick || handleSend)();
-                }}
-                disabled={sendButton?.disabled !== undefined ? sendButton.disabled : isSendDisabled}
-                className={`absolute right-2 bottom-1.5 p-2 rounded-full transition-all disabled:cursor-not-allowed overflow-hidden border ${
-                  isSendDisabled
-                    ? theme === 'dark'
-                      ? 'bg-transparent text-button-disabled-text border-input-border-dark'
-                      : 'bg-transparent text-button-disabled-text border-input-border'
-                    : theme === 'dark'
-                    ? 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95 border-transparent'
-                    : 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95 border-transparent'
-                } ${sendButton?.className || ''}`}
-                type='button'
-                aria-label={sendAriaLabel}
-                aria-disabled={sendButton?.disabled !== undefined ? sendButton.disabled : isSendDisabled}
-              >
-                {/* Ripple effects */}
-                {ripples.map((ripple) => (
-                  <span
-                    key={ripple.id}
-                    className='absolute rounded-full bg-white opacity-30 animate-ripple pointer-events-none'
-                    style={{
-                      left: ripple.x,
-                      top: ripple.y,
-                      width: ripple.size,
-                      height: ripple.size,
-                      animation: 'ripple 600ms ease-out',
-                    }}
-                  />
-                ))}
-                {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as any) : null}
-              </button>
-            )}
-          </>
+        {/* Extended Variant Toolbar */}
+        {variant === 'extended' && (
+          <div className={`flex items-center justify-between px-3 pb-2 pt-1 gap-2 ${/* Optional separator border if needed */ ''}`}>
+            <div className='flex items-center gap-2 overflow-x-auto no-scrollbar flex-1'>
+              {/* Hidden Input for Extended Mode */}
+              {enableMediaUpload && (
+                <input
+                  ref={fileInputRef}
+                  type='file'
+                  accept={mediaButton?.accept || 'image/*'}
+                  onChange={handleMediaSelect}
+                  className='hidden'
+                  disabled={disabled || isLoading || mediaButton?.disabled}
+                  aria-label={mediaAriaLabel}
+                />
+              )}
+              {/* Attach Pill */}
+              {enableMediaUpload && (
+                <button
+                  type='button'
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={disabled || isLoading || mediaButton?.disabled}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap border ${
+                    theme === 'dark'
+                      ? 'bg-input-bg-dark border-input-border-dark hover:bg-menu-hover-bg-dark text-input-text-dark'
+                      : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
+                  } ${mediaButton?.className || ''}`}
+                >
+                  {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 16 } as any) : null}
+                  <span>{mediaButton?.label || 'Attach'}</span>
+                </button>
+              )}
+
+              {/* Search Pill */}
+              {searchButton && (
+                <button
+                  type='button'
+                  onClick={searchButton.onClick}
+                  disabled={disabled || isLoading || searchButton.disabled}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap border ${
+                    theme === 'dark'
+                      ? 'bg-input-bg-dark border-input-border-dark hover:bg-menu-hover-bg-dark text-input-text-dark'
+                      : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
+                  } ${searchButton.className || ''}`}
+                >
+                  {searchButton.icon ? cloneElement(searchButton.icon, { size: 16 } as any) : null}
+                  <span>{searchButton.label || 'Search'}</span>
+                </button>
+              )}
+
+              {/* Study Pill */}
+              {studyButton && (
+                <button
+                  type='button'
+                  onClick={studyButton.onClick}
+                  disabled={disabled || isLoading || studyButton.disabled}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap border ${
+                    theme === 'dark'
+                      ? 'bg-input-bg-dark border-input-border-dark hover:bg-menu-hover-bg-dark text-input-text-dark'
+                      : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
+                  } ${studyButton.className || ''}`}
+                >
+                  {studyButton.icon ? cloneElement(studyButton.icon, { size: 16 } as any) : null}
+                  <span>{studyButton.label || 'Study'}</span>
+                </button>
+              )}
+
+              {/* Image Gen Pill */}
+              {imageGenerationButton && (
+                <button
+                  type='button'
+                  onClick={imageGenerationButton.onClick}
+                  disabled={disabled || isLoading || imageGenerationButton.disabled}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap border ${
+                    theme === 'dark'
+                      ? 'bg-input-bg-dark border-input-border-dark hover:bg-menu-hover-bg-dark text-input-text-dark'
+                      : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
+                  } ${imageGenerationButton.className || ''}`}
+                >
+                  {imageGenerationButton.icon ? cloneElement(imageGenerationButton.icon, { size: 16 } as any) : null}
+                  <span>{imageGenerationButton.label || 'Create image'}</span>
+                </button>
+              )}
+            </div>
+
+            {/* Voice / Send Action - Extended Position */}
+            <div className='flex items-center gap-2 shrink-0 ml-1'>
+              {/* Voice Button */}
+              {enableVoiceInput && !internalValue.trim() && !selectedMedia ? (
+                <>
+                  {voiceButton?.component || (
+                    <button
+                      onMouseDown={voiceButton?.onStartRecording}
+                      onMouseUp={voiceButton?.onStopRecording}
+                      onMouseLeave={voiceButton?.onStopRecording}
+                      onTouchStart={voiceButton?.onStartRecording}
+                      onTouchEnd={voiceButton?.onStopRecording}
+                      disabled={disabled || isLoading || voiceButton?.disabled}
+                      className={`p-2 ${
+                        theme === 'dark' ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark' : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg'
+                      } rounded-full select-none transition-all ${voiceButton?.className || ''}`}
+                      type='button'
+                      aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
+                    >
+                      {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
+                    </button>
+                  )}
+                </>
+              ) : (
+                /* Send Button */
+                <>
+                  {sendButton?.component || (
+                    <button
+                      ref={sendButtonRef}
+                      onClick={(e) => {
+                        createRipple(e);
+                        (sendButton?.onClick || handleSend)();
+                      }}
+                      disabled={sendButton?.disabled !== undefined ? sendButton.disabled : isSendDisabled}
+                      className={`p-2 rounded-full transition-all disabled:cursor-not-allowed overflow-hidden ${
+                        isSendDisabled
+                          ? theme === 'dark'
+                            ? 'bg-transparent text-button-disabled-text'
+                            : 'bg-transparent text-button-disabled-text'
+                          : theme === 'dark'
+                          ? 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95'
+                          : 'bg-button-primary-bg text-button-primary-text hover:bg-button-primary-bg-hover active:scale-95'
+                      } ${sendButton?.className || ''}`}
+                      type='button'
+                      aria-label={sendAriaLabel}
+                    >
+                      {ripples.map((ripple) => (
+                        <span
+                          key={ripple.id}
+                          className='absolute rounded-full bg-white opacity-30 animate-ripple pointer-events-none'
+                          style={{
+                            left: ripple.x,
+                            top: ripple.y,
+                            width: ripple.size,
+                            height: ripple.size,
+                            animation: 'ripple 600ms ease-out',
+                          }}
+                        />
+                      ))}
+                      {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as any) : null}
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>

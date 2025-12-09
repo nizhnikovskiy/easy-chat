@@ -67,6 +67,26 @@ export interface VoiceButtonProps {
 }
 
 /**
+ * Props for generic action buttons (Search, Study, etc.)
+ */
+export interface ActionButtonProps {
+  /** Custom button component */
+  component?: ReactNode;
+  /** Icon for the button */
+  icon?: ReactElement;
+  /** Button label text */
+  label?: string;
+  /** Click handler */
+  onClick?: () => void;
+  /** Whether button is disabled */
+  disabled?: boolean;
+  /** Custom className */
+  className?: string;
+  /** ARIA label */
+  ariaLabel?: string;
+}
+
+/**
  * Main ChatInput component props
  */
 export interface ChatInputProps {
@@ -134,4 +154,14 @@ export interface ChatInputProps {
   theme?: 'light' | 'dark';
   /** Icon for closing/removing media attachments */
   closeIcon?: ReactElement;
+
+  /** Input variant */
+  variant?: 'default' | 'extended';
+
+  /** Search button customization */
+  searchButton?: ActionButtonProps;
+  /** Study button customization */
+  studyButton?: ActionButtonProps;
+  /** Image generation button customization */
+  imageGenerationButton?: ActionButtonProps;
 }

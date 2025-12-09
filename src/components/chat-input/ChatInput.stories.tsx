@@ -3,7 +3,7 @@ import ChatInput from './ChatInput';
 import type { Story } from '@ladle/react';
 import chatBgImage from '@/assets/images/chat/chat-bg.webp';
 import chatBgDarkImage from '@/assets/images/chat/chat-bg-dark.webp';
-import { IoArrowUp, IoMic, IoAttach, IoClose } from 'react-icons/io5';
+import { IoArrowUp, IoMic, IoAttach, IoClose, IoSearch, IoBook, IoImage } from 'react-icons/io5';
 
 const bgStyle = {
   backgroundImage: `url("${chatBgImage}")`,
@@ -554,6 +554,117 @@ export const AutoGrowTextareaDark: Story = () => {
 };
 
 AutoGrowTextareaDark.storyName = 'Auto Grow Textarea - Dark';
+
+// ===== EXTENDED VARIANT STORIES =====
+
+export const ExtendedVariant: Story = () => {
+  const [message, setMessage] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+
+  const handleSend = (msg: string, media?: File) => {
+    console.log('Message sent:', msg, 'Media:', media);
+    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
+  };
+
+  return (
+    <div style={bgStyle} className='h-screen flex flex-col justify-end'>
+      <ChatInput
+        variant='extended'
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Ask anything...'
+        enableMediaUpload
+        enableVoiceInput
+        mediaButton={{
+          label: 'Attach',
+          icon: <IoAttach />,
+          onUpload: (file) => console.log('Media uploaded:', file),
+        }}
+        searchButton={{
+          label: 'Search',
+          icon: <IoSearch />,
+          onClick: () => console.log('Search clicked'),
+        }}
+        studyButton={{
+          label: 'Study',
+          icon: <IoBook />,
+          onClick: () => console.log('Study clicked'),
+        }}
+        imageGenerationButton={{
+          label: 'Create image',
+          icon: <IoImage />,
+          onClick: () => console.log('Image Gen clicked'),
+        }}
+        voiceButton={{
+          isRecording,
+          onStartRecording: () => setIsRecording(true),
+          onStopRecording: () => setIsRecording(false),
+          icon: <IoMic />,
+        }}
+        sendButton={{ icon: <IoArrowUp /> }}
+        closeIcon={<IoClose />}
+      />
+    </div>
+  );
+};
+
+ExtendedVariant.storyName = 'Extended Variant - Default';
+
+export const ExtendedVariantDark: Story = () => {
+  const [message, setMessage] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+
+  const handleSend = (msg: string, media?: File) => {
+    console.log('Message sent:', msg, 'Media:', media);
+    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
+  };
+
+  return (
+    <div style={bgStyleDark} className='h-screen flex flex-col justify-end bg-gray-900'>
+      <ChatInput
+        variant='extended'
+        theme='dark'
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Ask anything...'
+        enableMediaUpload
+        enableVoiceInput
+        mediaButton={{
+          label: 'Attach',
+          icon: <IoAttach />,
+          onUpload: (file) => console.log('Media uploaded:', file),
+        }}
+        searchButton={{
+          label: 'Search',
+          icon: <IoSearch />,
+          onClick: () => console.log('Search clicked'),
+        }}
+        studyButton={{
+          label: 'Study',
+          icon: <IoBook />,
+          onClick: () => console.log('Study clicked'),
+        }}
+        imageGenerationButton={{
+          label: 'Create image',
+          icon: <IoImage />,
+          onClick: () => console.log('Image Gen clicked'),
+        }}
+        voiceButton={{
+          isRecording,
+          onStartRecording: () => setIsRecording(true),
+          onStopRecording: () => setIsRecording(false),
+          icon: <IoMic />,
+        }}
+        sendButton={{ icon: <IoArrowUp /> }}
+        closeIcon={<IoClose />}
+      />
+    </div>
+  );
+};
+
+ExtendedVariantDark.storyName = 'Extended Variant - Dark';
 
 // ===== DARK THEME STORIES =====
 
