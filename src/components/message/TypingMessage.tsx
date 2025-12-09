@@ -1,13 +1,13 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import Message from './Message';
-import { TypingMessageProps } from '@/types/message';
-import { getFormattedTextAtPosition, getPlainTextLength } from '@/utils/formatText';
+import { TypingMessageProps } from '../../types/message';
+import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/formatText';
 
 /**
  * TypingMessage - Message with character-by-character animation
- * 
+ *
  * @component
- * 
+ *
  * ## How It Works
  * - Calculates plain text length (excludes formatting markup)
  * - Reveals characters via `setInterval` at `typingSpeed` ms/char
@@ -15,7 +15,7 @@ import { getFormattedTextAtPosition, getPlainTextLength } from '@/utils/formatTe
  * - Shows pulsing cursor during animation
  * - Calls `onComplete` when finished
  * - Re-animates if `text` prop changes
- * 
+ *
  * @example
  * ```tsx
  * <TypingMessage

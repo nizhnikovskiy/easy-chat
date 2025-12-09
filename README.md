@@ -69,14 +69,14 @@ export default {
 3. Import the Easy Chat CSS in your main file:
 
 ```tsx
-import 'easy-chat/styles';
+import '@nizhnikovskiy/easy-chat/styles';
 ```
 
 ## Quick Start
 
 ```tsx
 import { Chat, Message, ChatInput } from 'easy-chat';
-import 'easy-chat/styles';
+import '@nizhnikovskiy/easy-chat/styles';
 import { IoArrowUp, IoAttach, IoClose } from 'react-icons/io5';
 import { MdCheck, MdDoneAll } from 'react-icons/md';
 
@@ -94,16 +94,7 @@ function App() {
     <div className='h-screen flex flex-col'>
       <div className='flex-1 overflow-y-auto p-4'>
         {messages.map((msg, idx) => (
-          <Message 
-            key={idx} 
-            content={msg.content} 
-            sender={msg.sender} 
-            timestamp={msg.timestamp} 
-            showTimestamp
-            showReadStatus={msg.sender === 'user'}
-            sentIcon={<MdCheck />}
-            readIcon={<MdDoneAll />}
-          />
+          <Message key={idx} content={msg.content} sender={msg.sender} timestamp={msg.timestamp} showTimestamp showReadStatus={msg.sender === 'user'} sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
         ))}
       </div>
 
@@ -158,13 +149,13 @@ Easy Chat uses **CSS Variables** for complete theme customization. Override thes
 
 ```css
 /* your-app.css */
-@import 'easy-chat/styles';
+@import '@nizhnikovskiy/easy-chat/styles';
 
 :root {
   /* Customize user message colors */
   --chat-message-user-bg: #8b5cf6; /* Purple */
   --chat-message-user-text: #ffffff;
-  
+
   /* Customize buttons */
   --chat-button-primary-bg: #8b5cf6;
   --chat-button-primary-bg-hover: #7c3aed;
@@ -174,6 +165,7 @@ Easy Chat uses **CSS Variables** for complete theme customization. Override thes
 **[📖 Complete Theming Guide →](./THEMING.md)**
 
 The theming guide includes:
+
 - All available CSS variables
 - Multiple theme examples (Purple, Green, Monochrome, etc.)
 - Dark mode customization
@@ -220,14 +212,7 @@ Easy Chat components accept icons as props, giving you full control over which i
 import { ChatInput } from 'easy-chat';
 import { IoArrowUp, IoAttach, IoMic, IoClose } from 'react-icons/io5';
 
-<ChatInput
-  sendButton={{ icon: <IoArrowUp /> }}
-  mediaButton={{ icon: <IoAttach /> }}
-  voiceButton={{ icon: <IoMic /> }}
-  closeIcon={<IoClose />}
-  enableMediaUpload
-  enableVoiceInput
-/>
+<ChatInput sendButton={{ icon: <IoArrowUp /> }} mediaButton={{ icon: <IoAttach /> }} voiceButton={{ icon: <IoMic /> }} closeIcon={<IoClose />} enableMediaUpload enableVoiceInput />;
 ```
 
 ### Message Icons (Read Status)
@@ -237,13 +222,13 @@ import { Message } from 'easy-chat';
 import { MdCheck, MdDoneAll } from 'react-icons/md';
 
 <Message
-  content="Hello!"
-  sender="user"
+  content='Hello!'
+  sender='user'
   showReadStatus
   isRead={true}
-  sentIcon={<MdCheck />}     // Single checkmark (sent)
-  readIcon={<MdDoneAll />}    // Double checkmark (read)
-/>
+  sentIcon={<MdCheck />} // Single checkmark (sent)
+  readIcon={<MdDoneAll />} // Double checkmark (read)
+/>;
 ```
 
 ### Chat Component Icons
@@ -272,7 +257,7 @@ import { MdContentCopy, MdEdit, MdDelete, MdCheck, MdDoneAll } from 'react-icons
   // Message read status icons
   sentIcon={<MdCheck />}
   readIcon={<MdDoneAll />}
-/>
+/>;
 ```
 
 ### Why Icons as Props?

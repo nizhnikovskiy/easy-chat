@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Message from '@/components/message/Message';
-import AssistantMessage from '@/components/message/AssistantMessage';
+import Message from '../message/Message';
+import AssistantMessage from '../message/AssistantMessage';
 
 /**
  * ChatInputSkeleton (Internal)
@@ -37,20 +37,20 @@ interface ChatSkeletonProps {
 
 /**
  * ChatSkeleton - Loading placeholder for chat interface
- * 
+ *
  * @component
- * 
+ *
  * ## Key Behaviors
  * - Every 3rd message is user message (i % 3 === 0)
  * - Every 4th message is plain AssistantMessage if `mixedTypes={true}` (i % 4 === 1)
  * - Random widths (50-90%) for realistic skeleton text lines
  * - Uses CSS `animate-pulse` for shimmer
- * 
+ *
  * ## Theming Variables
  * - `--chat-skeleton-bg` / `--chat-skeleton-bg-dark`
  * - `--chat-skeleton-shimmer` / `--chat-skeleton-shimmer-dark`
  * - Also uses message background colors for bubble skeletons
- * 
+ *
  * @example
  * ```tsx
  * {isLoading ? (

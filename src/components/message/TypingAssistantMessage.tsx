@@ -1,14 +1,14 @@
 import { FC, useState, useEffect, useRef } from 'react';
 import AssistantMessage from './AssistantMessage';
-import { TypingAssistantMessageProps } from '@/types/message';
-import { getFormattedTextAtPosition, getPlainTextLength } from '@/utils/formatText';
+import { TypingAssistantMessageProps } from '../../types/message';
+import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/formatText';
 
 /**
  * TypingAssistantMessage - AssistantMessage with typing animation
- * 
+ *
  * Combines plain-text ChatGPT style with character-by-character animation.
  * Same animation logic as TypingMessage but renders via AssistantMessage.
- * 
+ *
  * @example
  * ```tsx
  * <TypingAssistantMessage

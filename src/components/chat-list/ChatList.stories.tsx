@@ -4,7 +4,7 @@ import { ChatList } from './index';
 import Chat from '@/components/chat/Chat';
 import type { ChatListItemData } from '@/types/chat-list';
 import type { ChatHistoryMessage } from '@/types/chat';
-import { MessageRole } from '@/types/chat';
+
 import avatar1 from '@/assets/images/avatars/avatar-1.webp';
 import avatar2 from '@/assets/images/avatars/avatar-2.webp';
 import avatar3 from '@/assets/images/avatars/avatar-3.webp';
@@ -52,25 +52,25 @@ const sampleMessages: Record<string, ChatHistoryMessage[]> = {
   '1': [
     {
       content: 'Hi Alice! How are you?',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: "I'm great! Thanks for asking. How about you?",
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Doing well! Are we still on for tomorrow?',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'See you tomorrow!',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -78,13 +78,13 @@ const sampleMessages: Record<string, ChatHistoryMessage[]> = {
   '2': [
     {
       content: 'Hey Bob, I sent you the documentation.',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Thanks for your help!',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -92,13 +92,13 @@ const sampleMessages: Record<string, ChatHistoryMessage[]> = {
   '3': [
     {
       content: 'Hi Carol!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Can we schedule a meeting?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -339,7 +339,7 @@ export const CombinedWithChatLeftExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -350,7 +350,7 @@ export const CombinedWithChatLeftExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -391,7 +391,7 @@ export const CombinedWithChatRightExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -402,7 +402,7 @@ export const CombinedWithChatRightExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -477,7 +477,7 @@ export const DarkThemeCombinedWithChat: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -488,7 +488,7 @@ export const DarkThemeCombinedWithChat: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };

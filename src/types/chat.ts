@@ -1,8 +1,4 @@
-export enum MessageRole {
-  USER = 'user',
-  ASSISTANT = 'assistant',
-  TEACHER = 'teacher',
-}
+export type MessageRole = 'user' | 'assistant' | 'teacher';
 
 export interface BaseMessage {
   content: string;
@@ -13,17 +9,17 @@ export interface BaseMessage {
 }
 
 export interface UserMessage extends BaseMessage {
-  role: MessageRole.USER;
+  role: 'user';
 }
 
 export interface AssistantMessage extends BaseMessage {
-  role: MessageRole.ASSISTANT;
+  role: 'assistant';
   isSubMessage?: boolean;
   remainingContent?: string[];
 }
 
 export interface TeacherMessage extends BaseMessage {
-  role: MessageRole.TEACHER;
+  role: 'teacher';
   isSubMessage?: boolean;
 }
 

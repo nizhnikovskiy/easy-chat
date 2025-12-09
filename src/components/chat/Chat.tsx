@@ -1,10 +1,10 @@
 import { FC, useState, useEffect, ReactElement } from 'react';
-import type { ChatHistoryItem, ChatHistoryMessage, MessageRole } from '@/types/chat';
-import type { ContextMenuConfig, ContextMenuItem } from '@/types/context-menu';
-import ChatInput from '@/components/chat-input';
-import { Message, TypingMessage } from '@/components/message';
-import DateSeparator from '@/components/date-separator';
-import '@/styles/Chat.animations.css';
+import type { ChatHistoryItem, ChatHistoryMessage } from '../../types/chat';
+import type { ContextMenuConfig, ContextMenuItem } from '../../types/context-menu';
+import ChatInput from '../chat-input';
+import { Message, TypingMessage } from '../message';
+import DateSeparator from '../date-separator';
+import '../../styles/Chat.animations.css';
 
 // Mock useReflection hook for standalone usage
 const useReflection = () => {
@@ -14,22 +14,22 @@ const useReflection = () => {
 
 /**
  * Chat - Main chat interface
- * 
+ *
  * @component
- * 
+ *
  * ## Key Behaviors
  * - Last received message shows typing animation (controlled by `initialMessageCount`)
  * - New messages after mount get slide-in animations
  * - Auto-scrolls to bottom on new messages
  * - Context menu items default to copy/edit/delete for user messages, copy-only for others
- * 
+ *
  * ## Theming Variables
  * - `--chat-message-user-bg` / `--chat-message-user-bg-dark`
  * - `--chat-message-user-text` / `--chat-message-user-text-dark`
  * - `--chat-message-other-bg` / `--chat-message-other-bg-dark`
  * - `--chat-message-other-text` / `--chat-message-other-text-dark`
  * - See THEMING.md for complete list
- * 
+ *
  * @example
  * ```tsx
  * <Chat
@@ -173,16 +173,19 @@ const Chat: FC<ChatProps> = ({
     if ('type' in msg && msg.type === 'date') return false;
     // Now we know msg is ChatHistoryMessage
     const historyMsg = msg as ChatHistoryMessage;
-    return historyMsg.role !== ('user' as MessageRole) && !historyMsg.isTypingComplete;
+    return historyMsg.role !== 'user' && !historyMsg.isTypingComplete;
   };
 
-  const bgStyle = backgroundImage || backgroundImageDark ? {
-    backgroundImage: `url("${theme === 'dark' && backgroundImageDark ? backgroundImageDark : backgroundImage}")`,
-    backgroundRepeat: 'repeat',
-    width: '100%',
-    height: '100%',
-    backgroundSize: 'cover',
-  } : {};
+  const bgStyle =
+    backgroundImage || backgroundImageDark
+      ? {
+          backgroundImage: `url("${theme === 'dark' && backgroundImageDark ? backgroundImageDark : backgroundImage}")`,
+          backgroundRepeat: 'repeat',
+          width: '100%',
+          height: '100%',
+          backgroundSize: 'cover',
+        }
+      : {};
 
   const handleImageUpload = (file: File | null) => {
     setSelectedImage(file);
@@ -220,7 +223,7 @@ const Chat: FC<ChatProps> = ({
 
               // Type guard: now TypeScript knows msg is ChatHistoryMessage
               const historyMsg = msg as ChatHistoryMessage;
-              const isUser = historyMsg.role === ('user' as MessageRole);
+              const isUser = historyMsg.role === 'user';
               const sender = isUser ? 'user' : 'other';
               const shouldUseTyping = isLastReceivedMessage(index);
 

@@ -27,13 +27,7 @@ export const Basic: Story = () => {
 
   return (
     <div style={bgStyle} className='h-screen flex flex-col justify-end'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={handleSend} 
-        placeholder='Type a message...'
-        sendButton={{ icon: <IoArrowUp /> }}
-      />
+      <ChatInput value={message} onChange={setMessage} onSend={handleSend} placeholder='Type a message...' sendButton={{ icon: <IoArrowUp /> }} />
     </div>
   );
 };
@@ -355,15 +349,7 @@ export const WithCharacterCounter: Story = () => {
 
   return (
     <div style={bgStyle} className='h-screen flex flex-col justify-end'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={handleSend} 
-        placeholder='Type a message (max 280 chars)...' 
-        maxLength={280} 
-        showCharacterCount
-        sendButton={{ icon: <IoArrowUp /> }}
-      />
+      <ChatInput value={message} onChange={setMessage} onSend={handleSend} placeholder='Type a message (max 280 chars)...' maxLength={280} showCharacterCount sendButton={{ icon: <IoArrowUp /> }} />
     </div>
   );
 };
@@ -378,13 +364,13 @@ export const WithCharacterCounterDark: Story = () => {
 
   return (
     <div style={bgStyleDark} className='h-screen flex flex-col justify-end bg-gray-900'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={handleSend} 
-        placeholder='Type a message (max 280 chars)...' 
-        maxLength={280} 
-        showCharacterCount 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Type a message (max 280 chars)...'
+        maxLength={280}
+        showCharacterCount
         theme='dark'
         sendButton={{ icon: <IoArrowUp /> }}
       />
@@ -399,12 +385,12 @@ export const LoadingState: Story = () => {
 
   return (
     <div style={bgStyle} className='h-screen flex flex-col justify-end'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={() => {}} 
-        placeholder='Loading...' 
-        isLoading 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={() => {}}
+        placeholder='Loading...'
+        isLoading
         enableMediaUpload
         mediaButton={{ icon: <IoAttach /> }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -419,13 +405,13 @@ export const LoadingStateDark: Story = () => {
 
   return (
     <div style={bgStyleDark} className='h-screen flex flex-col justify-end bg-gray-900'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={() => {}} 
-        placeholder='Loading...' 
-        isLoading 
-        enableMediaUpload 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={() => {}}
+        placeholder='Loading...'
+        isLoading
+        enableMediaUpload
         theme='dark'
         mediaButton={{ icon: <IoAttach /> }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -442,12 +428,12 @@ export const DisabledState: Story = () => {
 
   return (
     <div style={bgStyle} className='h-screen flex flex-col justify-end'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={() => {}} 
-        placeholder='Disabled input...' 
-        disabled 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={() => {}}
+        placeholder='Disabled input...'
+        disabled
         enableMediaUpload
         mediaButton={{ icon: <IoAttach /> }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -462,13 +448,13 @@ export const DisabledStateDark: Story = () => {
 
   return (
     <div style={bgStyleDark} className='h-screen flex flex-col justify-end bg-gray-900'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={() => {}} 
-        placeholder='Disabled input...' 
-        disabled 
-        enableMediaUpload 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={() => {}}
+        placeholder='Disabled input...'
+        disabled
+        enableMediaUpload
         theme='dark'
         mediaButton={{ icon: <IoAttach /> }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -524,13 +510,13 @@ export const AutoGrowTextarea: Story = () => {
 
   return (
     <div style={bgStyle} className='h-screen flex flex-col justify-end'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={handleSend} 
-        placeholder='Type multiple lines...' 
-        autoGrow 
-        maxRows={8} 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Type multiple lines...'
+        autoGrow
+        maxRows={8}
         enableMediaUpload
         mediaButton={{ icon: <IoAttach /> }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -550,14 +536,14 @@ export const AutoGrowTextareaDark: Story = () => {
 
   return (
     <div style={bgStyleDark} className='h-screen flex flex-col justify-end bg-gray-900'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={handleSend} 
-        placeholder='Type multiple lines...' 
-        autoGrow 
-        maxRows={8} 
-        enableMediaUpload 
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Type multiple lines...'
+        autoGrow
+        maxRows={8}
+        enableMediaUpload
         theme='dark'
         mediaButton={{ icon: <IoAttach /> }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -581,14 +567,7 @@ export const DarkThemeBasic: Story = () => {
 
   return (
     <div style={bgStyleDark} className='h-screen flex flex-col justify-end bg-gray-900'>
-      <ChatInput 
-        value={message} 
-        onChange={setMessage} 
-        onSend={handleSend} 
-        placeholder='Type a message...' 
-        theme='dark'
-        sendButton={{ icon: <IoArrowUp /> }}
-      />
+      <ChatInput value={message} onChange={setMessage} onSend={handleSend} placeholder='Type a message...' theme='dark' sendButton={{ icon: <IoArrowUp /> }} />
     </div>
   );
 };
@@ -656,12 +635,12 @@ export const ThemeComparison: Story = () => {
       <div>
         <div className='text-center font-bold py-2 bg-white border-b'>Light Theme</div>
         <div style={bgStyle} className='h-[calc(100vh-40px)] flex flex-col justify-end'>
-          <ChatInput 
-            value={message} 
-            onChange={setMessage} 
-            onSend={handleSend} 
-            placeholder='Type a message...' 
-            enableMediaUpload 
+          <ChatInput
+            value={message}
+            onChange={setMessage}
+            onSend={handleSend}
+            placeholder='Type a message...'
+            enableMediaUpload
             theme='light'
             mediaButton={{ icon: <IoAttach /> }}
             sendButton={{ icon: <IoArrowUp /> }}
@@ -672,12 +651,12 @@ export const ThemeComparison: Story = () => {
       <div>
         <div className='text-center font-bold py-2 bg-gray-800 text-white border-b border-gray-700'>Dark Theme</div>
         <div style={bgStyleDark} className='h-[calc(100vh-40px)] flex flex-col justify-end bg-gray-900'>
-          <ChatInput 
-            value={message} 
-            onChange={setMessage} 
-            onSend={handleSend} 
-            placeholder='Type a message...' 
-            enableMediaUpload 
+          <ChatInput
+            value={message}
+            onChange={setMessage}
+            onSend={handleSend}
+            placeholder='Type a message...'
+            enableMediaUpload
             theme='dark'
             mediaButton={{ icon: <IoAttach /> }}
             sendButton={{ icon: <IoArrowUp /> }}

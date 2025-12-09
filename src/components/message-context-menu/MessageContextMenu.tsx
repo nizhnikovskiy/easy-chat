@@ -1,30 +1,30 @@
 import { FC, useEffect, useRef, useCallback, useState } from 'react';
-import { MessageContextMenuProps } from '@/types/context-menu';
+import { MessageContextMenuProps } from '../../types/context-menu';
 
 /**
  * MessageContextMenu - ChatGPT-style context menu
- * 
+ *
  * @component
- * 
+ *
  * ## Smart Positioning
  * - Aligns to message bubble based on `sender` (user: left, other: right)
  * - Positions below/above bubble with 8px gap
  * - Slides up if in lower half of viewport for better UX
  * - Stays within viewport bounds (adjusts x/y if needed)
- * 
+ *
  * ## Interactions
  * - Click outside or ESC to close
  * - 10ms delay before click-outside listener (prevents immediate close)
  * - Backdrop with blur effect
  * - Slide-down/up animation with bounce (300ms)
- * 
+ *
  * ## Theming Variables
  * - `--chat-menu-bg` / `--chat-menu-bg-dark`
  * - `--chat-menu-border` / `--chat-menu-border-dark`
  * - `--chat-menu-text` / `--chat-menu-text-dark`
  * - `--chat-menu-hover-bg` / `--chat-menu-hover-bg-dark`
  * - `--chat-button-disabled-text`
- * 
+ *
  * @example
  * ```tsx
  * <MessageContextMenu

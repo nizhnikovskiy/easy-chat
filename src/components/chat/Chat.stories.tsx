@@ -3,7 +3,7 @@ import type { Story } from '@ladle/react';
 import Chat from './Chat';
 import ChatInput from '@/components/chat-input';
 import ChatSkeleton from '@/components/chat-skeleton';
-import { ChatHistoryMessage, MessageRole } from '@/types/chat';
+import { ChatHistoryMessage } from '@/types/chat';
 import { MdBookmark, MdShare, MdContentCopy, MdEdit, MdDelete, MdCheck, MdDoneAll } from 'react-icons/md';
 import { IoArrowUp, IoMic, IoAttach, IoClose } from 'react-icons/io5';
 import { ContextMenuItem } from '@/types/context-menu';
@@ -34,19 +34,19 @@ export const DefaultExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! How can I help you?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hi! Tell me about your capabilities.',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'I can help you with various questions, answer inquiries, and provide information. How can I be useful?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -58,7 +58,7 @@ export const DefaultExample: Story = () => {
     // Add user message
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -70,7 +70,7 @@ export const DefaultExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `You said: "${message}". This is a test bot response.`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true, // No typing effect in default story
         isLoading: false,
       };
@@ -94,13 +94,13 @@ export const WithPendingMessageExample: Story = () => {
   const [messages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! How can I help you?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hello!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -122,19 +122,19 @@ export const CompletedHistoryExample: Story = () => {
   const [messages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hello! How are you doing?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'All good, thank you!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -160,7 +160,7 @@ export const EmptyChatExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -171,7 +171,7 @@ export const EmptyChatExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -195,7 +195,7 @@ export const WithTypingEffectExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! Show me the typing effect.',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -208,7 +208,7 @@ export const WithTypingEffectExample: Story = () => {
       const typingMessage: ChatHistoryMessage = {
         content:
           'Hello! Nice to see you! This is a demonstration of the message typing effect. Notice how the text appears character by character, creating a live conversation effect. This makes the interface more dynamic and pleasant for the user.',
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: false, // This triggers the typing animation
         isLoading: false,
       };
@@ -236,19 +236,19 @@ export const WithDateSeparatorsExample: Story = () => {
     },
     {
       content: 'Hi! How are things?',
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hello! All good, thank you! How about you?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: "Great too! What's new?",
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
@@ -258,19 +258,19 @@ export const WithDateSeparatorsExample: Story = () => {
     },
     {
       content: 'Good morning!',
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Good morning! How did you sleep?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Excellent! Thank you for asking.',
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
@@ -280,13 +280,13 @@ export const WithDateSeparatorsExample: Story = () => {
     },
     {
       content: 'Hello! Ready for a new day?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: "Yes, of course! Let's get started.",
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
@@ -308,7 +308,7 @@ export const WithNewMessageAnimationExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: "Hello! Now you'll see the animation of adding new messages.",
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -317,10 +317,10 @@ export const WithNewMessageAnimationExample: Story = () => {
 
   // Sample messages to add with animation
   const messagesToAdd = [
-    { content: 'This is cool!', role: MessageRole.USER },
-    { content: 'Yes, messages smoothly appear with animation!', role: MessageRole.ASSISTANT },
-    { content: 'I love the effect!', role: MessageRole.USER },
-    { content: 'Wonderful! Animation makes the interface more alive.', role: MessageRole.ASSISTANT },
+    { content: 'This is cool!', role: 'user' },
+    { content: 'Yes, messages smoothly appear with animation!', role: 'assistant' },
+    { content: 'I love the effect!', role: 'user' },
+    { content: 'Wonderful! Animation makes the interface more alive.', role: 'assistant' },
   ];
 
   useEffect(() => {
@@ -329,7 +329,7 @@ export const WithNewMessageAnimationExample: Story = () => {
       if (messageIndex < messagesToAdd.length) {
         const newMessage: ChatHistoryMessage = {
           content: messagesToAdd[messageIndex].content,
-          role: messagesToAdd[messageIndex].role as MessageRole,
+          role: messagesToAdd[messageIndex].role as 'user' | 'assistant',
           isTypingComplete: true,
           isLoading: false,
         };
@@ -363,19 +363,19 @@ export const WithCustomBackgroundExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! How do you like this custom background?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hi! Looks great!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Glad you like it. Custom background makes the chat unique and pleasant.',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -386,7 +386,7 @@ export const WithCustomBackgroundExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -397,7 +397,7 @@ export const WithCustomBackgroundExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -409,7 +409,15 @@ export const WithCustomBackgroundExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} backgroundImage={chatBgAltImage} {...chatIconProps} />
+        <Chat
+          messages={messages}
+          isPending={isPending}
+          onSendMessage={handleSendMessage}
+          messagesEndRef={messagesEndRef}
+          isHistoryCompleted={false}
+          backgroundImage={chatBgAltImage}
+          {...chatIconProps}
+        />
       </div>
     </MockReflectionProvider>
   );
@@ -476,25 +484,25 @@ export const WithContextMenuEnabledExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! Try right-clicking on messages to see the context menu.',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Wow, this is amazing!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'You can copy, edit, or delete messages using the context menu.',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Let me try this feature!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -505,7 +513,7 @@ export const WithContextMenuEnabledExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -516,7 +524,7 @@ export const WithContextMenuEnabledExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -559,13 +567,13 @@ export const WithCustomContextMenuItemsExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! Right-click to see custom context menu items.',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'These menu items are customizable!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -576,7 +584,7 @@ export const WithCustomContextMenuItemsExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -587,7 +595,7 @@ export const WithCustomContextMenuItemsExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -643,13 +651,13 @@ export const WithContextMenuDisabledExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Context menu is disabled in this story. Try right-clicking on messages.',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Nothing happens when I right-click!',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -660,7 +668,7 @@ export const WithContextMenuDisabledExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -671,7 +679,7 @@ export const WithContextMenuDisabledExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `Response to: "${message}"`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -683,7 +691,15 @@ export const WithContextMenuDisabledExample: Story = () => {
   return (
     <MockReflectionProvider>
       <div style={{ height: '100vh', width: '100%' }}>
-        <Chat messages={messages} isPending={isPending} onSendMessage={handleSendMessage} messagesEndRef={messagesEndRef} isHistoryCompleted={false} contextMenuConfig={{ enabled: false }} {...chatIconProps} />
+        <Chat
+          messages={messages}
+          isPending={isPending}
+          onSendMessage={handleSendMessage}
+          messagesEndRef={messagesEndRef}
+          isHistoryCompleted={false}
+          contextMenuConfig={{ enabled: false }}
+          {...chatIconProps}
+        />
       </div>
     </MockReflectionProvider>
   );
@@ -697,19 +713,19 @@ export const DarkThemeDefaultExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! How can I help you?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hi! Tell me about your capabilities.',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'I can help you with various questions, answer inquiries, and provide information. How can I be useful?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
@@ -720,7 +736,7 @@ export const DarkThemeDefaultExample: Story = () => {
   const handleSendMessage = (message: string, image?: File) => {
     const userMessage: ChatHistoryMessage = {
       content: message,
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
       image: image ? URL.createObjectURL(image) : undefined,
@@ -731,7 +747,7 @@ export const DarkThemeDefaultExample: Story = () => {
     setTimeout(() => {
       const botMessage: ChatHistoryMessage = {
         content: `You said: "${message}". This is a test bot response in dark theme.`,
-        role: MessageRole.ASSISTANT,
+        role: 'assistant',
         isTypingComplete: true,
         isLoading: false,
       };
@@ -759,13 +775,13 @@ export const DarkThemeWithDateSeparatorsExample: Story = () => {
     },
     {
       content: 'Hi! How are things?',
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hello! All good, thank you! How about you?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant' as const,
       isTypingComplete: true,
       isLoading: false,
     },
@@ -775,13 +791,13 @@ export const DarkThemeWithDateSeparatorsExample: Story = () => {
     },
     {
       content: 'Hello! Ready for a new day?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant' as const,
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: "Yes, of course! Let's get started.",
-      role: MessageRole.USER,
+      role: 'user' as const,
       isTypingComplete: true,
       isLoading: false,
     },
@@ -803,19 +819,19 @@ export const ThemeComparisonExample: Story = () => {
   const [messages] = useState<ChatHistoryMessage[]>([
     {
       content: 'Hello! How can I help you?',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Hi! This is a comparison of light and dark themes.',
-      role: MessageRole.USER,
+      role: 'user',
       isTypingComplete: true,
       isLoading: false,
     },
     {
       content: 'Great! You can see the difference side by side.',
-      role: MessageRole.ASSISTANT,
+      role: 'assistant',
       isTypingComplete: true,
       isLoading: false,
     },

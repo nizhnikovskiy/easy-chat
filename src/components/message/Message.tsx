@@ -1,13 +1,13 @@
 import { FC, useState, useRef, cloneElement } from 'react';
-import { MessageProps } from '@/types/message';
-import MessageContextMenu from '@/components/message-context-menu';
-import { formatText } from '@/utils/formatText';
+import { MessageProps } from '../../types/message';
+import MessageContextMenu from '../message-context-menu';
+import { formatText } from '../../utils/formatText';
 
 /**
  * Message - Telegram/WhatsApp-style message bubble
- * 
+ *
  * @component
- * 
+ *
  * ## Key Behaviors
  * - User messages: right-aligned, other messages: left-aligned
  * - Bubble tail removed for grouped messages (first/middle positions)
@@ -15,21 +15,21 @@ import { formatText } from '@/utils/formatText';
  * - Context menu: right-click (desktop) or 500ms long-press (mobile)
  * - Long-press cancelled if finger moves >10px
  * - Text formatting via `formatText` utility (supports bold, italic, code, links)
- * 
+ *
  * ## Message Grouping
  * Use `groupPosition` to group consecutive messages:
  * - `standalone`: Full spacing + avatar + tail (default)
  * - `first`: Shows avatar/username, no tail
  * - `middle`: No avatar, no tail, minimal spacing
  * - `last`: Shows avatar + tail, no username
- * 
+ *
  * ## Theming Variables
  * - `--chat-message-user-bg` / `--chat-message-user-bg-dark`
  * - `--chat-message-user-text` / `--chat-message-user-text-dark`
  * - `--chat-message-other-bg` / `--chat-message-other-bg-dark`
  * - `--chat-message-other-text` / `--chat-message-other-text-dark`
  * - `--chat-username-text` / `--chat-avatar-text` / `--chat-skeleton-bg`
- * 
+ *
  * @example
  * ```tsx
  * <Message
@@ -86,9 +86,13 @@ const Message: FC<MessageProps> = ({
   const shouldShowTail = isStandaloneOrLast;
 
   // Bubble styling based on sender and theme using CSS variables
-  const bubbleColorClass = isUser 
-    ? (theme === 'dark' ? 'bg-message-user-bg-dark text-message-user-text-dark' : 'bg-message-user-bg text-message-user-text')
-    : (theme === 'dark' ? 'bg-message-other-bg-dark text-message-other-text-dark' : 'bg-message-other-bg text-message-other-text');
+  const bubbleColorClass = isUser
+    ? theme === 'dark'
+      ? 'bg-message-user-bg-dark text-message-user-text-dark'
+      : 'bg-message-user-bg text-message-user-text'
+    : theme === 'dark'
+    ? 'bg-message-other-bg-dark text-message-other-text-dark'
+    : 'bg-message-other-bg text-message-other-text';
 
   const tailPosition = shouldShowTail ? (isUser ? 'rounded-br-none' : 'rounded-bl-none') : '';
 
@@ -117,9 +121,7 @@ const Message: FC<MessageProps> = ({
 
   // Render skeleton if loading
   if (isLoading) {
-    const skeletonBubbleColor = isUser 
-      ? (theme === 'dark' ? 'bg-message-user-bg-dark' : 'bg-message-user-bg')
-      : (theme === 'dark' ? 'bg-skeleton-bg-dark' : 'bg-skeleton-bg');
+    const skeletonBubbleColor = isUser ? (theme === 'dark' ? 'bg-message-user-bg-dark' : 'bg-message-user-bg') : theme === 'dark' ? 'bg-skeleton-bg-dark' : 'bg-skeleton-bg';
     const skeletonAvatarColor = theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer';
 
     return (
@@ -134,14 +136,8 @@ const Message: FC<MessageProps> = ({
             {/* Skeleton bubble */}
             <div className={`w-64 px-4 py-2 rounded-2xl ${skeletonBubbleColor} ${tailPosition}`}>
               <div className='space-y-2'>
-                <div
-                  className={`h-4 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`}
-                  style={{ width: randomWidth1 }}
-                />
-                <div
-                  className={`h-4 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`}
-                  style={{ width: randomWidth2 }}
-                />
+                <div className={`h-4 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`} style={{ width: randomWidth1 }} />
+                <div className={`h-4 ${theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer'} opacity-50 rounded`} style={{ width: randomWidth2 }} />
               </div>
             </div>
           </div>
@@ -249,7 +245,15 @@ const Message: FC<MessageProps> = ({
                 >
                   {showTimestamp && timestamp && (
                     <time
-                      className={`text-xs ${isUser ? (theme === 'dark' ? 'text-message-user-timestamp-dark' : 'text-message-user-timestamp') : theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp'}`}
+                      className={`text-xs ${
+                        isUser
+                          ? theme === 'dark'
+                            ? 'text-message-user-timestamp-dark'
+                            : 'text-message-user-timestamp'
+                          : theme === 'dark'
+                          ? 'text-message-other-timestamp-dark'
+                          : 'text-message-other-timestamp'
+                      }`}
                       dateTime={timestamp}
                       aria-label={`Sent at ${timestamp}`}
                     >
@@ -258,17 +262,29 @@ const Message: FC<MessageProps> = ({
                   )}
                   {showReadStatus && (
                     <div className='flex items-center' aria-label={isRead ? 'Read' : 'Sent'} title={isRead ? 'Read' : 'Sent'}>
-                      {isRead && readIcon ? (
-                        cloneElement(readIcon, { 
-                          className: isUser ? (theme === 'dark' ? 'text-message-user-timestamp-dark' : 'text-message-user-timestamp') : theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
-                          size: 16 
-                        } as any)
-                      ) : !isRead && sentIcon ? (
-                        cloneElement(sentIcon, { 
-                          className: isUser ? (theme === 'dark' ? 'text-message-user-timestamp-dark' : 'text-message-user-timestamp') : theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
-                          size: 16 
-                        } as any)
-                      ) : null}
+                      {isRead && readIcon
+                        ? cloneElement(readIcon, {
+                            className: isUser
+                              ? theme === 'dark'
+                                ? 'text-message-user-timestamp-dark'
+                                : 'text-message-user-timestamp'
+                              : theme === 'dark'
+                              ? 'text-message-other-timestamp-dark'
+                              : 'text-message-other-timestamp',
+                            size: 16,
+                          } as any)
+                        : !isRead && sentIcon
+                        ? cloneElement(sentIcon, {
+                            className: isUser
+                              ? theme === 'dark'
+                                ? 'text-message-user-timestamp-dark'
+                                : 'text-message-user-timestamp'
+                              : theme === 'dark'
+                              ? 'text-message-other-timestamp-dark'
+                              : 'text-message-other-timestamp',
+                            size: 16,
+                          } as any)
+                        : null}
                     </div>
                   )}
                 </div>

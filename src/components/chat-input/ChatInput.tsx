@@ -1,5 +1,5 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent, MouseEvent, cloneElement } from 'react';
-import type { ChatInputProps } from '@/types/chat-input';
+import type { ChatInputProps } from '../../types/chat-input';
 
 interface Ripple {
   x: number;
@@ -10,16 +10,16 @@ interface Ripple {
 
 /**
  * ChatInput - Auto-growing textarea with media upload and voice support
- * 
+ *
  * @component
- * 
+ *
  * ## Key Behaviors
  * - Enter: new line, Ctrl/Cmd+Enter: send message
  * - Auto-grows up to `maxRows` (default: 10)
  * - Send button replaces voice button when text/media present
  * - Ripple effect on send button click
  * - Multi-line detection at ~52px height threshold
- * 
+ *
  * ## Theming Variables
  * - `--chat-input-bg` / `--chat-input-bg-dark`
  * - `--chat-input-text` / `--chat-input-text-dark`
@@ -27,7 +27,7 @@ interface Ripple {
  * - `--chat-input-border-focus`
  * - `--chat-button-primary-bg` / `--chat-button-primary-bg-hover`
  * - See THEMING.md for complete list
- * 
+ *
  * @example
  * ```tsx
  * <ChatInput
@@ -244,7 +244,11 @@ const ChatInput: FC<ChatInputProps> = ({
       {/* Media preview */}
       {selectedMedia && mediaPreview && (
         <div className='relative inline-block mb-2'>
-          <img src={mediaPreview} alt='Selected media preview' className={`w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border ${theme === 'dark' ? 'border-input-border-dark' : 'border-input-border'}`} />
+          <img
+            src={mediaPreview}
+            alt='Selected media preview'
+            className={`w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border ${theme === 'dark' ? 'border-input-border-dark' : 'border-input-border'}`}
+          />
           <button
             onClick={handleRemoveMedia}
             className='absolute -top-2 -right-2 min-w-[28px] min-h-[28px] w-7 h-7 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors'
@@ -282,7 +286,9 @@ const ChatInput: FC<ChatInputProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 disabled={disabled || isLoading || mediaButton?.disabled}
                 className={`absolute left-2 bottom-1.5 p-2 ${
-                  theme === 'dark' ? 'text-input-placeholder-dark border-input-border-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark' : 'text-input-placeholder border-input-border hover:text-input-text hover:bg-menu-hover-bg'
+                  theme === 'dark'
+                    ? 'text-input-placeholder-dark border-input-border-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark'
+                    : 'text-input-placeholder border-input-border hover:text-input-text hover:bg-menu-hover-bg'
                 } rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed border hover:border-transparent ${mediaButton?.className || ''}`}
                 type='button'
                 aria-label={mediaAriaLabel}
@@ -305,7 +311,9 @@ const ChatInput: FC<ChatInputProps> = ({
           autoFocus={autoFocus}
           rows={1}
           className={`block w-full px-4 py-3 bg-transparent border-0 resize-none focus:outline-none ${
-            theme === 'dark' ? 'text-input-text-dark placeholder:text-input-placeholder-dark disabled:text-input-placeholder-dark/60' : 'text-input-text placeholder:text-input-placeholder disabled:text-input-placeholder/60'
+            theme === 'dark'
+              ? 'text-input-text-dark placeholder:text-input-placeholder-dark disabled:text-input-placeholder-dark/60'
+              : 'text-input-text placeholder:text-input-placeholder disabled:text-input-placeholder/60'
           } text-base min-h-11 ${enableMediaUpload ? 'pl-14' : ''} ${!enableVoiceInput || internalValue.trim() || selectedMedia ? 'pr-14' : 'pr-4'} ${inputClassName}`}
           style={{
             maxHeight: `${24 * maxRows}px`,
@@ -318,7 +326,11 @@ const ChatInput: FC<ChatInputProps> = ({
 
         {/* Character counter */}
         {showCharacterCount && maxLength && (
-          <span className={`absolute right-14 bottom-3 text-xs ${theme === 'dark' ? 'text-input-placeholder-dark' : 'text-input-placeholder'} pointer-events-none`} aria-live='polite' aria-atomic='true'>
+          <span
+            className={`absolute right-14 bottom-3 text-xs ${theme === 'dark' ? 'text-input-placeholder-dark' : 'text-input-placeholder'} pointer-events-none`}
+            aria-live='polite'
+            aria-atomic='true'
+          >
             {internalValue.length}/{maxLength}
           </span>
         )}
@@ -335,7 +347,9 @@ const ChatInput: FC<ChatInputProps> = ({
                 onTouchEnd={voiceButton?.onStopRecording}
                 disabled={disabled || isLoading || voiceButton?.disabled}
                 className={`absolute right-2 bottom-1/2 translate-y-1/2 p-2 ${
-                  theme === 'dark' ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark border-input-border-dark' : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg border-input-border'
+                  theme === 'dark'
+                    ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark border-input-border-dark'
+                    : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg border-input-border'
                 } rounded-full select-none transition-all border disabled:cursor-not-allowed ${voiceButton?.className || ''}`}
                 type='button'
                 aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}

@@ -4,22 +4,22 @@ import MessageContextMenu from '@/components/message-context-menu';
 
 /**
  * AssistantMessage - ChatGPT-style plain text message (no bubble)
- * 
+ *
  * @component
- * 
+ *
  * ## Key Differences from Message
  * - No bubble background (plain text only)
  * - Always left-aligned
  * - Action buttons below message instead of context menu
  * - Timestamp/status inline at end of text (not in bubble corner)
- * 
+ *
  * ## Theming Variables
  * - `--chat-message-other-text` / `--chat-message-other-text-dark`
  * - `--chat-message-other-timestamp` / `--chat-message-other-timestamp-dark`
  * - `--chat-username-text` / `--chat-avatar-text`
  * - `--chat-menu-hover-bg` / `--chat-menu-hover-bg-dark` (for action buttons)
  * - `--chat-skeleton-bg` / `--chat-skeleton-shimmer` (loading state)
- * 
+ *
  * @example
  * ```tsx
  * <AssistantMessage
@@ -181,7 +181,13 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
             )}
 
             <div onContextMenu={handleContextMenu} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className='relative'>
-              <div className={['text-sm md:text-base leading-relaxed break-words', theme === 'dark' ? 'text-message-other-text-dark' : 'text-message-other-text', disableTextCopy ? 'select-none' : ''].join(' ')}>
+              <div
+                className={[
+                  'text-sm md:text-base leading-relaxed break-words',
+                  theme === 'dark' ? 'text-message-other-text-dark' : 'text-message-other-text',
+                  disableTextCopy ? 'select-none' : '',
+                ].join(' ')}
+              >
                 {content}
               </div>
 
@@ -195,17 +201,17 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
                   )}
                   {showReadStatus && (
                     <div className='flex items-center' aria-label={isRead ? 'Read' : 'Sent'} title={isRead ? 'Read' : 'Sent'}>
-                      {isRead && readIcon ? (
-                        cloneElement(readIcon, { 
-                          className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
-                          size: 16 
-                        } as any)
-                      ) : !isRead && sentIcon ? (
-                        cloneElement(sentIcon, { 
-                          className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
-                          size: 16 
-                        } as any)
-                      ) : null}
+                      {isRead && readIcon
+                        ? cloneElement(readIcon, {
+                            className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
+                            size: 16,
+                          } as any)
+                        : !isRead && sentIcon
+                        ? cloneElement(sentIcon, {
+                            className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
+                            size: 16,
+                          } as any)
+                        : null}
                     </div>
                   )}
                 </div>

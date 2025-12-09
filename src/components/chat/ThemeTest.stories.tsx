@@ -1,7 +1,7 @@
 import type { StoryDefault } from '@ladle/react';
 import { useState, useRef } from 'react';
 import Chat from './Chat';
-import { MessageRole, type ChatHistoryItem } from '@/types/chat';
+import type { ChatHistoryItem } from '@/types/chat';
 
 export default {
   title: 'Components / Theme Test',
@@ -9,25 +9,25 @@ export default {
 
 const mockMessages: ChatHistoryItem[] = [
   {
-    role: MessageRole.USER,
+    role: 'user',
     content: 'Hello! Testing user message colors.',
     isTypingComplete: true,
     isLoading: false,
   },
   {
-    role: MessageRole.ASSISTANT,
+    role: 'assistant',
     content: 'Hi! Testing assistant message colors.',
     isTypingComplete: true,
     isLoading: false,
   },
   {
-    role: MessageRole.USER,
+    role: 'user',
     content: 'This message should have custom colors if CSS variables are working.',
     isTypingComplete: true,
     isLoading: false,
   },
   {
-    role: MessageRole.ASSISTANT,
+    role: 'assistant',
     content: 'Yes, and this one too! The theme system uses CSS variables for complete customization.',
     isTypingComplete: true,
     isLoading: false,

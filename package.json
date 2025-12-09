@@ -1,6 +1,6 @@
 {
-  "name": "easy-chat",
-  "version": "0.1.0",
+  "name": "@nizhnikovskiy/easy-chat",
+  "version": "0.1.4",
   "description": "Lightweight and customizable React chat components library",
   "type": "module",
   "main": "./dist/easy-chat.cjs",
@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "ladle": "ladle serve",
-    "build": "npm run build:types && npm run build:lib",
+    "build": "npm run build:lib && npm run build:types",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:types": "tsc -p tsconfig.lib.json",
     "build:ladle": "ladle build --base /easy-chat/",
