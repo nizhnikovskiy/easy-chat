@@ -39,34 +39,42 @@ npm install react-icons
 
 ## Setup
 
-### 1. Import Styles
+Easy Chat uses Tailwind CSS for styling. You need to set up Tailwind in your project:
 
-Easy Chat comes with pre-compiled styles. Import them in your main entry file (e.g., `main.tsx` or `App.tsx`):
+1. Install Tailwind CSS if you haven't already:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init
+```
+
+2. Configure Tailwind to scan Easy Chat components in your `tailwind.config.js`:
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+    // Add this line to scan Easy Chat components
+    './node_modules/easy-chat/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+3. Import the Easy Chat CSS in your main file:
 
 ```tsx
 import '@nizhnikovskiy/easy-chat/styles';
 ```
 
-**That's it!** The library includes all necessary styles, including Tailwind CSS utilities and custom theme variables.
-
-### 2. (Optional) Customize Theme
-
-If you want to customize colors and appearance, override the CSS variables in your own stylesheet:
-
-```css
-/* your-app.css */
-:root {
-  --chat-message-user-bg: #8b5cf6; /* Purple user messages */
-  --chat-button-primary-bg: #8b5cf6;
-}
-```
-
-See the [Theming Guide](./THEMING.md) for all available variables.
-
 ## Quick Start
 
 ```tsx
-import 'easy-chat/styles'; // Import styles first
 import { Chat, Message, ChatInput } from 'easy-chat';
 import '@nizhnikovskiy/easy-chat/styles';
 import { IoArrowUp, IoAttach, IoClose } from 'react-icons/io5';
