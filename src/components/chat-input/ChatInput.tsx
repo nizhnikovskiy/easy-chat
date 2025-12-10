@@ -14,7 +14,8 @@ interface Ripple {
  * @component
  *
  * ## Key Behaviors
- * - Enter: new line, Ctrl/Cmd+Enter: send message
+ * - Enter: send message (desktop), new line (mobile)
+ * - Shift+Enter: new line (desktop)
  * - Auto-grows up to `maxRows` (default: 10)
  * - Send button replaces voice button when text/media present
  * - Ripple effect on send button click
@@ -162,12 +163,23 @@ const ChatInput: FC<ChatInputProps> = ({
 
   // Handle Enter key
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    // Only send on Ctrl+Enter or Cmd+Enter
-    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+    const isMobile = typeof navigator !== 'undefined' && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (e.key === 'Enter') {
+      // Mobile: Default behavior (new line)
+      if (isMobile) {
+        return;
+      }
+
+      // Desktop: Shift+Enter -> New line
+      if (e.shiftKey) {
+        return;
+      }
+
+      // Desktop: Enter -> Send
       e.preventDefault();
       handleSend();
     }
-    // Regular Enter key creates a new line (default textarea behavior)
   };
 
   // Handle media upload
