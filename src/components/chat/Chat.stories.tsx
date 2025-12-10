@@ -535,12 +535,10 @@ export const WithContextMenuEnabledExample: Story = () => {
 
   const handleEditMessage = (messageId: string, newContent: string) => {
     console.log('Edit message', messageId, newContent);
-    alert(`Message ${messageId} edited to: "${newContent}"`);
   };
 
   const handleDeleteMessage = (messageId: string) => {
     console.log('Delete message', messageId);
-    alert(`Message ${messageId} deleted`);
   };
 
   return (
@@ -611,7 +609,7 @@ export const WithCustomContextMenuItemsExample: Story = () => {
       label: 'Bookmark',
       icon: <MdBookmark size={16} />,
       onClick: (messageId) => {
-        alert(`Bookmarked message ${messageId}`);
+        console.log(`Bookmarked message ${messageId}`);
       },
     },
     {
@@ -619,7 +617,7 @@ export const WithCustomContextMenuItemsExample: Story = () => {
       label: 'Share',
       icon: <MdShare size={16} />,
       onClick: (messageId) => {
-        alert(`Share message ${messageId}`);
+        console.log(`Share message ${messageId}`);
       },
     },
   ];
@@ -637,8 +635,8 @@ export const WithCustomContextMenuItemsExample: Story = () => {
             enabled: true,
             customItems: customContextMenuItems,
           }}
-          onEditMessage={(id, content) => alert(`Edit ${id}: ${content}`)}
-          onDeleteMessage={(id) => alert(`Delete ${id}`)}
+          onEditMessage={(id, content) => console.log(`Edit ${id}: ${content}`)}
+          onDeleteMessage={(id) => console.log(`Delete ${id}`)}
         />
       </div>
     </MockReflectionProvider>

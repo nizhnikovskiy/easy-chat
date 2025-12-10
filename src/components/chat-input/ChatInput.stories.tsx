@@ -22,7 +22,6 @@ export const Basic: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -37,7 +36,6 @@ export const BasicDark: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -54,7 +52,6 @@ export const WithMediaUpload: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   return (
@@ -83,7 +80,6 @@ export const WithMediaUploadDark: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   return (
@@ -116,7 +112,6 @@ export const WithVoiceInput: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   const handleStartRecording = () => {
@@ -157,7 +152,6 @@ export const WithVoiceInputDark: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   const handleStartRecording = () => {
@@ -201,7 +195,6 @@ export const CompleteWithAllFeatures: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   const handleStartRecording = () => {
@@ -246,7 +239,6 @@ export const CompleteWithAllFeaturesDark: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   const handleStartRecording = () => {
@@ -289,7 +281,6 @@ export const WithCustomSendButton: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -315,7 +306,6 @@ export const WithCustomSendButtonDark: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -344,7 +334,6 @@ export const WithCharacterCounter: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -359,7 +348,6 @@ export const WithCharacterCounterDark: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -471,7 +459,6 @@ export const CustomStyling: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -505,7 +492,6 @@ export const AutoGrowTextarea: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -531,7 +517,6 @@ export const AutoGrowTextareaDark: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -563,7 +548,6 @@ export const ExtendedVariant: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   return (
@@ -617,7 +601,6 @@ export const ExtendedVariantDark: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   return (
@@ -673,7 +656,6 @@ export const DarkThemeBasic: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (
@@ -691,7 +673,6 @@ export const DarkThemeWithAllFeatures: Story = () => {
 
   const handleSend = (msg: string, media?: File) => {
     console.log('Message sent:', msg, 'Media:', media);
-    alert(`Sent: ${msg}${media ? ` with file: ${media.name}` : ''}`);
   };
 
   const handleStartRecording = () => {
@@ -738,7 +719,6 @@ export const ThemeComparison: Story = () => {
 
   const handleSend = (msg: string) => {
     console.log('Message sent:', msg);
-    alert(`Sent: ${msg}`);
   };
 
   return (

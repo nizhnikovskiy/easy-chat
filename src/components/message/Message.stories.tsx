@@ -26,7 +26,18 @@ export const ThemeComparison: Story = () => (
         <div className='space-y-4'>
           <Message content='Hello from light theme!' sender='user' showAvatar={true} theme='light' />
           <Message content='This is a response in light theme' sender='other' showAvatar={true} username='Assistant' showUsername={true} theme='light' />
-          <Message content='With timestamps and read status' sender='user' showAvatar={true} showTimestamp={true} timestamp='10:30' showReadStatus={true} isRead={true} theme='light' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
+          <Message
+            content='With timestamps and read status'
+            sender='user'
+            showAvatar={true}
+            showTimestamp={true}
+            timestamp='10:30'
+            showReadStatus={true}
+            isRead={true}
+            theme='light'
+            sentIcon={<MdCheck />}
+            readIcon={<MdDoneAll />}
+          />
         </div>
       </div>
     </div>
@@ -36,7 +47,18 @@ export const ThemeComparison: Story = () => (
         <div className='space-y-4'>
           <Message content='Hello from dark theme!' sender='user' showAvatar={true} theme='dark' />
           <Message content='This is a response in dark theme' sender='other' showAvatar={true} username='Assistant' showUsername={true} theme='dark' />
-          <Message content='With timestamps and read status' sender='user' showAvatar={true} showTimestamp={true} timestamp='10:30' showReadStatus={true} isRead={true} theme='dark' sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
+          <Message
+            content='With timestamps and read status'
+            sender='user'
+            showAvatar={true}
+            showTimestamp={true}
+            timestamp='10:30'
+            showReadStatus={true}
+            isRead={true}
+            theme='dark'
+            sentIcon={<MdCheck />}
+            readIcon={<MdDoneAll />}
+          />
         </div>
       </div>
     </div>
@@ -491,7 +513,6 @@ const createContextMenuItems = (): ContextMenuItem[] => [
     icon: <MdContentCopy size={16} />,
     onClick: (id) => {
       console.log(`Copy clicked for message: ${id}`);
-      alert(`Copied message ${id}`);
     },
   },
   {
@@ -500,7 +521,6 @@ const createContextMenuItems = (): ContextMenuItem[] => [
     icon: <MdEdit size={16} />,
     onClick: (id) => {
       console.log(`Edit clicked for message: ${id}`);
-      alert(`Edit message ${id}`);
     },
   },
   {
@@ -509,7 +529,6 @@ const createContextMenuItems = (): ContextMenuItem[] => [
     icon: <MdDelete size={16} />,
     onClick: (id) => {
       console.log(`Delete clicked for message: ${id}`);
-      alert(`Delete message ${id}`);
     },
     divider: true,
   },
@@ -519,7 +538,6 @@ const createContextMenuItems = (): ContextMenuItem[] => [
     icon: <MdSelectAll size={16} />,
     onClick: (id) => {
       console.log(`Select clicked for message: ${id}`);
-      alert(`Select text in message ${id}`);
     },
   },
 ];
@@ -547,28 +565,28 @@ export const WithCustomContextMenu: Story = () => {
       id: 'copy',
       label: 'Copy',
       icon: <MdContentCopy size={16} />,
-      onClick: (id) => alert(`Copied message ${id}`),
+      onClick: (id) => console.log(`Copied message ${id}`),
     },
     {
       id: 'translate',
       label: 'Translate',
-      onClick: (id) => alert(`Translate message ${id}`),
+      onClick: (id) => console.log(`Translate message ${id}`),
       divider: true,
     },
     {
       id: 'pin',
       label: 'Pin message',
-      onClick: (id) => alert(`Pinned message ${id}`),
+      onClick: (id) => console.log(`Pinned message ${id}`),
     },
     {
       id: 'forward',
       label: 'Forward',
-      onClick: (id) => alert(`Forward message ${id}`),
+      onClick: (id) => console.log(`Forward message ${id}`),
     },
     {
       id: 'report',
       label: 'Report',
-      onClick: (id) => alert(`Report message ${id}`),
+      onClick: (id) => console.log(`Report message ${id}`),
       className: 'text-red-600',
     },
   ];
@@ -588,28 +606,28 @@ export const WithCustomContextMenuDark: Story = () => {
       id: 'copy',
       label: 'Copy',
       icon: <MdContentCopy size={16} />,
-      onClick: (id) => alert(`Copied message ${id}`),
+      onClick: (id) => console.log(`Copied message ${id}`),
     },
     {
       id: 'translate',
       label: 'Translate',
-      onClick: (id) => alert(`Translate message ${id}`),
+      onClick: (id) => console.log(`Translate message ${id}`),
       divider: true,
     },
     {
       id: 'pin',
       label: 'Pin message',
-      onClick: (id) => alert(`Pinned message ${id}`),
+      onClick: (id) => console.log(`Pinned message ${id}`),
     },
     {
       id: 'forward',
       label: 'Forward',
-      onClick: (id) => alert(`Forward message ${id}`),
+      onClick: (id) => console.log(`Forward message ${id}`),
     },
     {
       id: 'report',
       label: 'Report',
-      onClick: (id) => alert(`Report message ${id}`),
+      onClick: (id) => console.log(`Report message ${id}`),
       className: 'text-red-600',
     },
   ];
@@ -778,7 +796,19 @@ export const ReadStatusConversationExample: Story = () => (
     />
     <Message content="That's wonderful to hear!" sender='other' showAvatar={false} showUsername={false} showTimestamp={true} timestamp='14:21' />
     <Message content='Want to grab coffee later?' sender='other' showAvatar={true} showUsername={false} showTimestamp={true} timestamp='14:22' />
-    <Message content='Sure! What time works for you?' sender='user' showAvatar={true} username='You' showUsername={false} showTimestamp={true} timestamp='14:23' showReadStatus={true} isRead={false} sentIcon={<MdCheck />} readIcon={<MdDoneAll />} />
+    <Message
+      content='Sure! What time works for you?'
+      sender='user'
+      showAvatar={true}
+      username='You'
+      showUsername={false}
+      showTimestamp={true}
+      timestamp='14:23'
+      showReadStatus={true}
+      isRead={false}
+      sentIcon={<MdCheck />}
+      readIcon={<MdDoneAll />}
+    />
   </div>
 );
 

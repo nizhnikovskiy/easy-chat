@@ -25,7 +25,6 @@ const createStandardActions = (): AssistantMessageActionItem[] => [
     icon: <MdRefresh size={14} />,
     onClick: (id) => {
       console.log(`Regenerate clicked for message: ${id}`);
-      alert(`Regenerating message ${id}`);
     },
   },
   {
@@ -34,7 +33,6 @@ const createStandardActions = (): AssistantMessageActionItem[] => [
     icon: <MdThumbUp size={14} />,
     onClick: (id) => {
       console.log(`Like clicked for message: ${id}`);
-      alert(`Liked message ${id}`);
     },
   },
   {
@@ -43,7 +41,6 @@ const createStandardActions = (): AssistantMessageActionItem[] => [
     icon: <MdThumbDown size={14} />,
     onClick: (id) => {
       console.log(`Dislike clicked for message: ${id}`);
-      alert(`Disliked message ${id}`);
     },
   },
   {
@@ -52,7 +49,6 @@ const createStandardActions = (): AssistantMessageActionItem[] => [
     icon: <MdContentCopy size={14} />,
     onClick: (id) => {
       console.log(`Copy clicked for message: ${id}`);
-      alert(`Copied message ${id}`);
     },
   },
 ];
@@ -150,31 +146,31 @@ export const CustomActions: Story = () => {
       id: 'regenerate',
       label: 'Regenerate',
       icon: <MdRefresh size={14} />,
-      onClick: () => alert('Regenerating...'),
+      onClick: () => console.log('Regenerating...'),
     },
     {
       id: 'read-aloud',
       label: 'Read Aloud',
       icon: <MdVolumeUp size={14} />,
-      onClick: () => alert('Reading aloud...'),
+      onClick: () => console.log('Reading aloud...'),
     },
     {
       id: 'edit',
       label: 'Edit',
       icon: <MdEdit size={14} />,
-      onClick: () => alert('Edit mode...'),
+      onClick: () => console.log('Edit mode...'),
     },
     {
       id: 'share',
       label: 'Share',
       icon: <MdShare size={14} />,
-      onClick: () => alert('Sharing...'),
+      onClick: () => console.log('Sharing...'),
     },
     {
       id: 'copy',
       label: 'Copy',
       icon: <MdContentCopy size={14} />,
-      onClick: () => alert('Copied!'),
+      onClick: () => console.log('Copied!'),
     },
   ];
 
@@ -198,31 +194,31 @@ export const CustomActionsDark: Story = () => {
       id: 'regenerate',
       label: 'Regenerate',
       icon: <MdRefresh size={14} />,
-      onClick: () => alert('Regenerating...'),
+      onClick: () => console.log('Regenerating...'),
     },
     {
       id: 'read-aloud',
       label: 'Read Aloud',
       icon: <MdVolumeUp size={14} />,
-      onClick: () => alert('Reading aloud...'),
+      onClick: () => console.log('Reading aloud...'),
     },
     {
       id: 'edit',
       label: 'Edit',
       icon: <MdEdit size={14} />,
-      onClick: () => alert('Edit mode...'),
+      onClick: () => console.log('Edit mode...'),
     },
     {
       id: 'share',
       label: 'Share',
       icon: <MdShare size={14} />,
-      onClick: () => alert('Sharing...'),
+      onClick: () => console.log('Sharing...'),
     },
     {
       id: 'copy',
       label: 'Copy',
       icon: <MdContentCopy size={14} />,
-      onClick: () => alert('Copied!'),
+      onClick: () => console.log('Copied!'),
     },
   ];
 
@@ -248,31 +244,31 @@ export const IconOnlyActions: Story = () => {
       id: 'regenerate',
       label: '',
       icon: <MdRefresh size={16} />,
-      onClick: () => alert('Regenerating...'),
+      onClick: () => console.log('Regenerating...'),
     },
     {
       id: 'like',
       label: '',
       icon: <MdThumbUp size={16} />,
-      onClick: () => alert('Liked!'),
+      onClick: () => console.log('Liked!'),
     },
     {
       id: 'dislike',
       label: '',
       icon: <MdThumbDown size={16} />,
-      onClick: () => alert('Disliked!'),
+      onClick: () => console.log('Disliked!'),
     },
     {
       id: 'copy',
       label: '',
       icon: <MdContentCopy size={16} />,
-      onClick: () => alert('Copied!'),
+      onClick: () => console.log('Copied!'),
     },
     {
       id: 'share',
       label: '',
       icon: <MdShare size={16} />,
-      onClick: () => alert('Shared!'),
+      onClick: () => console.log('Shared!'),
     },
   ];
 
@@ -291,31 +287,31 @@ export const IconOnlyActionsDark: Story = () => {
       id: 'regenerate',
       label: '',
       icon: <MdRefresh size={16} />,
-      onClick: () => alert('Regenerating...'),
+      onClick: () => console.log('Regenerating...'),
     },
     {
       id: 'like',
       label: '',
       icon: <MdThumbUp size={16} />,
-      onClick: () => alert('Liked!'),
+      onClick: () => console.log('Liked!'),
     },
     {
       id: 'dislike',
       label: '',
       icon: <MdThumbDown size={16} />,
-      onClick: () => alert('Disliked!'),
+      onClick: () => console.log('Disliked!'),
     },
     {
       id: 'copy',
       label: '',
       icon: <MdContentCopy size={16} />,
-      onClick: () => alert('Copied!'),
+      onClick: () => console.log('Copied!'),
     },
     {
       id: 'share',
       label: '',
       icon: <MdShare size={16} />,
-      onClick: () => alert('Shared!'),
+      onClick: () => console.log('Shared!'),
     },
   ];
 
@@ -418,27 +414,27 @@ export const DisabledActions: Story = () => {
       id: 'regenerate',
       label: 'Regenerate',
       icon: <MdRefresh size={14} />,
-      onClick: () => alert('Regenerating...'),
+      onClick: () => console.log('Regenerating...'),
       disabled: true,
     },
     {
       id: 'like',
       label: '',
       icon: <MdThumbUp size={14} />,
-      onClick: () => alert('Liked!'),
+      onClick: () => console.log('Liked!'),
     },
     {
       id: 'dislike',
       label: '',
       icon: <MdThumbDown size={14} />,
-      onClick: () => alert('Disliked!'),
+      onClick: () => console.log('Disliked!'),
       disabled: true,
     },
     {
       id: 'copy',
       label: '',
       icon: <MdContentCopy size={14} />,
-      onClick: () => alert('Copied!'),
+      onClick: () => console.log('Copied!'),
     },
   ];
 
@@ -462,27 +458,27 @@ export const DisabledActionsDark: Story = () => {
       id: 'regenerate',
       label: 'Regenerate',
       icon: <MdRefresh size={14} />,
-      onClick: () => alert('Regenerating...'),
+      onClick: () => console.log('Regenerating...'),
       disabled: true,
     },
     {
       id: 'like',
       label: '',
       icon: <MdThumbUp size={14} />,
-      onClick: () => alert('Liked!'),
+      onClick: () => console.log('Liked!'),
     },
     {
       id: 'dislike',
       label: '',
       icon: <MdThumbDown size={14} />,
-      onClick: () => alert('Disliked!'),
+      onClick: () => console.log('Disliked!'),
       disabled: true,
     },
     {
       id: 'copy',
       label: '',
       icon: <MdContentCopy size={14} />,
-      onClick: () => alert('Copied!'),
+      onClick: () => console.log('Copied!'),
     },
   ];
 
