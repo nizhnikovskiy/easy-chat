@@ -572,11 +572,7 @@ const ChatInput: FC<ChatInputProps> = ({
                   <>
                     {voiceButton?.component || (
                       <button
-                        onMouseDown={voiceButton?.onStartRecording}
-                        onMouseUp={voiceButton?.onStopRecording}
-                        onMouseLeave={voiceButton?.onStopRecording}
-                        onTouchStart={voiceButton?.onStartRecording}
-                        onTouchEnd={voiceButton?.onStopRecording}
+                        onClick={voiceButton?.onStartRecording}
                         disabled={disabled || isLoading || voiceButton?.disabled}
                         className={`p-2 ${
                           theme === 'dark'
@@ -584,7 +580,7 @@ const ChatInput: FC<ChatInputProps> = ({
                             : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg'
                         } rounded-full select-none transition-all ${voiceButton?.className || ''}`}
                         type='button'
-                        aria-label={voiceButton?.isRecording ? 'Recording voice message, release to stop' : voiceAriaLabel}
+                        aria-label={voiceButton?.isRecording ? 'Recording voice message' : voiceAriaLabel}
                       >
                         {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
                       </button>
