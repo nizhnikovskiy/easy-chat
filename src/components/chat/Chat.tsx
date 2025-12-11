@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, ReactElement } from 'react';
+import { FC, useState, useEffect, useRef, ReactElement } from 'react';
 import type { ChatHistoryItem, ChatHistoryMessage } from '../../types/chat';
 import type { ContextMenuConfig, ContextMenuItem } from '../../types/context-menu';
 import ChatInput from '../chat-input';
@@ -101,6 +101,54 @@ const Chat: FC<ChatProps> = ({
   const [shouldFocus, setShouldFocus] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [initialMessageCount, setInitialMessageCount] = useState(0);
+
+  // Voice Recording State
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+
+  const handleStartRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+      alert('Could not access microphone');
+    }
+  };
+
+  const handleStopRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+        const audioFile = new File([audioBlob], 'voice-message.webm', { type: 'audio/webm' });
+        handleSendMessage(undefined, audioFile);
+        mediaRecorderRef.current?.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+      };
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const handleCancelRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+      setIsRecording(false);
+      audioChunksRef.current = [];
+    }
+  };
 
   // Create default context menu items
   const createDefaultContextMenuItems = (isUserMessage: boolean): ContextMenuItem[] => {
@@ -328,7 +376,12 @@ const Chat: FC<ChatProps> = ({
               }}
               voiceButton={{
                 icon: microphoneIcon,
+                isRecording,
+                onStartRecording: handleStartRecording,
+                onStopRecording: handleStopRecording,
+                onCancelRecording: handleCancelRecording,
               }}
+              enableVoiceInput={true}
               closeIcon={closeIcon}
               placeholder='Enter message...'
               autoFocus={shouldFocus}

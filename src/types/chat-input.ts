@@ -58,6 +58,8 @@ export interface VoiceButtonProps {
   onStartRecording?: () => void;
   /** Stop recording handler */
   onStopRecording?: () => void;
+  /** Cancel recording handler */
+  onCancelRecording?: () => void;
   /** Whether currently recording */
   isRecording?: boolean;
   /** Whether button is disabled */

@@ -146,6 +146,8 @@ export const WithVoiceInput: Story = () => {
   );
 };
 
+WithVoiceInput.storyName = 'With Voice Input - Default';
+
 export const WithVoiceInputDark: Story = () => {
   const [message, setMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);

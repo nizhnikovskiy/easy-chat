@@ -69,6 +69,19 @@
   }
 }
 
+/* Waveform animation for voice recording */
+@keyframes waveform {
+  0%,
+  100% {
+    height: 4px;
+    opacity: 0.5;
+  }
+  50% {
+    height: 16px;
+    opacity: 1;
+  }
+}
+
 /* Animation classes with fast, subtle timing */
 .animate-slide-in-right {
   animation: slideInFromRight 0.2s ease-out forwards;
@@ -86,12 +99,17 @@
   animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
 
+.animate-waveform {
+  animation: waveform 1s ease-in-out infinite;
+}
+
 /* Ensure smooth animations and GPU acceleration */
 .animate-slide-in-right,
 .animate-slide-in-left,
 .animate-fade-in,
-.animate-bounce-in {
-  will-change: transform, opacity;
+.animate-bounce-in,
+.animate-waveform {
+  will-change: transform, opacity, height;
   backface-visibility: hidden;
   perspective: 1000px;
 }
