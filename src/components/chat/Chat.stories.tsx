@@ -443,7 +443,7 @@ export const LoadingSkeletonExample: Story = () => {
         <div className='h-full w-full overflow-hidden'>
           <div className='h-[calc(100vh-5rem)] flex flex-col' style={bgStyle}>
             {/* Messages area with skeleton */}
-            <div className='flex-1 overflow-y-auto overflow-x-hidden w-full max-w-250 p-4 mx-auto'>
+            <div className='flex-1 overflow-y-auto overflow-x-hidden w-full max-w-160 p-4 mx-auto'>
               <div style={{ paddingBottom: '1rem' }}>
                 <ChatSkeleton messageCount={6} showInput={false} />
               </div>

@@ -69,7 +69,7 @@ const ChatSkeleton: FC<ChatSkeletonProps> = ({ messageCount = 5, showInput = tru
 
   return (
     <>
-      <div className='p-4 w-full max-w-250 mx-auto'>
+      <div className='p-4 w-full max-w-160 mx-auto'>
         {skeletonMessages.map((msg) =>
           msg.usePlainType ? (
             <AssistantMessage

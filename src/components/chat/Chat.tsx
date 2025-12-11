@@ -213,7 +213,7 @@ const Chat: FC<ChatProps> = ({
   return (
     <div className='h-full w-full overflow-hidden'>
       <div className='h-[calc(100vh-5rem)] flex flex-col' style={bgStyle}>
-        <div className={`flex-1 overflow-y-auto overflow-x-hidden w-full max-w-250 p-4 mx-auto ${containerClassName}`}>
+        <div className={`flex-1 overflow-y-auto overflow-x-hidden w-full max-w-160 p-4 mx-auto ${containerClassName}`}>
           <div style={{ paddingBottom: '1rem' }}>
             {messages.map((msg, index) => {
               // Check if it's a date separator

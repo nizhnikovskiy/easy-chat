@@ -244,7 +244,7 @@ const ChatInput: FC<ChatInputProps> = ({
   const isSendDisabled = disabled || isLoading || (!internalValue.trim() && !selectedMedia);
 
   return (
-    <div className={`flex flex-col gap-2 w-full max-w-250 mx-auto p-4 ${theme === 'dark' ? 'bg-input-bg-dark' : 'bg-input-bg'} ${className}`} role='form' aria-label='Message input form'>
+    <div className={`flex flex-col gap-2 w-full max-w-160 mx-auto p-4 ${theme === 'dark' ? 'bg-input-bg-dark' : 'bg-input-bg'} ${className}`} role='form' aria-label='Message input form'>
       {/* Screen reader announcements */}
       <div role='status' aria-live='polite' aria-atomic='true' className='sr-only'>
         {announcement}

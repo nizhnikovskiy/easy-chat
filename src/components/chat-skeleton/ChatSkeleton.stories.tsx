@@ -88,7 +88,7 @@ MixedTypes.storyName = 'Mixed Bubble and Plain Types';
 export const WithTypingIndicatorExample: Story = () => {
   return (
     <div style={bgStyle} className='h-screen w-full'>
-      <div className='p-4 w-full max-w-250 mx-auto'>
+      <div className='p-4 w-full max-w-160 mx-auto'>
         <ChatSkeleton messageCount={3} showInput={false} />
         {/* Add a typing indicator skeleton */}
         <TypingMessage text='Typing...' sender='other' groupPosition='standalone' isLoading={true} />
