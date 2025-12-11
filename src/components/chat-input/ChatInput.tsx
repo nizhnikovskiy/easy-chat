@@ -93,6 +93,11 @@ const ChatInput: FC<ChatInputProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sendButtonRef = useRef<HTMLButtonElement>(null);
+  const waveformRef = useRef<HTMLDivElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const errorMessageId = useRef(`chat-input-error-${Math.random().toString(36).substr(2, 9)}`);
 
   // Sync external value with internal state
@@ -241,6 +246,81 @@ const ChatInput: FC<ChatInputProps> = ({
     return () => clearTimeout(timer);
   }, [ripples]);
 
+  // Live Audio Visualization
+  useEffect(() => {
+    if (voiceButton?.isRecording && voiceButton?.audioStream && waveformRef.current) {
+      if (!audioContextRef.current) {
+        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      const ctx = audioContextRef.current;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+
+      if (!analyserRef.current) {
+        analyserRef.current = ctx.createAnalyser();
+        analyserRef.current.fftSize = 64; // Small FFT size for ~20 bars ranges
+        analyserRef.current.smoothingTimeConstant = 0.5;
+      }
+      const analyser = analyserRef.current;
+
+      // Disconnect old source if any
+      if (sourceRef.current) {
+        sourceRef.current.disconnect();
+      }
+
+      try {
+        sourceRef.current = ctx.createMediaStreamSource(voiceButton.audioStream);
+        sourceRef.current.connect(analyser);
+      } catch (err) {
+        console.error('Error connecting audio stream:', err);
+        return;
+      }
+
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      const bars = waveformRef.current.children;
+      const totalBars = bars.length;
+
+      const animate = () => {
+        analyser.getByteFrequencyData(dataArray);
+
+        for (let i = 0; i < totalBars; i++) {
+          // Map bar index to frequency bin index
+          // We focus on lower-mid frequencies for voice clarity
+          const binIndex = Math.floor((i / totalBars) * (bufferLength * 0.7));
+          const value = dataArray[binIndex] || 0;
+
+          // Map 0-255 to height (min 4px, max 32px)
+          // Sensitivity adjusted: added threshold (value > 30) and reduced scale
+          const normalizedValue = Math.max(0, value - 40); // Noise gate
+          const height = Math.max(4, (normalizedValue / 215) * 28);
+
+          const bar = bars[i] as HTMLElement;
+          bar.style.height = `${height}px`;
+          // Disable CSS animation while live
+          bar.style.animation = 'none';
+        }
+
+        animationFrameRef.current = requestAnimationFrame(animate);
+      };
+
+      animate();
+
+      return () => {
+        if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+        sourceRef.current?.disconnect();
+        // We don't close the context to keep it ready, or we could close it if we want to save resources
+      };
+    } else {
+      // Stopped recording or no stream: stop animation
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+
+      // Reset bars to default state or let CSS animation take over if we were to unmount/remount
+      // Since isRecording goes false, the whole overlay disappears anyway.
+    }
+  }, [voiceButton?.isRecording, voiceButton?.audioStream]);
+
   // Determine if send button should be disabled
   const isSendDisabled = disabled || isLoading || (!internalValue.trim() && !selectedMedia);
 
@@ -309,7 +389,7 @@ const ChatInput: FC<ChatInputProps> = ({
           </button>
 
           {/* Dynamic Waveform */}
-          <div className='flex-1 flex items-center justify-center gap-[3px] h-8 mx-4 overflow-hidden'>
+          <div ref={waveformRef} className='flex-1 flex items-center justify-center gap-[3px] h-8 mx-4 overflow-hidden'>
             {[...Array(20)].map((_, i) => (
               <div
                 key={i}

@@ -191,6 +191,58 @@ export const WithVoiceInputDark: Story = () => {
 
 WithVoiceInputDark.storyName = 'With Voice Input - Dark';
 
+export const WithLiveVoiceInput: Story = () => {
+  const [message, setMessage] = useState('');
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
+
+  const handleSend = (msg: string) => {
+    console.log('Message sent:', msg);
+  };
+
+  const handleStartRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setAudioStream(stream);
+      setIsRecording(true);
+      console.log('Recording started with live stream');
+    } catch (err) {
+      console.error('Error accessing microphone:', err);
+      alert('Could not access microphone for live demo');
+    }
+  };
+
+  const handleStopRecording = () => {
+    if (audioStream) {
+      audioStream.getTracks().forEach((track) => track.stop());
+      setAudioStream(null);
+    }
+    setIsRecording(false);
+    console.log('Recording stopped');
+  };
+
+  return (
+    <div style={bgStyle} className='h-screen flex flex-col justify-end'>
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Click mic to test live visualization...'
+        enableVoiceInput
+        voiceButton={{
+          isRecording,
+          audioStream,
+          onStartRecording: handleStartRecording,
+          onStopRecording: handleStopRecording,
+          onCancelRecording: handleStopRecording,
+          icon: <IoMic />,
+        }}
+        sendButton={{ icon: <IoArrowUp /> }}
+      />
+    </div>
+  );
+};
+
 export const CompleteWithAllFeatures: Story = () => {
   const [message, setMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);

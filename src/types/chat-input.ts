@@ -58,6 +58,8 @@ export interface VoiceButtonProps {
   onStartRecording?: () => void;
   /** Stop recording handler */
   onStopRecording?: () => void;
+  /** Audio stream for live visualization */
+  audioStream?: MediaStream | null;
   /** Cancel recording handler */
   onCancelRecording?: () => void;
   /** Whether currently recording */

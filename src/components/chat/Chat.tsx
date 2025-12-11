@@ -104,6 +104,7 @@ const Chat: FC<ChatProps> = ({
 
   // Voice Recording State
   const [isRecording, setIsRecording] = useState(false);
+  const [audioStream, setAudioStream] = useState<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
@@ -121,6 +122,7 @@ const Chat: FC<ChatProps> = ({
       };
 
       mediaRecorder.start();
+      setAudioStream(stream);
       setIsRecording(true);
     } catch (error) {
       console.error('Error accessing microphone:', error);
@@ -135,6 +137,7 @@ const Chat: FC<ChatProps> = ({
         const audioFile = new File([audioBlob], 'voice-message.webm', { type: 'audio/webm' });
         handleSendMessage(undefined, audioFile);
         mediaRecorderRef.current?.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+        setAudioStream(null);
       };
       mediaRecorderRef.current.stop();
       setIsRecording(false);
@@ -145,6 +148,7 @@ const Chat: FC<ChatProps> = ({
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       mediaRecorderRef.current.stream.getTracks().forEach((track: MediaStreamTrack) => track.stop());
+      setAudioStream(null);
       setIsRecording(false);
       audioChunksRef.current = [];
     }
@@ -377,6 +381,7 @@ const Chat: FC<ChatProps> = ({
               voiceButton={{
                 icon: microphoneIcon,
                 isRecording,
+                audioStream,
                 onStartRecording: handleStartRecording,
                 onStopRecording: handleStopRecording,
                 onCancelRecording: handleCancelRecording,
