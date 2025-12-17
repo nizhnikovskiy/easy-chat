@@ -1,5 +1,5 @@
 import type { StoryDefault } from '@ladle/react';
-import { useState, useRef } from 'react';
+import { useState, useRef, CSSProperties } from 'react';
 import Chat from './Chat';
 import type { ChatHistoryItem } from '@/types/chat';
 
@@ -52,17 +52,19 @@ export const PurpleTheme = () => {
 
   return (
     <div
-      style={{
-        height: '600px',
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        // Override CSS variables for purple theme
-        ['--chat-message-user-bg' as any]: '#8b5cf6',
-        ['--chat-message-user-bg-dark' as any]: '#7c3aed',
-        ['--chat-button-primary-bg' as any]: '#8b5cf6',
-        ['--chat-button-primary-bg-hover' as any]: '#7c3aed',
-      }}
+      style={
+        {
+          height: '600px',
+          border: '1px solid #e5e7eb',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          // Override CSS variables for purple theme
+          '--chat-message-user-bg': '#8b5cf6',
+          '--chat-message-user-bg-dark': '#7c3aed',
+          '--chat-button-primary-bg': '#8b5cf6',
+          '--chat-button-primary-bg-hover': '#7c3aed',
+        } as CSSProperties
+      }
     >
       <h3 style={{ padding: '1rem', margin: 0, borderBottom: '1px solid #e5e7eb', background: '#f9fafb' }}>Purple Theme (CSS Variables Override)</h3>
       <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} theme='light' />
@@ -76,17 +78,19 @@ export const GreenTheme = () => {
 
   return (
     <div
-      style={{
-        height: '600px',
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        // Override CSS variables for green theme (WhatsApp-like)
-        ['--chat-message-user-bg' as any]: '#25d366',
-        ['--chat-message-user-bg-dark' as any]: '#128c7e',
-        ['--chat-button-primary-bg' as any]: '#25d366',
-        ['--chat-button-primary-bg-hover' as any]: '#20bd5c',
-      }}
+      style={
+        {
+          height: '600px',
+          border: '1px solid #e5e7eb',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          // Override CSS variables for green theme (WhatsApp-like)
+          '--chat-message-user-bg': '#25d366',
+          '--chat-message-user-bg-dark': '#128c7e',
+          '--chat-button-primary-bg': '#25d366',
+          '--chat-button-primary-bg-hover': '#20bd5c',
+        } as CSSProperties
+      }
     >
       <h3 style={{ padding: '1rem', margin: 0, borderBottom: '1px solid #e5e7eb', background: '#f9fafb' }}>Green Theme - WhatsApp Style</h3>
       <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} theme='light' />
@@ -120,18 +124,20 @@ export const DarkThemePurple = () => {
 
   return (
     <div
-      style={{
-        height: '600px',
-        border: '1px solid #374151',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        background: '#1f2937',
-        // Override CSS variables for purple dark theme
-        ['--chat-message-user-bg-dark' as any]: '#7c3aed',
-        ['--chat-message-other-bg-dark' as any]: '#4c1d95',
-        ['--chat-button-primary-bg' as any]: '#7c3aed',
-        ['--chat-button-primary-bg-hover' as any]: '#6d28d9',
-      }}
+      style={
+        {
+          height: '600px',
+          border: '1px solid #374151',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          background: '#1f2937',
+          // Override CSS variables for purple dark theme
+          '--chat-message-user-bg-dark': '#7c3aed',
+          '--chat-message-other-bg-dark': '#4c1d95',
+          '--chat-button-primary-bg': '#7c3aed',
+          '--chat-button-primary-bg-hover': '#6d28d9',
+        } as CSSProperties
+      }
     >
       <h3 style={{ padding: '1rem', margin: 0, borderBottom: '1px solid #374151', background: '#111827', color: '#fff' }}>Dark Theme - Purple Custom</h3>
       <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} theme='dark' />
@@ -145,19 +151,21 @@ export const MonochromeTheme = () => {
 
   return (
     <div
-      style={{
-        height: '600px',
-        border: '1px solid #e5e7eb',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        // Override CSS variables for monochrome theme
-        ['--chat-message-user-bg' as any]: '#000000',
-        ['--chat-message-user-text' as any]: '#ffffff',
-        ['--chat-message-other-bg' as any]: '#f5f5f5',
-        ['--chat-message-other-text' as any]: '#000000',
-        ['--chat-button-primary-bg' as any]: '#000000',
-        ['--chat-button-primary-bg-hover' as any]: '#333333',
-      }}
+      style={
+        {
+          height: '600px',
+          border: '1px solid #e5e7eb',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          // Override CSS variables for monochrome theme
+          '--chat-message-user-bg': '#000000',
+          '--chat-message-user-text': '#ffffff',
+          '--chat-message-other-bg': '#f5f5f5',
+          '--chat-message-other-text': '#000000',
+          '--chat-button-primary-bg': '#000000',
+          '--chat-button-primary-bg-hover': '#333333',
+        } as CSSProperties
+      }
     >
       <h3 style={{ padding: '1rem', margin: 0, borderBottom: '1px solid #e5e7eb', background: '#f9fafb' }}>Monochrome Theme</h3>
       <Chat messages={messages} isPending={false} onSendMessage={() => {}} messagesEndRef={messagesEndRef} theme='light' />

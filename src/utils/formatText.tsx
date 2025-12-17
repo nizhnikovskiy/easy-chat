@@ -179,7 +179,6 @@ export function getFormattedTextAtPosition(text: string, visibleLength: number):
   const tokens = tokenize(text);
   const result: ReactNode[] = [];
   let remainingLength = visibleLength;
-  let tokenIndex = 0;
 
   tokens.forEach((token, index) => {
     if (remainingLength <= 0) return;
@@ -214,8 +213,6 @@ export function getFormattedTextAtPosition(text: string, visibleLength: number):
       );
       remainingLength = 0;
     }
-
-    tokenIndex++;
   });
 
   return result;

@@ -1,0 +1,52 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'package.json' # Only trigger if package.json changes (usually version bump)
+      - 'src/**' # Or if source code changes, but effectively we need a version bump.
+        # If I remove paths, it runs on every push, which might fail if version isn't bumped,
+        # but that might be what they want (fail fast if forgot to bump).
+        # Let's keep it simple: run on push to main.
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed to push the version bump back
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needed for tags and history
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Increment Version
+        # Updates version in package.json & package-lock.json, commits, and tags.
+        # [skip ci] prevents the commit from triggering the workflow again.
+        run: npm version patch -m "chore(release): %s [skip ci]"
+
+      - name: Publish to NPM
+        # prepublishOnly script in package.json runs the build automatically
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push Version Update
+        run: git push --follow-tags origin main

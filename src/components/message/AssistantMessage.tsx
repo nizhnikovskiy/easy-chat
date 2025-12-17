@@ -55,11 +55,15 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
   theme = 'light',
   sentIcon,
   readIcon,
+  fullWidth = true,
 }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
   const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [touchStartPos, setTouchStartPos] = useState<{ x: number; y: number } | null>(null);
+
+  // Determine width class
+  const widthClass = fullWidth ? 'w-full' : 'max-w-[80%] md:max-w-[70%]';
 
   // Determine if this message should show avatar/username based on grouping
   const isStandaloneOrLast = !groupPosition || groupPosition === 'standalone' || groupPosition === 'last';
@@ -72,9 +76,13 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
   const marginBottom = groupPosition === 'first' || groupPosition === 'middle' ? 'mb-1' : 'mb-4';
 
   // Random widths for skeleton text lines
-  const randomWidths = ['50%', '65%', '80%', '70%', '90%'];
-  const randomWidth1 = randomWidths[Math.floor(Math.random() * randomWidths.length)];
-  const randomWidth2 = randomWidths[Math.floor(Math.random() * randomWidths.length)];
+  const [{ randomWidth1, randomWidth2 }] = useState(() => {
+    const randomWidths = ['50%', '65%', '80%', '70%', '90%'];
+    return {
+      randomWidth1: randomWidths[Math.floor(Math.random() * randomWidths.length)],
+      randomWidth2: randomWidths[Math.floor(Math.random() * randomWidths.length)],
+    };
+  });
 
   // Default avatar if not provided
   const avatarElement = shouldShowAvatar && (
@@ -89,7 +97,7 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
     const skeletonShimmer = theme === 'dark' ? 'bg-skeleton-shimmer-dark' : 'bg-skeleton-shimmer';
     return (
       <article className={`flex justify-start ${marginBottom} ${className} animate-pulse`} aria-label={ariaLabel || `Loading message from ${username || 'assistant'}`}>
-        <div className='flex flex-row items-start gap-2 max-w-[80%] md:max-w-[70%]'>
+        <div className={`flex flex-row items-start gap-2 ${widthClass}`}>
           {/* Avatar skeleton */}
           {shouldShowAvatar ? <div className={`shrink-0 w-10 h-10 rounded-full ${skeletonColor}`} /> : showAvatar && <div className='shrink-0 w-10' aria-hidden='true' />}
 
@@ -169,7 +177,7 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
   return (
     <>
       <article className={`flex justify-start ${marginBottom} ${className}`} aria-label={ariaLabel || `Message from ${username || 'assistant'}`}>
-        <div className={`flex flex-row items-start gap-2 max-w-[80%] md:max-w-[70%]`}>
+        <div className={`flex flex-row items-start gap-2 ${widthClass}`}>
           {/* Show avatar or placeholder spacing */}
           {shouldShowAvatar ? avatarElement : showAvatar && <div className='shrink-0 w-10' aria-hidden='true' />}
 
@@ -205,12 +213,12 @@ const AssistantMessage: FC<AssistantMessageProps> = ({
                         ? cloneElement(readIcon, {
                             className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
                             size: 16,
-                          } as any)
+                          } as { className: string; size: number })
                         : !isRead && sentIcon
                         ? cloneElement(sentIcon, {
                             className: theme === 'dark' ? 'text-message-other-timestamp-dark' : 'text-message-other-timestamp',
                             size: 16,
-                          } as any)
+                          } as { className: string; size: number })
                         : null}
                     </div>
                   )}

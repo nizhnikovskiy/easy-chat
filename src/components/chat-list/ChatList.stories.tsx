@@ -47,6 +47,33 @@ const sampleChats: ChatListItemData[] = [
   },
 ];
 
+const llmChats: ChatListItemData[] = [
+  {
+    id: 'llm-1',
+    name: 'ChatGPT 4',
+    lastMessage: 'How can I assist you with your project today?',
+    timestamp: new Date(Date.now() - 1000 * 60 * 5),
+    unreadCount: 0,
+    showAvatar: false,
+  },
+  {
+    id: 'llm-2',
+    name: 'Claude 3 Opus',
+    lastMessage: 'I analyzed the code you shared...',
+    timestamp: new Date(Date.now() - 1000 * 60 * 30),
+    unreadCount: 2,
+    showAvatar: false,
+  },
+  {
+    id: 'llm-3',
+    name: 'Gemini Pro',
+    lastMessage: 'Let me help you with that algorithm.',
+    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2),
+    unreadCount: 1,
+    showAvatar: false,
+  },
+];
+
 // Sample messages for chat window (for Examples)
 const sampleMessages: Record<string, ChatHistoryMessage[]> = {
   '1': [
@@ -249,33 +276,6 @@ EmptyChatListDark.storyName = 'Empty Chat List - Dark';
 
 // LLM-style chats - demonstrate ONLY showAvatar=false
 export const LLMStyleChats: Story = () => {
-  const llmChats: ChatListItemData[] = [
-    {
-      id: 'llm-1',
-      name: 'ChatGPT 4',
-      lastMessage: 'How can I assist you with your project today?',
-      timestamp: new Date(Date.now() - 1000 * 60 * 5),
-      unreadCount: 0,
-      showAvatar: false,
-    },
-    {
-      id: 'llm-2',
-      name: 'Claude 3 Opus',
-      lastMessage: 'I analyzed the code you shared...',
-      timestamp: new Date(Date.now() - 1000 * 60 * 30),
-      unreadCount: 2,
-      showAvatar: false,
-    },
-    {
-      id: 'llm-3',
-      name: 'Gemini Pro',
-      lastMessage: 'Let me help you with that algorithm.',
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2),
-      unreadCount: 1,
-      showAvatar: false,
-    },
-  ];
-
   return (
     <div style={bgStyle} className='h-screen w-full'>
       <ChatList items={llmChats} />
@@ -286,33 +286,6 @@ export const LLMStyleChats: Story = () => {
 LLMStyleChats.storyName = 'LLM-Style Chats (No Avatars)';
 
 export const LLMStyleChatsDark: Story = () => {
-  const llmChats: ChatListItemData[] = [
-    {
-      id: 'llm-1',
-      name: 'ChatGPT 4',
-      lastMessage: 'How can I assist you with your project today?',
-      timestamp: new Date(Date.now() - 1000 * 60 * 5),
-      unreadCount: 0,
-      showAvatar: false,
-    },
-    {
-      id: 'llm-2',
-      name: 'Claude 3 Opus',
-      lastMessage: 'I analyzed the code you shared...',
-      timestamp: new Date(Date.now() - 1000 * 60 * 30),
-      unreadCount: 2,
-      showAvatar: false,
-    },
-    {
-      id: 'llm-3',
-      name: 'Gemini Pro',
-      lastMessage: 'Let me help you with that algorithm.',
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2),
-      unreadCount: 1,
-      showAvatar: false,
-    },
-  ];
-
   return (
     <div className='h-screen w-full bg-gray-900'>
       <ChatList items={llmChats} theme='dark' />

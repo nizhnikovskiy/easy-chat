@@ -24,7 +24,21 @@ export const Default: Story<TypingAssistantMessageProps> = () => (
   </div>
 );
 
-Default.storyName = 'Default Typing';
+Default.storyName = 'Default Typing (Full Width)';
+
+// Limited width - demonstrate limitWidth prop
+export const LimitedWidth: Story<TypingAssistantMessageProps> = () => (
+  <div style={bgStyle} className='p-4 min-h-screen'>
+    <TypingAssistantMessage
+      text='This message has limitWidth={true}, so it should be limited to 80%/70% width like the original behavior. This text is long enough to demonstrate the wrapping behavior when width is limited.'
+      sender='other'
+      typingSpeed={30}
+      limitWidth={true}
+    />
+  </div>
+);
+
+LimitedWidth.storyName = 'Limited Width';
 
 // With actions - demonstrate ONLY actions
 export const WithActions: Story<TypingAssistantMessageProps> = () => (

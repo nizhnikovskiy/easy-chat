@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef, ReactElement } from 'react';
+import { FC, useState, useRef, ReactElement } from 'react';
 import type { ChatHistoryItem, ChatHistoryMessage } from '../../types/chat';
 import type { ContextMenuConfig, ContextMenuItem } from '../../types/context-menu';
 import ChatInput from '../chat-input';
@@ -100,7 +100,7 @@ const Chat: FC<ChatProps> = ({
   const [message, setMessage] = useState('');
   const [shouldFocus, setShouldFocus] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [initialMessageCount, setInitialMessageCount] = useState(0);
+  const [initialMessageCount] = useState(() => messages.length);
 
   // Voice Recording State
   const [isRecording, setIsRecording] = useState(false);
@@ -210,11 +210,6 @@ const Chat: FC<ChatProps> = ({
 
     return defaultItems;
   };
-
-  useEffect(() => {
-    // Store initial message count on mount
-    setInitialMessageCount(messages.length);
-  }, []);
 
   // Determine if a message is the last received message (not from user) and was added after mount
   const isLastReceivedMessage = (index: number) => {

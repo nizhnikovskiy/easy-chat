@@ -304,6 +304,14 @@ export const WithDateSeparatorsExample: Story = () => {
 
 WithDateSeparatorsExample.storyName = 'Example - With Date Separators';
 
+// Sample messages to add with animation
+const messagesToAdd = [
+  { content: 'This is cool!', role: 'user' },
+  { content: 'Yes, messages smoothly appear with animation!', role: 'assistant' },
+  { content: 'I love the effect!', role: 'user' },
+  { content: 'Wonderful! Animation makes the interface more alive.', role: 'assistant' },
+];
+
 export const WithNewMessageAnimationExample: Story = () => {
   const [messages, setMessages] = useState<ChatHistoryMessage[]>([
     {
@@ -314,14 +322,6 @@ export const WithNewMessageAnimationExample: Story = () => {
     },
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Sample messages to add with animation
-  const messagesToAdd = [
-    { content: 'This is cool!', role: 'user' },
-    { content: 'Yes, messages smoothly appear with animation!', role: 'assistant' },
-    { content: 'I love the effect!', role: 'user' },
-    { content: 'Wonderful! Animation makes the interface more alive.', role: 'assistant' },
-  ];
 
   useEffect(() => {
     let messageIndex = 0;

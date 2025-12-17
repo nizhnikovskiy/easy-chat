@@ -98,7 +98,15 @@ const ChatInput: FC<ChatInputProps> = ({
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
-  const errorMessageId = useRef(`chat-input-error-${Math.random().toString(36).substr(2, 9)}`);
+  const [errorMessageId] = useState(() => `chat-input-error-${Math.random().toString(36).substr(2, 9)}`);
+
+  // Audio waveform animation data
+  const [waveformData] = useState(() =>
+    [...Array(20)].map(() => ({
+      delay: Math.random() * 0.5,
+      duration: 0.8 + Math.random() * 0.5,
+    }))
+  );
 
   // Sync external value with internal state
   useEffect(() => {
@@ -250,7 +258,8 @@ const ChatInput: FC<ChatInputProps> = ({
   useEffect(() => {
     if (voiceButton?.isRecording && voiceButton?.audioStream && waveformRef.current) {
       if (!audioContextRef.current) {
-        audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const AudioContextClass = window.AudioContext || (window as unknown as Window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        audioContextRef.current = new AudioContextClass();
       }
       const ctx = audioContextRef.current;
       if (ctx.state === 'suspended') {
@@ -333,7 +342,7 @@ const ChatInput: FC<ChatInputProps> = ({
 
       {/* Error message for screen readers */}
       {error && errorMessage && (
-        <div id={errorMessageId.current} role='alert' aria-live='assertive' className='text-xs text-red-600 px-2 mb-1'>
+        <div id={errorMessageId} role='alert' aria-live='assertive' className='text-xs text-red-600 px-2 mb-1'>
           {errorMessage}
         </div>
       )}
@@ -352,7 +361,7 @@ const ChatInput: FC<ChatInputProps> = ({
             type='button'
             aria-label='Remove media attachment'
           >
-            {closeIcon ? cloneElement(closeIcon, { size: 14 } as any) : null}
+            {closeIcon ? cloneElement(closeIcon, { size: 14 } as { size: number }) : null}
           </button>
         </div>
       )}
@@ -379,7 +388,7 @@ const ChatInput: FC<ChatInputProps> = ({
             type='button'
           >
             {closeIcon ? (
-              cloneElement(closeIcon, { size: 20 } as any)
+              cloneElement(closeIcon, { size: 20 } as { size: number })
             ) : (
               <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
                 <line x1='18' y1='6' x2='6' y2='18'></line>
@@ -390,13 +399,13 @@ const ChatInput: FC<ChatInputProps> = ({
 
           {/* Dynamic Waveform */}
           <div ref={waveformRef} className='flex-1 flex items-center justify-center gap-[3px] h-8 mx-4 overflow-hidden'>
-            {[...Array(20)].map((_, i) => (
+            {waveformData.map((data, i) => (
               <div
                 key={i}
                 className={`w-1 rounded-full ${theme === 'dark' ? 'bg-blue-400' : 'bg-blue-500'} animate-waveform`}
                 style={{
-                  animationDelay: `${Math.random() * 0.5}s`,
-                  animationDuration: `${0.8 + Math.random() * 0.5}s`,
+                  animationDelay: `${data.delay}s`,
+                  animationDuration: `${data.duration}s`,
                   height: '4px', // Fallback/Initial
                 }}
               />
@@ -446,9 +455,9 @@ const ChatInput: FC<ChatInputProps> = ({
                   } rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed border hover:border-transparent ${mediaButton?.className || ''}`}
                   type='button'
                   aria-label={mediaAriaLabel}
-                  aria-describedby={error && errorMessage ? errorMessageId.current : undefined}
+                  aria-describedby={error && errorMessage ? errorMessageId : undefined}
                 >
-                  {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 20 } as any) : null}
+                  {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 20 } as { size: number }) : null}
                 </button>
               )}
             </>
@@ -476,7 +485,7 @@ const ChatInput: FC<ChatInputProps> = ({
             }}
             aria-label={ariaLabel}
             aria-invalid={error}
-            aria-describedby={error && errorMessage ? errorMessageId.current : undefined}
+            aria-describedby={error && errorMessage ? errorMessageId : undefined}
             aria-multiline='true'
           />
 
@@ -509,7 +518,7 @@ const ChatInput: FC<ChatInputProps> = ({
                       type='button'
                       aria-label={voiceButton?.isRecording ? 'Recording voice message' : voiceAriaLabel}
                     >
-                      {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
+                      {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as { size: number }) : null}
                     </button>
                   )}
                 </>
@@ -552,7 +561,7 @@ const ChatInput: FC<ChatInputProps> = ({
                           }}
                         />
                       ))}
-                      {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as any) : null}
+                      {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as { size: number }) : null}
                     </button>
                   )}
                 </>
@@ -588,7 +597,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
                     } ${mediaButton?.className || ''}`}
                   >
-                    {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 16 } as any) : null}
+                    {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 16 } as { size: number }) : null}
                     <span>{mediaButton?.label || 'Attach'}</span>
                   </button>
                 )}
@@ -605,7 +614,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
                     } ${searchButton.className || ''}`}
                   >
-                    {searchButton.icon ? cloneElement(searchButton.icon, { size: 16 } as any) : null}
+                    {searchButton.icon ? cloneElement(searchButton.icon, { size: 16 } as { size: number }) : null}
                     <span>{searchButton.label || 'Search'}</span>
                   </button>
                 )}
@@ -622,7 +631,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
                     } ${studyButton.className || ''}`}
                   >
-                    {studyButton.icon ? cloneElement(studyButton.icon, { size: 16 } as any) : null}
+                    {studyButton.icon ? cloneElement(studyButton.icon, { size: 16 } as { size: number }) : null}
                     <span>{studyButton.label || 'Study'}</span>
                   </button>
                 )}
@@ -639,7 +648,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
                     } ${imageGenerationButton.className || ''}`}
                   >
-                    {imageGenerationButton.icon ? cloneElement(imageGenerationButton.icon, { size: 16 } as any) : null}
+                    {imageGenerationButton.icon ? cloneElement(imageGenerationButton.icon, { size: 16 } as { size: number }) : null}
                     <span>{imageGenerationButton.label || 'Create image'}</span>
                   </button>
                 )}
@@ -662,7 +671,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         type='button'
                         aria-label={voiceButton?.isRecording ? 'Recording voice message' : voiceAriaLabel}
                       >
-                        {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as any) : null}
+                        {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as { size: number }) : null}
                       </button>
                     )}
                   </>
@@ -702,7 +711,7 @@ const ChatInput: FC<ChatInputProps> = ({
                             }}
                           />
                         ))}
-                        {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as any) : null}
+                        {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as { size: number }) : null}
                       </button>
                     )}
                   </>

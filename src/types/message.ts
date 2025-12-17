@@ -113,6 +113,12 @@ export interface AssistantMessageProps extends Omit<MessageProps, 'content' | 'i
    */
   actions?: AssistantMessageActionItem[];
   /**
+   * Whether the message should stretch to the full width of the container
+   * - true: Message takes 100% width
+   * - false: Message has localized max-width (80%/70%)
+   */
+  fullWidth?: boolean;
+  /**
    * Whether to render skeleton loading state instead of actual content
    * When true, displays a skeleton placeholder with the same layout and configuration
    */
@@ -126,6 +132,11 @@ export interface TypingAssistantMessageProps extends Omit<AssistantMessageProps,
   text: string;
   typingSpeed?: number;
   onComplete?: () => void;
+  /**
+   * If true, limits the width of the message similar to the standard AssistantMessage.
+   * If false or undefined, the message stretches to the full available width.
+   */
+  limitWidth?: boolean;
   /**
    * Whether to render skeleton loading state instead of typing animation
    * When true, displays a skeleton placeholder with pulsing dots

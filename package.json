@@ -1,6 +1,6 @@
 {
   "name": "@nizhnikovskiy/easy-chat",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Lightweight and customizable React chat components library",
   "type": "module",
   "main": "./dist/easy-chat.cjs",

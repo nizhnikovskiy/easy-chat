@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useCallback, useState } from 'react';
+import { FC, useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { MessageContextMenuProps } from '../../types/context-menu';
 
 /**
@@ -46,8 +46,10 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
   const [isMounted, setIsMounted] = useState(false);
 
   // Determine position and slide direction
-  const getAdjustedPosition = useCallback(() => {
-    if (!menuRef.current) return { position, slideDirection: 'down' as const };
+  const [layout, setLayout] = useState({ position, slideDirection: 'down' as 'down' | 'up' });
+
+  useLayoutEffect(() => {
+    if (!isOpen || !menuRef.current) return;
 
     const menuRect = menuRef.current.getBoundingClientRect();
     const viewportWidth = window.innerWidth;
@@ -60,60 +62,44 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
     // Adjust horizontal position based on sender
     if (bubbleRect && sender) {
       if (sender === 'user') {
-        // User messages are on the right, align menu to the left edge of the message
         x = bubbleRect.left;
       } else {
-        // Other messages are on the left, align menu to the right edge of the message
         x = bubbleRect.right - menuRect.width;
       }
     }
 
-    // Ensure menu stays within viewport horizontally
-    if (x + menuRect.width > viewportWidth) {
-      x = viewportWidth - menuRect.width - 10;
-    }
-    if (x < 0) {
-      x = 10;
-    }
+    if (x + menuRect.width > viewportWidth) x = viewportWidth - menuRect.width - 10;
+    if (x < 0) x = 10;
 
-    // Determine vertical direction and adjust position
     const spaceBelow = viewportHeight - y;
-    const minSpaceRequired = menuRect.height + 20; // menu height + some padding
+    const minSpaceRequired = menuRect.height + 20;
 
-    // Check if there's enough space below for the menu
     if (spaceBelow < minSpaceRequired) {
-      // Not enough space below - slide up
       direction = 'up';
-      // If we have bubbleRect, position menu above the message bubble with gap
       if (bubbleRect) {
         y = Math.max(10, bubbleRect.top - menuRect.height - verticalGap);
       } else {
         y = Math.max(10, y - menuRect.height);
       }
     } else if (spaceBelow < viewportHeight / 2) {
-      // In lower half of viewport but has enough space - still slide up for better UX
       direction = 'up';
-      // If we have bubbleRect, position menu above the message bubble with gap
       if (bubbleRect) {
         y = Math.max(10, bubbleRect.top - menuRect.height - verticalGap);
       } else {
         y = Math.max(10, y - menuRect.height);
       }
     } else {
-      // Enough space below and in upper half - slide down
       direction = 'down';
-      // If we have bubbleRect, position menu below the message bubble with gap
       if (bubbleRect) {
         y = bubbleRect.bottom + verticalGap;
       }
     }
 
-    if (y < 0) {
-      y = 10;
-    }
+    if (y < 0) y = 10;
 
-    return { position: { x, y }, slideDirection: direction };
-  }, [position, bubbleRect, sender]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLayout({ position: { x, y }, slideDirection: direction });
+  }, [isOpen, position, bubbleRect, sender]);
 
   // Handle click outside
   useEffect(() => {
@@ -153,6 +139,7 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
   // Set mounted state when menu ref is available
   useEffect(() => {
     if (isOpen && menuRef.current) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsMounted(true);
     } else {
       setIsMounted(false);
@@ -168,11 +155,9 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
 
   if (!isOpen) return null;
 
-  const { position: adjustedPosition, slideDirection: currentDirection } = getAdjustedPosition();
-
   // Animation styles based on slide direction (only apply when mounted)
   const animationStyle = isMounted
-    ? currentDirection === 'down'
+    ? layout.slideDirection === 'down'
       ? {
           animation: 'slideDownBounce 300ms ease-out',
         }
@@ -251,8 +236,8 @@ const MessageContextMenu: FC<MessageContextMenuProps> = ({ isOpen, position, ite
         aria-label='Message context menu'
         className={`fixed z-9999 min-w-[180px] rounded-lg shadow-lg border py-1 ${theme === 'dark' ? 'bg-menu-bg-dark border-menu-border-dark' : 'bg-menu-bg border-menu-border'}`}
         style={{
-          left: `${adjustedPosition.x}px`,
-          top: `${adjustedPosition.y}px`,
+          left: `${layout.position.x}px`,
+          top: `${layout.position.y}px`,
           ...animationStyle,
         }}
       >

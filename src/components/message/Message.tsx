@@ -71,6 +71,7 @@ const Message: FC<MessageProps> = ({
 }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+  const [bubbleRect, setBubbleRect] = useState<DOMRect | null>(null);
   const bubbleRef = useRef<HTMLDivElement>(null);
   const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(null);
   const [touchStartPos, setTouchStartPos] = useState<{ x: number; y: number } | null>(null);
@@ -104,9 +105,13 @@ const Message: FC<MessageProps> = ({
   const marginBottom = groupPosition === 'first' || groupPosition === 'middle' ? 'mb-1' : 'mb-4';
 
   // Random widths for skeleton text lines
-  const randomWidths = ['50%', '65%', '80%', '70%', '90%'];
-  const randomWidth1 = randomWidths[Math.floor(Math.random() * randomWidths.length)];
-  const randomWidth2 = randomWidths[Math.floor(Math.random() * randomWidths.length)];
+  const [{ randomWidth1, randomWidth2 }] = useState(() => {
+    const randomWidths = ['50%', '65%', '80%', '70%', '90%'];
+    return {
+      randomWidth1: randomWidths[Math.floor(Math.random() * randomWidths.length)],
+      randomWidth2: randomWidths[Math.floor(Math.random() * randomWidths.length)],
+    };
+  });
 
   // Default avatar if not provided
   const avatarElement = shouldShowAvatar && (
@@ -151,6 +156,7 @@ const Message: FC<MessageProps> = ({
     if (contextMenuItems && contextMenuItems.length > 0 && bubbleRef.current) {
       event.preventDefault();
       const rect = bubbleRef.current.getBoundingClientRect();
+      setBubbleRect(rect);
       // Position menu at the bottom center of the bubble
       setContextMenuPosition({ x: rect.left + rect.width / 2, y: rect.bottom });
       setIsContextMenuOpen(true);
@@ -168,6 +174,7 @@ const Message: FC<MessageProps> = ({
     const timer = setTimeout(() => {
       if (bubbleRef.current) {
         const rect = bubbleRef.current.getBoundingClientRect();
+        setBubbleRect(rect);
         // Position menu at the bottom center of the bubble
         setContextMenuPosition({ x: rect.left + rect.width / 2, y: rect.bottom });
         setIsContextMenuOpen(true);
@@ -272,7 +279,7 @@ const Message: FC<MessageProps> = ({
                               ? 'text-message-other-timestamp-dark'
                               : 'text-message-other-timestamp',
                             size: 16,
-                          } as any)
+                          } as { className: string; size: number })
                         : !isRead && sentIcon
                         ? cloneElement(sentIcon, {
                             className: isUser
@@ -283,7 +290,7 @@ const Message: FC<MessageProps> = ({
                               ? 'text-message-other-timestamp-dark'
                               : 'text-message-other-timestamp',
                             size: 16,
-                          } as any)
+                          } as { className: string; size: number })
                         : null}
                     </div>
                   )}
@@ -302,7 +309,7 @@ const Message: FC<MessageProps> = ({
           items={contextMenuItems}
           onClose={() => setIsContextMenuOpen(false)}
           messageId={messageId}
-          bubbleRect={bubbleRef.current?.getBoundingClientRect() || null}
+          bubbleRect={bubbleRect}
           sender={sender}
           theme={theme}
         />

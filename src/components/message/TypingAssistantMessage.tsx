@@ -21,11 +21,18 @@ import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/form
  * />
  * ```
  */
-const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, ...messageProps }) => {
+const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, limitWidth, ...messageProps }) => {
+  const [prevText, setPrevText] = useState(text);
   const [visibleLength, setVisibleLength] = useState(0);
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const onCompleteRef = useRef(onComplete);
   const totalLength = getPlainTextLength(text);
+  const isTypingComplete = !isLoading && visibleLength >= totalLength;
+
+  // Reset state when text changes (Pattern: Adjusting state when a prop changes)
+  if (text !== prevText) {
+    setPrevText(text);
+    setVisibleLength(0);
+  }
 
   // Keep ref updated
   useEffect(() => {
@@ -33,17 +40,10 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
   }, [onComplete]);
 
   useEffect(() => {
-    // Skip typing animation if loading skeleton
-    if (isLoading) return;
-
-    if (!text) {
-      setVisibleLength(0);
-      setIsTypingComplete(true);
+    // Skip typing animation if loading skeleton or no text
+    if (isLoading || !text) {
       return;
     }
-
-    setVisibleLength(0);
-    setIsTypingComplete(false);
 
     const interval = setInterval(() => {
       setVisibleLength((prev) => {
@@ -51,7 +51,6 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
           return prev + 1;
         } else {
           clearInterval(interval);
-          setIsTypingComplete(true);
           onCompleteRef.current?.();
           return prev;
         }
@@ -64,17 +63,26 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
   const formattedContent = getFormattedTextAtPosition(text, visibleLength);
 
   return (
-    <AssistantMessage
-      content={
-        <>
-          {formattedContent}
-          {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse' aria-hidden='true' />}
-        </>
-      }
-      {...messageProps}
-      isLoading={isLoading}
-      aria-label={`${messageProps['aria-label'] || 'Assistant message'}, ${isTypingComplete ? 'complete' : 'typing in progress'}`}
-    />
+    <div className={`relative ${messageProps.className || ''}`}>
+      {/* Hidden 'ghost' element to reserve full space (dimensions + margins) */}
+      <AssistantMessage content={text} {...messageProps} className='invisible' fullWidth={!limitWidth} isLoading={isLoading} aria-hidden='true' />
+
+      {/* Visible element with typing animation positioned over the ghost */}
+      <AssistantMessage
+        content={
+          <>
+            {formattedContent}
+            {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse' aria-hidden='true' />}
+          </>
+        }
+        {...messageProps}
+        // Force absolute positioning to overlay the ghost exactly
+        className='absolute top-0 left-0 w-full h-full'
+        fullWidth={!limitWidth}
+        isLoading={isLoading}
+        aria-label={`${messageProps['aria-label'] || 'Assistant message'}, ${isTypingComplete ? 'complete' : 'typing in progress'}`}
+      />
+    </div>
   );
 };
 

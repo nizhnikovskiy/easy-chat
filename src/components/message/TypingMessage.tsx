@@ -27,10 +27,17 @@ import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/form
  * ```
  */
 const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, ...messageProps }) => {
+  const [prevText, setPrevText] = useState(text);
   const [visibleLength, setVisibleLength] = useState(0);
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const onCompleteRef = useRef(onComplete);
   const totalLength = getPlainTextLength(text);
+  const isTypingComplete = !isLoading && visibleLength >= totalLength;
+
+  // Reset state when text changes (Pattern: Adjusting state when a prop changes)
+  if (text !== prevText) {
+    setPrevText(text);
+    setVisibleLength(0);
+  }
 
   // Keep ref updated
   useEffect(() => {
@@ -38,17 +45,10 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
   }, [onComplete]);
 
   useEffect(() => {
-    // Skip typing animation if loading skeleton
-    if (isLoading) return;
-
-    if (!text) {
-      setVisibleLength(0);
-      setIsTypingComplete(true);
+    // Skip typing animation if loading skeleton or no text
+    if (isLoading || !text) {
       return;
     }
-
-    setVisibleLength(0);
-    setIsTypingComplete(false);
 
     const interval = setInterval(() => {
       setVisibleLength((prev) => {
@@ -56,7 +56,6 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
           return prev + 1;
         } else {
           clearInterval(interval);
-          setIsTypingComplete(true);
           onCompleteRef.current?.();
           return prev;
         }
