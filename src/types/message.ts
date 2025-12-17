@@ -142,4 +142,10 @@ export interface TypingAssistantMessageProps extends Omit<AssistantMessageProps,
    * When true, displays a skeleton placeholder with pulsing dots
    */
   isLoading?: boolean;
+  /**
+   * Whether to enable the character-by-character typing animation.
+   * - true: Text appears one character at a time (default).
+   * - false: Text appears immediately.
+   */
+  animationEnabled?: boolean;
 }

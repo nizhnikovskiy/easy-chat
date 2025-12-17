@@ -127,6 +127,15 @@ export const SlowTyping: Story<TypingAssistantMessageProps> = () => (
 
 SlowTyping.storyName = 'Slow Typing (100ms)';
 
+// No animation - demonstrate animationEnabled={false}
+export const NoAnimation: Story<TypingAssistantMessageProps> = () => (
+  <div style={bgStyle} className='p-4 min-h-screen'>
+    <TypingAssistantMessage text='This message has animationEnabled={false}, so it appears immediately without typing effect.' sender='other' animationEnabled={false} />
+  </div>
+);
+
+NoAnimation.storyName = 'No Animation';
+
 // Group position stories - demonstrate ONLY groupPosition (one component each)
 export const GroupPositionFirst: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen'>

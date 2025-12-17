@@ -21,17 +21,20 @@ import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/form
  * />
  * ```
  */
-const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, limitWidth, ...messageProps }) => {
-  const [prevText, setPrevText] = useState(text);
-  const [visibleLength, setVisibleLength] = useState(0);
-  const onCompleteRef = useRef(onComplete);
+const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, limitWidth, animationEnabled = true, ...messageProps }) => {
   const totalLength = getPlainTextLength(text);
+  const [prevText, setPrevText] = useState(text);
+  const [visibleLength, setVisibleLength] = useState(() => {
+    if (isLoading) return 0;
+    return animationEnabled ? 0 : totalLength;
+  });
+  const onCompleteRef = useRef(onComplete);
   const isTypingComplete = !isLoading && visibleLength >= totalLength;
 
   // Reset state when text changes (Pattern: Adjusting state when a prop changes)
   if (text !== prevText) {
     setPrevText(text);
-    setVisibleLength(0);
+    setVisibleLength(animationEnabled ? 0 : totalLength);
   }
 
   // Keep ref updated
@@ -40,6 +43,15 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
   }, [onComplete]);
 
   useEffect(() => {
+    // If animation is disabled, ensure text is fully visible immediately
+    if (!animationEnabled) {
+      if (visibleLength < totalLength && !isLoading) {
+        setVisibleLength(totalLength);
+        onCompleteRef.current?.();
+      }
+      return;
+    }
+
     // Skip typing animation if loading skeleton or no text
     if (isLoading || !text) {
       return;
@@ -58,7 +70,7 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
     }, typingSpeed);
 
     return () => clearInterval(interval);
-  }, [text, typingSpeed, totalLength, isLoading]);
+  }, [text, typingSpeed, totalLength, isLoading, animationEnabled]);
 
   const formattedContent = getFormattedTextAtPosition(text, visibleLength);
 
