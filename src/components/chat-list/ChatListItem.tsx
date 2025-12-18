@@ -55,6 +55,7 @@ const ChatListItem: FC<ChatListItemProps> = ({
   textColor = '#000000',
   timestampColor = '#8e8e93',
   unreadBadgeColor = '#34c759',
+  hideBadges = false,
 }) => {
   const formatTimestamp = (ts?: Date | string) => {
     if (!ts) return '';
@@ -122,7 +123,7 @@ const ChatListItem: FC<ChatListItemProps> = ({
           <p className='text-sm truncate' style={{ color: timestampColor }}>
             {lastMessage || 'No messages yet'}
           </p>
-          {unreadCount > 0 && (
+          {!hideBadges && unreadCount > 0 && (
             <div className='ml-2 px-2 py-0.5 rounded-full text-white text-xs font-semibold shrink-0 min-w-[20px] text-center' style={{ backgroundColor: unreadBadgeColor }}>
               {unreadCount > 99 ? '99+' : unreadCount}
             </div>

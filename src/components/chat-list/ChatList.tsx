@@ -46,6 +46,7 @@ const ChatList: FC<ChatListProps> = ({
   hideSearch = false,
   hideCreateChat = false,
   hideAvatars = false,
+  hideBadges = false,
 }) => {
   const handleChatClick = (chatId: string) => {
     if (onChatSelect) {
@@ -120,6 +121,7 @@ const ChatList: FC<ChatListProps> = ({
             unreadBadgeColor={unreadBadgeColor}
             theme={theme}
             showAvatar={!hideAvatars && (item.showAvatar ?? true)}
+            hideBadges={hideBadges}
           />
         ))}
         {items.length === 0 && (

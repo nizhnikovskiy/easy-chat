@@ -20,6 +20,7 @@ export interface ChatListItemProps extends ChatListItemData {
   timestampColor?: string;
   unreadBadgeColor?: string;
   theme?: 'light' | 'dark';
+  hideBadges?: boolean;
 }
 
 export interface ChatListProps {
@@ -39,4 +40,5 @@ export interface ChatListProps {
   hideSearch?: boolean;
   hideCreateChat?: boolean;
   hideAvatars?: boolean;
+  hideBadges?: boolean;
 }
