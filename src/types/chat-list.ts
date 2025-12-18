@@ -36,4 +36,7 @@ export interface ChatListProps {
   unreadBadgeColor?: string;
   className?: string;
   theme?: 'light' | 'dark';
+  hideSearch?: boolean;
+  hideCreateChat?: boolean;
+  hideAvatars?: boolean;
 }

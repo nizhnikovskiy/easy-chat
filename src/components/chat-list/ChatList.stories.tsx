@@ -295,6 +295,36 @@ export const LLMStyleChatsDark: Story = () => {
 
 LLMStyleChatsDark.storyName = 'LLM-Style Chats (No Avatars) - Dark';
 
+// With hidden elements - demonstrate hideSearch, hideCreateChat, and hideAvatars
+export const HiddenElements: Story = () => {
+  return (
+    <div style={bgStyle} className='h-screen w-full flex flex-wrap gap-4 p-4 items-start overflow-auto'>
+      <div className='w-[300px] shrink-0'>
+        <h3 className='mb-2 bg-white inline-block p-1 rounded font-bold'>Both Search & Create Hidden</h3>
+        <ChatList items={sampleChats} hideSearch={true} hideCreateChat={true} width='100%' height='400px' />
+      </div>
+      <div className='w-[300px] shrink-0'>
+        <h3 className='mb-2 bg-white inline-block p-1 rounded font-bold'>Only Search Hidden</h3>
+        <ChatList items={sampleChats} hideSearch={true} width='100%' height='400px' />
+      </div>
+      <div className='w-[300px] shrink-0'>
+        <h3 className='mb-2 bg-white inline-block p-1 rounded font-bold'>Only Create Button Hidden</h3>
+        <ChatList items={sampleChats} hideCreateChat={true} width='100%' height='400px' />
+      </div>
+      <div className='w-[300px] shrink-0'>
+        <h3 className='mb-2 bg-white inline-block p-1 rounded font-bold'>Avatars Hidden (Full List)</h3>
+        <ChatList items={sampleChats} hideAvatars={true} width='100%' height='400px' />
+      </div>
+      <div className='w-[300px] shrink-0'>
+        <h3 className='mb-2 bg-white inline-block p-1 rounded font-bold'>All Hidden</h3>
+        <ChatList items={sampleChats} hideSearch={true} hideCreateChat={true} hideAvatars={true} width='100%' height='400px' />
+      </div>
+    </div>
+  );
+};
+
+HiddenElements.storyName = 'Hidden Elements (Search, Button, Avatars)';
+
 // ===== REALISTIC USE CASES (can have multiple components and options) =====
 
 // Combined with chat (left position) - realistic example

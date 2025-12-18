@@ -43,6 +43,9 @@ const ChatList: FC<ChatListProps> = ({
   unreadBadgeColor = '#34c759',
   className = '',
   theme = 'light',
+  hideSearch = false,
+  hideCreateChat = false,
+  hideAvatars = false,
 }) => {
   const handleChatClick = (chatId: string) => {
     if (onChatSelect) {
@@ -66,37 +69,41 @@ const ChatList: FC<ChatListProps> = ({
         <h2 className='text-xl font-bold' style={{ color: theme === 'dark' ? '#f3f4f6' : textColor }}>
           Chats
         </h2>
-        <button
-          className='w-8 h-8 rounded-full flex items-center justify-center transition-colors'
-          style={{
-            backgroundColor: 'transparent',
-            color: theme === 'dark' ? '#f3f4f6' : textColor,
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = theme === 'dark' ? '#374151' : '#f0f0f0';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'transparent';
-          }}
-        >
-          <svg width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='currentColor' strokeWidth='2'>
-            <path d='M10 5v10M5 10h10' strokeLinecap='round' />
-          </svg>
-        </button>
+        {!hideCreateChat && (
+          <button
+            className='w-8 h-8 rounded-full flex items-center justify-center transition-colors'
+            style={{
+              backgroundColor: 'transparent',
+              color: theme === 'dark' ? '#f3f4f6' : textColor,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = theme === 'dark' ? '#374151' : '#f0f0f0';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
+          >
+            <svg width='20' height='20' viewBox='0 0 20 20' fill='none' stroke='currentColor' strokeWidth='2'>
+              <path d='M10 5v10M5 10h10' strokeLinecap='round' />
+            </svg>
+          </button>
+        )}
       </div>
 
       {/* Search */}
-      <div className='p-3 border-b' style={{ borderColor: theme === 'dark' ? '#374151' : '#e5e5ea' }}>
-        <input
-          type='text'
-          placeholder='Search'
-          className='w-full px-3 py-2 rounded-lg border-none outline-none'
-          style={{
-            backgroundColor: theme === 'dark' ? '#374151' : '#f0f0f0',
-            color: theme === 'dark' ? '#f3f4f6' : textColor,
-          }}
-        />
-      </div>
+      {!hideSearch && (
+        <div className='p-3 border-b' style={{ borderColor: theme === 'dark' ? '#374151' : '#e5e5ea' }}>
+          <input
+            type='text'
+            placeholder='Search'
+            className='w-full px-3 py-2 rounded-lg border-none outline-none'
+            style={{
+              backgroundColor: theme === 'dark' ? '#374151' : '#f0f0f0',
+              color: theme === 'dark' ? '#f3f4f6' : textColor,
+            }}
+          />
+        </div>
+      )}
 
       {/* Chat List */}
       <div className='flex-1 overflow-y-auto'>
@@ -112,6 +119,7 @@ const ChatList: FC<ChatListProps> = ({
             timestampColor={theme === 'dark' ? '#9ca3af' : timestampColor}
             unreadBadgeColor={unreadBadgeColor}
             theme={theme}
+            showAvatar={!hideAvatars && (item.showAvatar ?? true)}
           />
         ))}
         {items.length === 0 && (
