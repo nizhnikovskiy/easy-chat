@@ -108,8 +108,29 @@
 .animate-slide-in-left,
 .animate-fade-in,
 .animate-bounce-in,
-.animate-waveform {
+.animate-waveform,
+.animate-word-in {
   will-change: transform, opacity, height;
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+/* Word-by-word animation similar to ChatGPT - smoother and more refined */
+@keyframes wordIn {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.96);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-word-in {
+  display: inline-block;
+  animation: wordIn 0.4s cubic-bezier(0.2, 0, 0.2, 1) forwards;
+  white-space: pre;
 }

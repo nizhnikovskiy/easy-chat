@@ -217,3 +217,71 @@ export function getFormattedTextAtPosition(text: string, visibleLength: number):
 
   return result;
 }
+
+/**
+ * Get indices of word boundaries in plain text
+ *
+ * @param text - Text with formatting
+ * @returns Array of character counts where words end
+ */
+export function getWordBoundaries(text: string): number[] {
+  const plainText = tokenize(text).reduce((acc, token) => acc + token.content, '');
+  const boundaries: number[] = [];
+  const words = plainText.split(/(\s+)/);
+
+  let currentPos = 0;
+  words.forEach((word) => {
+    currentPos += word.length;
+    if (word.trim().length > 0) {
+      boundaries.push(currentPos);
+    }
+  });
+
+  // Ensure the last position is included if not already
+  if (boundaries.length === 0 || boundaries[boundaries.length - 1] < plainText.length) {
+    boundaries.push(plainText.length);
+  }
+
+  return boundaries;
+}
+
+/**
+ * Recursively wrap text in spans with animation class
+ *
+ * @param nodes - React nodes to process
+ * @returns Processed nodes with words wrapped in animated spans
+ */
+import { cloneElement, isValidElement } from 'react';
+
+export function wrapWordsWithAnimation(nodes: ReactNode[]): ReactNode[] {
+  return nodes
+    .map((node, index) => {
+      if (typeof node === 'string') {
+        // Split by words but keep whitespace
+        const parts = node.split(/(\s+)/);
+        return parts.map((part, i) => {
+          if (part.trim().length === 0) return part;
+          return (
+            <span key={`word-${index}-${i}`} className='animate-word-in'>
+              {part}
+            </span>
+          );
+        });
+      }
+
+      if (isValidElement(node)) {
+        const children = (node.props as any).children;
+        if (children) {
+          const processedChildren = Array.isArray(children) ? wrapWordsWithAnimation(children) : wrapWordsWithAnimation([children]);
+
+          return cloneElement(node, {
+            key: node.key || `animated-${index}`,
+            children: processedChildren,
+          } as any);
+        }
+      }
+
+      return node;
+    })
+    .flat();
+}

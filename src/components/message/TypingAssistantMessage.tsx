@@ -1,13 +1,12 @@
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import AssistantMessage from './AssistantMessage';
 import { TypingAssistantMessageProps } from '../../types/message';
-import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/formatText';
+import { getFormattedTextAtPosition, getPlainTextLength, getWordBoundaries, wrapWordsWithAnimation } from '../../utils/formatText';
 
 /**
  * TypingAssistantMessage - AssistantMessage with typing animation
  *
- * Combines plain-text ChatGPT style with character-by-character animation.
- * Same animation logic as TypingMessage but renders via AssistantMessage.
+ * Combines plain-text ChatGPT style with word-by-word animation.
  *
  * @example
  * ```tsx
@@ -23,18 +22,27 @@ import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/form
  */
 const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, limitWidth, animationEnabled = true, ...messageProps }) => {
   const totalLength = getPlainTextLength(text);
+  const wordBoundaries = useMemo(() => getWordBoundaries(text), [text]);
   const [prevText, setPrevText] = useState(text);
-  const [visibleLength, setVisibleLength] = useState(() => {
-    if (isLoading) return 0;
-    return animationEnabled ? 0 : totalLength;
+
+  // Track which word index we are at
+  const [visibleWordIdx, setVisibleWordIdx] = useState(() => {
+    if (isLoading) return -1;
+    return animationEnabled ? -1 : wordBoundaries.length - 1;
   });
+
   const onCompleteRef = useRef(onComplete);
+
+  // Calculate visible characters based on current word index
+  const visibleLength = visibleWordIdx === -1 ? 0 : wordBoundaries[visibleWordIdx] || 0;
   const isTypingComplete = !isLoading && visibleLength >= totalLength;
 
-  // Reset state when text changes (Pattern: Adjusting state when a prop changes)
-  if (text !== prevText) {
+  // Reset state when text or animation mode changes
+  const [prevAnimationEnabled, setPrevAnimationEnabled] = useState(animationEnabled);
+  if (text !== prevText || animationEnabled !== prevAnimationEnabled) {
     setPrevText(text);
-    setVisibleLength(animationEnabled ? 0 : totalLength);
+    setPrevAnimationEnabled(animationEnabled);
+    setVisibleWordIdx(animationEnabled ? -1 : wordBoundaries.length - 1);
   }
 
   // Keep ref updated
@@ -43,23 +51,17 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
   }, [onComplete]);
 
   useEffect(() => {
-    // If animation is disabled, ensure text is fully visible immediately
-    if (!animationEnabled) {
-      if (visibleLength < totalLength && !isLoading) {
-        setVisibleLength(totalLength);
-        onCompleteRef.current?.();
-      }
+    if (isLoading || !text || wordBoundaries.length === 0 || !animationEnabled) {
+      // Non-animated state is already handled by the state-sync block above
       return;
     }
 
-    // Skip typing animation if loading skeleton or no text
-    if (isLoading || !text) {
-      return;
-    }
+    // Word-by-word happens less frequently than character-by-character
+    const adjustedSpeed = typingSpeed * 4;
 
     const interval = setInterval(() => {
-      setVisibleLength((prev) => {
-        if (prev < totalLength) {
+      setVisibleWordIdx((prev) => {
+        if (prev < wordBoundaries.length - 1) {
           return prev + 1;
         } else {
           clearInterval(interval);
@@ -67,28 +69,28 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
           return prev;
         }
       });
-    }, typingSpeed);
+    }, adjustedSpeed);
 
     return () => clearInterval(interval);
-  }, [text, typingSpeed, totalLength, isLoading, animationEnabled]);
+  }, [text, typingSpeed, wordBoundaries, isLoading, animationEnabled]);
 
-  const formattedContent = getFormattedTextAtPosition(text, visibleLength);
+  const rawFormattedContent = getFormattedTextAtPosition(text, visibleLength);
+  const animatedFormattedContent = wrapWordsWithAnimation(rawFormattedContent);
 
   return (
     <div className={`relative ${messageProps.className || ''}`}>
-      {/* Hidden 'ghost' element to reserve full space (dimensions + margins) */}
+      {/* Hidden 'ghost' element to reserve full space */}
       <AssistantMessage content={text} {...messageProps} className='invisible' fullWidth={!limitWidth} isLoading={isLoading} aria-hidden='true' />
 
-      {/* Visible element with typing animation positioned over the ghost */}
+      {/* Visible element with typing animation */}
       <AssistantMessage
         content={
           <>
-            {formattedContent}
-            {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse' aria-hidden='true' />}
+            {animatedFormattedContent}
+            {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse align-middle' aria-hidden='true' />}
           </>
         }
         {...messageProps}
-        // Force absolute positioning to overlay the ghost exactly
         className='absolute top-0 left-0 w-full h-full'
         fullWidth={!limitWidth}
         isLoading={isLoading}

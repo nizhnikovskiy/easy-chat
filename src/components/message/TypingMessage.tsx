@@ -1,42 +1,25 @@
-import { FC, useState, useEffect, useRef } from 'react';
+import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import Message from './Message';
 import { TypingMessageProps } from '../../types/message';
-import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/formatText';
+import { getFormattedTextAtPosition, getPlainTextLength, getWordBoundaries, wrapWordsWithAnimation } from '../../utils/formatText';
 
 /**
- * TypingMessage - Message with character-by-character animation
- *
- * @component
- *
- * ## How It Works
- * - Calculates plain text length (excludes formatting markup)
- * - Reveals characters via `setInterval` at `typingSpeed` ms/char
- * - Applies formatting to visible portion using `formatText` utility
- * - Shows pulsing cursor during animation
- * - Calls `onComplete` when finished
- * - Re-animates if `text` prop changes
- *
- * @example
- * ```tsx
- * <TypingMessage
- *   text="AI response with **bold** and *italic*"
- *   sender="other"
- *   typingSpeed={30}  // ms per character
- *   onComplete={() => scrollToBottom()}
- * />
- * ```
+ * TypingMessage - Message with word-by-word animation
  */
 const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, ...messageProps }) => {
   const [prevText, setPrevText] = useState(text);
-  const [visibleLength, setVisibleLength] = useState(0);
+  const wordBoundaries = useMemo(() => getWordBoundaries(text), [text]);
+  const [visibleWordIdx, setVisibleWordIdx] = useState(() => (isLoading ? -1 : -1));
   const onCompleteRef = useRef(onComplete);
   const totalLength = getPlainTextLength(text);
+
+  const visibleLength = visibleWordIdx === -1 ? 0 : wordBoundaries[visibleWordIdx] || 0;
   const isTypingComplete = !isLoading && visibleLength >= totalLength;
 
-  // Reset state when text changes (Pattern: Adjusting state when a prop changes)
+  // Reset state when text changes
   if (text !== prevText) {
     setPrevText(text);
-    setVisibleLength(0);
+    setVisibleWordIdx(-1);
   }
 
   // Keep ref updated
@@ -45,14 +28,14 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
   }, [onComplete]);
 
   useEffect(() => {
-    // Skip typing animation if loading skeleton or no text
-    if (isLoading || !text) {
+    if (isLoading || !text || wordBoundaries.length === 0) {
       return;
     }
+    const adjustedSpeed = typingSpeed * 4;
 
     const interval = setInterval(() => {
-      setVisibleLength((prev) => {
-        if (prev < totalLength) {
+      setVisibleWordIdx((prev) => {
+        if (prev < wordBoundaries.length - 1) {
           return prev + 1;
         } else {
           clearInterval(interval);
@@ -60,19 +43,20 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
           return prev;
         }
       });
-    }, typingSpeed);
+    }, adjustedSpeed);
 
     return () => clearInterval(interval);
-  }, [text, typingSpeed, totalLength, isLoading]);
+  }, [text, typingSpeed, wordBoundaries, isLoading]);
 
-  const formattedContent = getFormattedTextAtPosition(text, visibleLength);
+  const rawFormattedContent = getFormattedTextAtPosition(text, visibleLength);
+  const animatedFormattedContent = wrapWordsWithAnimation(rawFormattedContent);
 
   return (
     <Message
       content={
         <>
-          {formattedContent}
-          {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse' aria-hidden='true' />}
+          {animatedFormattedContent}
+          {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse align-middle' aria-hidden='true' />}
         </>
       }
       {...messageProps}
