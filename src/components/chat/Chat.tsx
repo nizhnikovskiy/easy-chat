@@ -3,8 +3,8 @@ import type { ChatHistoryItem, ChatHistoryMessage } from '../../types/chat';
 import type { ContextMenuConfig, ContextMenuItem } from '../../types/context-menu';
 import ChatInput from '../chat-input';
 import { Message, TypingMessage } from '../message';
-import DateSeparator from '../date-separator';
 import '../../styles/Chat.animations.css';
+import DateSeparator from '../date-separator';
 
 // Mock useReflection hook for standalone usage
 const useReflection = () => {
