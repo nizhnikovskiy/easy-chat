@@ -40,7 +40,8 @@ jobs:
       - name: Increment Version
         # Updates version in package.json & package-lock.json, commits, and tags.
         # [skip ci] prevents the commit from triggering the workflow again.
-        run: npm version patch -m "chore(release): %s [skip ci]"
+        run: |
+          npm version patch -m "chore(release): %s [skip ci]"
 
       - name: Publish to NPM
         # prepublishOnly script in package.json runs the build automatically
