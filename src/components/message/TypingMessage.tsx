@@ -1,7 +1,7 @@
 import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import Message from './Message';
-import { TypingMessageProps } from '../../types/message';
 import { getFormattedTextAtPosition, getPlainTextLength, getWordBoundaries, wrapWordsWithAnimation } from '../../utils/formatText';
+import { TypingMessageProps } from '../../types/message';
 
 /**
  * TypingMessage - Message with word-by-word animation
