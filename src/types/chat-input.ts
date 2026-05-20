@@ -51,7 +51,7 @@ export interface MediaButtonProps {
   accept?: string;
   /** Allow selecting and sending multiple files */
   multiple?: boolean;
-  /** Maximum number of selected files when multiple upload is enabled */
+  /** Maximum number of selected files when multiple upload is enabled. Extra selected files are ignored. */
   maxFiles?: number;
   /**
    * Determines when `onUpload` is called.
