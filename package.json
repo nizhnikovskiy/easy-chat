@@ -58,7 +58,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nizhnikovskiy/easy-chat"
+    "url": "git+https://github.com/nizhnikovskiy/easy-chat.git"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
