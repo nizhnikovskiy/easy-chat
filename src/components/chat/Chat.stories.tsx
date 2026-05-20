@@ -461,6 +461,7 @@ export const LoadingSkeletonExample: Story = () => {
                 enableMediaUpload={true}
                 mediaButton={{
                   accept: 'image/*',
+                  uploadMode: 'onSelect',
                   onUpload: () => {},
                 }}
                 placeholder='Enter message...'

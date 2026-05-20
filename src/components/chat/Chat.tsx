@@ -99,7 +99,6 @@ const Chat: FC<ChatProps> = ({
   useReflection();
   const [message, setMessage] = useState('');
   const [shouldFocus, setShouldFocus] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [initialMessageCount] = useState(() => messages.length);
 
   // Voice Recording State
@@ -234,20 +233,15 @@ const Chat: FC<ChatProps> = ({
         }
       : {};
 
-  const handleImageUpload = (file: File | null) => {
-    setSelectedImage(file);
-  };
-
   const handleSendMessage = (messageText?: string, imageFile?: File, submissionId?: string) => {
     // Use provided parameters or fall back to component state
     const finalMessage = messageText !== undefined ? messageText : message;
-    const finalImage = imageFile !== undefined ? imageFile : selectedImage;
+    const finalImage = imageFile || null;
 
     if (!finalMessage.trim() && !finalImage) return;
 
     onSendMessage(finalMessage.trim(), finalImage || undefined, submissionId);
     setMessage('');
-    setSelectedImage(null);
     setShouldFocus(true);
   };
 
@@ -361,13 +355,12 @@ const Chat: FC<ChatProps> = ({
             <ChatInput
               value={message}
               onChange={(value) => setMessage(value)}
-              onSend={(messageText, imageFile) => handleSendMessage(messageText, imageFile)}
+              onSend={(messageText, imageFile) => handleSendMessage(messageText, Array.isArray(imageFile) ? imageFile[0] : imageFile)}
               disabled={isPending}
               isLoading={isPending}
               enableMediaUpload={true}
               mediaButton={{
                 accept: 'image/*',
-                onUpload: handleImageUpload,
                 icon: attachmentIcon,
               }}
               sendButton={{

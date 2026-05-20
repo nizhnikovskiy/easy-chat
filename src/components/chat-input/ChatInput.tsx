@@ -1,5 +1,6 @@
 import { FC, useState, useRef, useEffect, KeyboardEvent, ChangeEvent, MouseEvent, cloneElement } from 'react';
 import type { ChatInputProps } from '../../types/chat-input';
+import { ArrowUpIcon, AttachIcon, CloseIcon, MicIcon } from '../../icons';
 import '../../styles/Chat.animations.css';
 
 interface Ripple {
@@ -7,6 +8,12 @@ interface Ripple {
   y: number;
   size: number;
   id: number;
+}
+
+interface SelectedMediaItem {
+  id: string;
+  file: File;
+  previewUrl: string | null;
 }
 
 /**
@@ -84,8 +91,7 @@ const ChatInput: FC<ChatInputProps> = ({
   variant = 'default',
 }) => {
   const [internalValue, setInternalValue] = useState(value);
-  const [selectedMedia, setSelectedMedia] = useState<File | null>(null);
-  const [mediaPreview, setMediaPreview] = useState<string | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<SelectedMediaItem[]>([]);
   const [announcement, setAnnouncement] = useState('');
   const [ripples, setRipples] = useState<Ripple[]>([]);
   const [isMultiLine, setIsMultiLine] = useState(false);
@@ -93,12 +99,16 @@ const ChatInput: FC<ChatInputProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const sendButtonRef = useRef<HTMLButtonElement>(null);
+  const selectedMediaRef = useRef<SelectedMediaItem[]>([]);
   const waveformRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const [errorMessageId] = useState(() => `chat-input-error-${Math.random().toString(36).substr(2, 9)}`);
+  const hasSelectedMedia = selectedMedia.length > 0;
+  const isMultipleMediaEnabled = mediaButton?.multiple === true;
+  const mediaUploadMode = mediaButton?.uploadMode || 'onSend';
 
   // Audio waveform animation data
   const [waveformData] = useState(() =>
@@ -152,9 +162,10 @@ const ChatInput: FC<ChatInputProps> = ({
     if (disabled || isLoading) return;
 
     const messageToSend = internalValue.trim();
-    if (!messageToSend && !selectedMedia) return;
+    if (!messageToSend && !hasSelectedMedia) return;
 
-    onSend?.(messageToSend, selectedMedia || undefined);
+    const mediaFiles = selectedMedia.map(({ file }) => file);
+    onSend?.(messageToSend, isMultipleMediaEnabled ? mediaFiles : mediaFiles[0]);
 
     // Announce to screen readers
     setAnnouncement('Message sent');
@@ -162,8 +173,7 @@ const ChatInput: FC<ChatInputProps> = ({
 
     // Clear input and media after sending
     setInternalValue('');
-    setSelectedMedia(null);
-    setMediaPreview(null);
+    clearSelectedMedia();
     onChange?.('');
 
     // Reset textarea height
@@ -198,17 +208,47 @@ const ChatInput: FC<ChatInputProps> = ({
 
   // Handle media upload
   const handleMediaSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
-    setSelectedMedia(file);
-    mediaButton?.onUpload?.(file);
+    const nextItems = files.map((file) => ({
+      id: `${file.name}-${file.size}-${file.lastModified}-${crypto.randomUUID()}`,
+      file,
+      previewUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : null,
+    }));
 
-    // Create preview for images
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e) => setMediaPreview(e.target?.result as string);
-      reader.readAsDataURL(file);
+    let acceptedItems: SelectedMediaItem[];
+    let newlyAcceptedItems: SelectedMediaItem[];
+
+    if (isMultipleMediaEnabled) {
+      const maxFiles = typeof mediaButton?.maxFiles === 'number' ? Math.max(1, mediaButton.maxFiles) : undefined;
+      const availableSlots = maxFiles ? Math.max(0, maxFiles - selectedMedia.length) : nextItems.length;
+      newlyAcceptedItems = nextItems.slice(0, availableSlots);
+      acceptedItems = maxFiles ? [...selectedMedia, ...newlyAcceptedItems].slice(0, maxFiles) : [...selectedMedia, ...newlyAcceptedItems];
+      nextItems.slice(availableSlots).forEach((item) => {
+        if (item.previewUrl) {
+          URL.revokeObjectURL(item.previewUrl);
+        }
+      });
+    } else {
+      selectedMedia.forEach((item) => {
+        if (item.previewUrl) {
+          URL.revokeObjectURL(item.previewUrl);
+        }
+      });
+      newlyAcceptedItems = nextItems.slice(0, 1);
+      acceptedItems = newlyAcceptedItems;
+      nextItems.slice(1).forEach((item) => {
+        if (item.previewUrl) {
+          URL.revokeObjectURL(item.previewUrl);
+        }
+      });
+    }
+
+    setSelectedMedia(acceptedItems);
+    mediaButton?.onSelect?.(acceptedItems.map(({ file }) => file));
+    if (mediaUploadMode === 'onSelect' && newlyAcceptedItems.length > 0) {
+      void mediaButton?.onUpload?.(newlyAcceptedItems.map(({ file }) => file));
     }
 
     // Clear file input
@@ -218,10 +258,41 @@ const ChatInput: FC<ChatInputProps> = ({
   };
 
   // Handle remove media
-  const handleRemoveMedia = () => {
-    setSelectedMedia(null);
-    setMediaPreview(null);
+  const handleRemoveMedia = (id: string) => {
+    setSelectedMedia((current) => {
+      const removed = current.find((item) => item.id === id);
+      if (removed?.previewUrl) {
+        URL.revokeObjectURL(removed.previewUrl);
+      }
+      return current.filter((item) => item.id !== id);
+    });
   };
+
+  const clearSelectedMedia = () => {
+    setSelectedMedia((current) => {
+      current.forEach((item) => {
+        if (item.previewUrl) {
+          URL.revokeObjectURL(item.previewUrl);
+        }
+      });
+      return [];
+    });
+  };
+
+  useEffect(() => {
+    selectedMediaRef.current = selectedMedia;
+  }, [selectedMedia]);
+
+  useEffect(
+    () => () => {
+      selectedMediaRef.current.forEach((item) => {
+        if (item.previewUrl) {
+          URL.revokeObjectURL(item.previewUrl);
+        }
+      });
+    },
+    []
+  );
 
   // Handle ripple effect on send button click
   const createRipple = (e: MouseEvent<HTMLButtonElement>) => {
@@ -331,7 +402,7 @@ const ChatInput: FC<ChatInputProps> = ({
   }, [voiceButton?.isRecording, voiceButton?.audioStream]);
 
   // Determine if send button should be disabled
-  const isSendDisabled = disabled || isLoading || (!internalValue.trim() && !selectedMedia);
+  const isSendDisabled = disabled || isLoading || (!internalValue.trim() && !hasSelectedMedia);
 
   return (
     <div className={`flex flex-col gap-2 w-full max-w-160 mx-auto p-4 ${theme === 'dark' ? 'bg-input-bg-dark' : 'bg-input-bg'} ${className}`} role='form' aria-label='Message input form'>
@@ -347,33 +418,48 @@ const ChatInput: FC<ChatInputProps> = ({
         </div>
       )}
 
-      {/* Media preview */}
-      {selectedMedia && mediaPreview && (
-        <div className='relative inline-block mb-2'>
-          <img
-            src={mediaPreview}
-            alt='Selected media preview'
-            className={`w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg border ${theme === 'dark' ? 'border-input-border-dark' : 'border-input-border'}`}
-          />
-          <button
-            onClick={handleRemoveMedia}
-            className='absolute -top-2 -right-2 min-w-[28px] min-h-[28px] w-7 h-7 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors'
-            type='button'
-            aria-label='Remove media attachment'
-          >
-            {closeIcon ? cloneElement(closeIcon, { size: 14 } as { size: number }) : null}
-          </button>
-        </div>
-      )}
+      <div className={`flex w-full ${variant === 'extended' ? 'flex-col' : 'items-end gap-2'}`}>
+        {/* Media upload button - Default Variant (External) */}
+        {variant !== 'extended' && enableMediaUpload && (
+          <div className='shrink-0'>
+            <input
+              ref={fileInputRef}
+              type='file'
+              accept={mediaButton?.accept || 'image/*'}
+              multiple={isMultipleMediaEnabled}
+              onChange={handleMediaSelect}
+              className='hidden'
+              disabled={disabled || isLoading || mediaButton?.disabled}
+              aria-label={mediaAriaLabel}
+              id='media-upload-input'
+            />
+            {mediaButton?.component || (
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={disabled || isLoading || mediaButton?.disabled}
+                className={`w-[50px] h-[50px] inline-flex items-center justify-center p-0 ${
+                  theme === 'dark'
+                    ? 'text-input-placeholder-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark'
+                    : 'text-input-placeholder hover:text-input-text hover:bg-menu-hover-bg'
+                } rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed leading-none [&>svg]:block ${mediaButton?.className || ''}`}
+                type='button'
+                aria-label={mediaAriaLabel}
+                aria-describedby={error && errorMessage ? errorMessageId : undefined}
+              >
+                {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 24 } as { size: number }) : <AttachIcon size={24} />}
+              </button>
+            )}
+          </div>
+        )}
 
-      {/* Input area with integrated buttons */}
-      <div
-        className={`relative flex ${variant === 'extended' ? 'flex-col' : 'items-end'} ${
+        {/* Input area with integrated buttons */}
+        <div
+          className={`relative flex min-w-0 flex-1 ${variant === 'extended' ? 'flex-col' : 'items-end'} ${
           theme === 'dark'
             ? 'bg-input-bg-dark border-input-border-dark/50 hover:border-input-border-dark/70 focus-within:border-input-border-focus'
             : 'bg-input-bg border-input-border/50 hover:border-input-border/70 focus-within:border-input-border-focus'
         } rounded-3xl border transition-all ${variant !== 'extended' && isMultiLine ? 'pb-13' : ''}`}
-      >
+        >
         {/* Voice Recording Overlay */}
         <div
           className={`absolute inset-0 z-20 flex items-center justify-between px-2 rounded-3xl transition-all duration-200 ${theme === 'dark' ? 'bg-input-bg-dark' : 'bg-input-bg'} ${
@@ -427,42 +513,46 @@ const ChatInput: FC<ChatInputProps> = ({
 
         {/* Text Input Content (Always rendered, hidden via opacity when recording) */}
         <div
-          className={`w-full relative flex ${variant === 'extended' ? 'flex-col' : 'items-end'} transition-opacity duration-200 ${
+          className={`w-full flex flex-col transition-opacity duration-200 ${
             voiceButton?.isRecording ? 'opacity-0 pointer-events-none' : 'opacity-100'
           }`}
         >
-          {/* Media upload button - Default Variant (Internal) */}
-          {variant !== 'extended' && enableMediaUpload && (
-            <>
-              <input
-                ref={fileInputRef}
-                type='file'
-                accept={mediaButton?.accept || 'image/*'}
-                onChange={handleMediaSelect}
-                className='hidden'
-                disabled={disabled || isLoading || mediaButton?.disabled}
-                aria-label={mediaAriaLabel}
-                id='media-upload-input'
-              />
-              {mediaButton?.component || (
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={disabled || isLoading || mediaButton?.disabled}
-                  className={`absolute left-2 bottom-1.5 p-2 ${
-                    theme === 'dark'
-                      ? 'text-input-placeholder-dark border-input-border-dark hover:text-input-text-dark hover:bg-menu-hover-bg-dark'
-                      : 'text-input-placeholder border-input-border hover:text-input-text hover:bg-menu-hover-bg'
-                  } rounded-full transition-all disabled:opacity-50 disabled:cursor-not-allowed border hover:border-transparent ${mediaButton?.className || ''}`}
-                  type='button'
-                  aria-label={mediaAriaLabel}
-                  aria-describedby={error && errorMessage ? errorMessageId : undefined}
-                >
-                  {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 20 } as { size: number }) : null}
-                </button>
-              )}
-            </>
+          {/* Media preview */}
+          {hasSelectedMedia && (
+            <div className='chat-media-preview-scrollbar w-full overflow-x-auto overflow-y-hidden pl-2 pr-3 pt-3 pb-1'>
+              <div className='flex items-start gap-2 w-max'>
+                {selectedMedia.map((item) => (
+                  <div key={item.id} className='relative inline-block'>
+                    {item.previewUrl ? (
+                      <img
+                        src={item.previewUrl}
+                        alt={item.file.name}
+                        className={`w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-xl border ${theme === 'dark' ? 'border-input-border-dark' : 'border-input-border'}`}
+                      />
+                    ) : (
+                      <div
+                        className={`w-40 min-h-16 sm:min-h-20 rounded-xl border px-3 py-2 flex items-center text-xs break-all ${
+                          theme === 'dark' ? 'border-input-border-dark text-input-text-dark bg-menu-hover-bg-dark' : 'border-input-border text-input-text bg-menu-hover-bg'
+                        }`}
+                      >
+                        {item.file.name}
+                      </div>
+                    )}
+                    <button
+                      onClick={() => handleRemoveMedia(item.id)}
+                      className='absolute right-1 top-1 w-6 h-6 bg-black/70 text-white rounded-full inline-flex items-center justify-center hover:bg-black/85 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black/50 transition-colors leading-none'
+                      type='button'
+                      aria-label={`Remove ${item.file.name}`}
+                    >
+                      {closeIcon ? cloneElement(closeIcon, { size: 18 } as { size: number }) : <CloseIcon size={18} strokeWidth={3} />}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
 
+          <div className='w-full'>
           {/* Text input */}
           <textarea
             ref={textareaRef}
@@ -477,8 +567,8 @@ const ChatInput: FC<ChatInputProps> = ({
               theme === 'dark'
                 ? 'text-input-text-dark placeholder:text-input-placeholder-dark disabled:text-input-placeholder-dark/60'
                 : 'text-input-text placeholder:text-input-placeholder disabled:text-input-placeholder/60'
-            } text-base min-h-11 ${variant !== 'extended' && enableMediaUpload ? 'pl-14' : ''} ${
-              variant !== 'extended' && (!enableVoiceInput || internalValue.trim() || selectedMedia) ? 'pr-14' : 'pr-4'
+            } text-base min-h-11 ${
+              variant !== 'extended' && (!enableVoiceInput || internalValue.trim() || hasSelectedMedia) ? 'pr-14' : 'pr-4'
             } ${inputClassName}`}
             style={{
               maxHeight: `${24 * maxRows}px`,
@@ -504,7 +594,7 @@ const ChatInput: FC<ChatInputProps> = ({
           {variant !== 'extended' && (
             <>
               {/* Voice input button */}
-              {enableVoiceInput && !internalValue.trim() && !selectedMedia && (
+              {enableVoiceInput && !internalValue.trim() && !hasSelectedMedia && (
                 <>
                   {voiceButton?.component || (
                     <button
@@ -518,14 +608,14 @@ const ChatInput: FC<ChatInputProps> = ({
                       type='button'
                       aria-label={voiceButton?.isRecording ? 'Recording voice message' : voiceAriaLabel}
                     >
-                      {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as { size: number }) : null}
+                      {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as { size: number }) : <MicIcon size={20} />}
                     </button>
                   )}
                 </>
               )}
 
               {/* Send button */}
-              {(!enableVoiceInput || internalValue.trim() || selectedMedia) && (
+              {(!enableVoiceInput || internalValue.trim() || hasSelectedMedia) && (
                 <>
                   {sendButton?.component || (
                     <button
@@ -561,13 +651,14 @@ const ChatInput: FC<ChatInputProps> = ({
                           }}
                         />
                       ))}
-                      {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as { size: number }) : null}
+                      {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as { size: number }) : <ArrowUpIcon size={20} />}
                     </button>
                   )}
                 </>
               )}
             </>
           )}
+          </div>
 
           {/* Extended Variant Toolbar */}
           {variant === 'extended' && (
@@ -579,6 +670,7 @@ const ChatInput: FC<ChatInputProps> = ({
                     ref={fileInputRef}
                     type='file'
                     accept={mediaButton?.accept || 'image/*'}
+                    multiple={isMultipleMediaEnabled}
                     onChange={handleMediaSelect}
                     className='hidden'
                     disabled={disabled || isLoading || mediaButton?.disabled}
@@ -597,7 +689,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         : 'bg-input-bg border-input-border hover:bg-menu-hover-bg text-input-text'
                     } ${mediaButton?.className || ''}`}
                   >
-                    {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 16 } as { size: number }) : null}
+                    {mediaButton?.icon ? cloneElement(mediaButton.icon, { size: 16 } as { size: number }) : <AttachIcon size={16} />}
                     <span>{mediaButton?.label || 'Attach'}</span>
                   </button>
                 )}
@@ -657,7 +749,7 @@ const ChatInput: FC<ChatInputProps> = ({
               {/* Voice / Send Action - Extended Position */}
               <div className='flex items-center gap-2 shrink-0 ml-1'>
                 {/* Voice Button */}
-                {enableVoiceInput && !internalValue.trim() && !selectedMedia ? (
+                {enableVoiceInput && !internalValue.trim() && !hasSelectedMedia ? (
                   <>
                     {voiceButton?.component || (
                       <button
@@ -671,7 +763,7 @@ const ChatInput: FC<ChatInputProps> = ({
                         type='button'
                         aria-label={voiceButton?.isRecording ? 'Recording voice message' : voiceAriaLabel}
                       >
-                        {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as { size: number }) : null}
+                        {voiceButton?.icon ? cloneElement(voiceButton.icon, { size: 20 } as { size: number }) : <MicIcon size={20} />}
                       </button>
                     )}
                   </>
@@ -711,7 +803,7 @@ const ChatInput: FC<ChatInputProps> = ({
                             }}
                           />
                         ))}
-                        {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as { size: number }) : null}
+                        {sendButton?.icon ? cloneElement(sendButton.icon, { size: 20 } as { size: number }) : <ArrowUpIcon size={20} />}
                       </button>
                     )}
                   </>
@@ -719,6 +811,7 @@ const ChatInput: FC<ChatInputProps> = ({
               </div>
             </div>
           )}
+        </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,21 @@
 import type { ReactNode, ReactElement } from 'react';
 
 /**
+ * Media payload emitted by ChatInput.
+ *
+ * Single-file mode emits one `File`; multiple-file mode emits `File[]`.
+ */
+export type ChatInputMedia = File | File[];
+
+/**
+ * Controls when selected files should be uploaded by the consumer application.
+ *
+ * ChatInput never uploads files by itself. It only decides when to call the
+ * provided callbacks with the selected browser `File` objects.
+ */
+export type ChatInputMediaUploadMode = 'onSelect' | 'onSend';
+
+/**
  * Props for customizing the send button
  */
 export interface SendButtonProps {
@@ -34,8 +49,28 @@ export interface MediaButtonProps {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
   /** Accepted file types */
   accept?: string;
-  /** Upload handler */
-  onUpload?: (file: File) => void;
+  /** Allow selecting and sending multiple files */
+  multiple?: boolean;
+  /** Maximum number of selected files when multiple upload is enabled */
+  maxFiles?: number;
+  /**
+   * Determines when `onUpload` is called.
+   *
+   * - `onSend`: selected files are kept local and emitted through `onSend`.
+   * - `onSelect`: `onUpload` is called immediately after file selection.
+   *
+   * @default 'onSend'
+   */
+  uploadMode?: ChatInputMediaUploadMode;
+  /** Called whenever the selected media list changes because the user picked files. */
+  onSelect?: (files: File[]) => void;
+  /**
+   * Consumer-provided upload hook.
+   *
+   * Called only when `uploadMode` is `onSelect`. The library does not perform
+   * network uploads internally.
+   */
+  onUpload?: (files: File[]) => void | Promise<void>;
   /** Whether button is disabled */
   disabled?: boolean;
   /** Custom className */
@@ -99,7 +134,7 @@ export interface ChatInputProps {
   /** Change handler for message input */
   onChange?: (value: string) => void;
   /** Send message handler */
-  onSend?: (message: string, media?: File) => void;
+  onSend?: (message: string, media?: ChatInputMedia) => void;
   /** Placeholder text for input */
   placeholder?: string;
   /** Whether input is disabled */

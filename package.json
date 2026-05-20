@@ -17,6 +17,16 @@
         "default": "./dist/easy-chat.cjs"
       }
     },
+    "./icons": {
+      "import": {
+        "types": "./dist/icons/index.d.ts",
+        "default": "./dist/icons.mjs"
+      },
+      "require": {
+        "types": "./dist/icons/index.d.ts",
+        "default": "./dist/icons.cjs"
+      }
+    },
     "./styles": "./dist/easy-chat.css"
   },
   "files": [

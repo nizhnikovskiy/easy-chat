@@ -65,7 +65,8 @@ export const WithMediaUpload: Story = () => {
         mediaButton={{
           label: undefined,
           accept: 'image/*',
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
           icon: <IoAttach />,
         }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -93,7 +94,8 @@ export const WithMediaUploadDark: Story = () => {
         mediaButton={{
           label: undefined,
           accept: 'image/*',
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
           icon: <IoAttach />,
         }}
         sendButton={{ icon: <IoArrowUp /> }}
@@ -271,7 +273,8 @@ export const CompleteWithAllFeatures: Story = () => {
         enableMediaUpload
         enableVoiceInput
         mediaButton={{
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
           icon: <IoAttach />,
         }}
         voiceButton={{
@@ -315,7 +318,8 @@ export const CompleteWithAllFeaturesDark: Story = () => {
         enableMediaUpload
         enableVoiceInput
         mediaButton={{
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
         }}
         voiceButton={{
           isRecording,
@@ -594,6 +598,33 @@ export const AutoGrowTextareaDark: Story = () => {
 
 AutoGrowTextareaDark.storyName = 'Auto Grow Textarea - Dark';
 
+export const AutoGrowTextareaMultipleImages: Story = () => {
+  const [message, setMessage] = useState('');
+
+  const handleSend = (msg: string, media?: File | File[]) => {
+    console.log('Message sent:', msg, 'Media:', media);
+  };
+
+  return (
+    <div style={bgStyle} className='h-screen flex flex-col justify-end'>
+      <ChatInput
+        value={message}
+        onChange={setMessage}
+        onSend={handleSend}
+        placeholder='Select multiple images...'
+        autoGrow
+        maxRows={8}
+        enableMediaUpload
+        mediaButton={{ icon: <IoAttach />, accept: 'image/*', multiple: true, maxFiles: 8 }}
+        sendButton={{ icon: <IoArrowUp /> }}
+        closeIcon={<IoClose />}
+      />
+    </div>
+  );
+};
+
+AutoGrowTextareaMultipleImages.storyName = 'Auto Grow Textarea - Multiple Images';
+
 // ===== EXTENDED VARIANT STORIES =====
 
 export const ExtendedVariant: Story = () => {
@@ -617,7 +648,8 @@ export const ExtendedVariant: Story = () => {
         mediaButton={{
           label: 'Attach',
           icon: <IoAttach />,
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
         }}
         searchButton={{
           label: 'Search',
@@ -671,7 +703,8 @@ export const ExtendedVariantDark: Story = () => {
         mediaButton={{
           label: 'Attach',
           icon: <IoAttach />,
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
         }}
         searchButton={{
           label: 'Search',
@@ -749,7 +782,8 @@ export const DarkThemeWithAllFeatures: Story = () => {
         enableMediaUpload
         enableVoiceInput
         mediaButton={{
-          onUpload: (file) => console.log('Media uploaded:', file),
+          uploadMode: 'onSelect',
+          onUpload: (files) => console.log('Media uploaded:', files),
           icon: <IoAttach />,
         }}
         voiceButton={{

@@ -17,10 +17,13 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        icons: resolve(__dirname, 'src/icons/index.ts'),
+      },
       name: 'EasyChat',
       formats: ['es', 'cjs'],
-      fileName: (format) => `easy-chat.${format === 'es' ? 'mjs' : 'cjs'}`,
+      fileName: (format, entryName) => `${entryName === 'index' ? 'easy-chat' : entryName}.${format === 'es' ? 'mjs' : 'cjs'}`,
     },
     rollupOptions: {
       // Externalize dependencies that shouldn't be bundled

@@ -32,7 +32,11 @@ export type {
 export type { ChatListProps, ChatListItemProps, ChatListItemData, ChatListPosition } from './types/chat-list';
 
 // Types - Chat Input
-export type { ChatInputProps, SendButtonProps, MediaButtonProps, VoiceButtonProps } from './types/chat-input';
+export type { ChatInputMedia, ChatInputMediaUploadMode, ChatInputProps, SendButtonProps, MediaButtonProps, VoiceButtonProps } from './types/chat-input';
+
+// Built-in icons
+export { ArrowUpIcon, AttachIcon, CloseIcon, MicIcon } from './icons';
+export type { EasyChatIconProps } from './icons';
 
 // Types - Context Menu
 export type { ContextMenuItem, MessageContextMenuProps } from './types/context-menu';
