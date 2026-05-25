@@ -330,7 +330,7 @@ const Chat: FC<ChatProps> = ({
 
               // Use TypingMessage for last received message
               if (shouldUseTyping) {
-                return <TypingMessage key={index} {...commonProps} text={historyMsg.content} typingSpeed={15} onComplete={scrollToBottom} />;
+                return <TypingMessage key={index} {...commonProps} text={historyMsg.content} onComplete={scrollToBottom} />;
               }
 
               // Regular message

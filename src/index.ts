@@ -10,7 +10,7 @@ export { default as DateSeparator } from './components/date-separator';
 export { default as MessageContextMenu } from './components/message-context-menu';
 
 // Message components
-export { Message, StaticMessage, TypingMessage, AssistantMessage, TypingAssistantMessage } from './components/message';
+export { Message, StaticMessage, TypingMessage, AssistantMessage, TypingAssistantMessage, TypingCursorIndicator } from './components/message';
 
 // Types - Message
 export type { MessageProps, StaticMessageProps, TypingMessageProps, AssistantMessageProps, TypingAssistantMessageProps, AssistantMessageActionItem } from './types/message';

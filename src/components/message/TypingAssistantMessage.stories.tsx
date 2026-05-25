@@ -1,4 +1,5 @@
 import type { Story } from '@ladle/react';
+import { useEffect, useState } from 'react';
 import TypingAssistantMessage from './TypingAssistantMessage';
 import { TypingAssistantMessageProps } from '@/types/message';
 import { MdThumbUp, MdThumbDown, MdRefresh, MdContentCopy } from 'react-icons/md';
@@ -20,11 +21,57 @@ const bgStyleDark = {
 // Default - basic typing animation without actions
 export const Default: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen'>
-    <TypingAssistantMessage text='Hello! This is a typing animation for assistant messages. It types character by character to simulate a real-time chat experience.' sender='other' typingSpeed={30} />
+    <TypingAssistantMessage text='Hello! This is a typing animation for assistant messages. It types character by character to simulate a real-time chat experience.' sender='other' />
   </div>
 );
 
 Default.storyName = 'Default Typing (Full Width)';
+
+export const Loading: Story<TypingAssistantMessageProps> = () => (
+  <div style={bgStyle} className='p-4 min-h-screen'>
+    <TypingAssistantMessage text='' sender='other' isLoading />
+  </div>
+);
+
+Loading.storyName = 'Loading State';
+
+export const LoadingToTyping: Story<TypingAssistantMessageProps> = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setIsLoading(false), 2000);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div style={bgStyle} className='p-4 min-h-screen'>
+      <TypingAssistantMessage
+        text={isLoading ? '' : 'Thanks for waiting. The loading state resolves first, then the assistant message starts typing normally.'}
+        sender='other'
+        isLoading={isLoading}
+      />
+    </div>
+  );
+};
+
+LoadingToTyping.storyName = 'Loading To Typing';
+
+export const LoadingToTypingCustomCursor: Story<TypingAssistantMessageProps> = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => setIsLoading(false), 2000);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div style={bgStyle} className='p-4 min-h-screen'>
+      <TypingAssistantMessage text={isLoading ? '' : 'Custom cursor color is applied for both loading and typing.'} sender='other' isLoading={isLoading} typingCursorColor='#2563eb' />
+    </div>
+  );
+};
+
+LoadingToTypingCustomCursor.storyName = 'Loading To Typing - Custom Cursor';
 
 // Limited width - demonstrate limitWidth prop
 export const LimitedWidth: Story<TypingAssistantMessageProps> = () => (
@@ -32,7 +79,6 @@ export const LimitedWidth: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='This message has limitWidth={true}, so it should be limited to 80%/70% width like the original behavior. This text is long enough to demonstrate the wrapping behavior when width is limited.'
       sender='other'
-      typingSpeed={30}
       limitWidth={true}
     />
   </div>
@@ -46,7 +92,6 @@ export const WithActions: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='This message includes action buttons that appear below the text. You can like, dislike, regenerate, or copy the message!'
       sender='other'
-      typingSpeed={25}
       actions={[
         {
           id: 'like',
@@ -85,7 +130,6 @@ export const WithFormatting: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='This message demonstrates **bold text**, *italic text*, and `code snippets` with typing animation. The formatting is preserved during typing!'
       sender='other'
-      typingSpeed={20}
     />
   </div>
 );
@@ -98,7 +142,6 @@ export const LongMessage: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='Here is a longer message to demonstrate the typing effect with more content. The typing animation smoothly reveals the text character by character, creating an engaging user experience that mimics real-time responses from an AI assistant. This is particularly useful for chat applications where you want to show that the assistant is actively generating a response.'
       sender='other'
-      typingSpeed={15}
     />
   </div>
 );
@@ -139,7 +182,7 @@ NoAnimation.storyName = 'No Animation';
 // Group position stories - demonstrate ONLY groupPosition (one component each)
 export const GroupPositionFirst: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen'>
-    <TypingAssistantMessage text='This is the first message in a group.' sender='other' groupPosition='first' typingSpeed={20} />
+    <TypingAssistantMessage text='This is the first message in a group.' sender='other' groupPosition='first' />
   </div>
 );
 
@@ -147,7 +190,7 @@ GroupPositionFirst.storyName = 'Group Position - First';
 
 export const GroupPositionMiddle: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen'>
-    <TypingAssistantMessage text='This is a middle message.' sender='other' groupPosition='middle' typingSpeed={20} />
+    <TypingAssistantMessage text='This is a middle message.' sender='other' groupPosition='middle' />
   </div>
 );
 
@@ -155,7 +198,7 @@ GroupPositionMiddle.storyName = 'Group Position - Middle';
 
 export const GroupPositionLast: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen'>
-    <TypingAssistantMessage text='This is the last message in the group.' sender='other' groupPosition='last' typingSpeed={20} />
+    <TypingAssistantMessage text='This is the last message in the group.' sender='other' groupPosition='last' />
   </div>
 );
 
@@ -164,9 +207,9 @@ GroupPositionLast.storyName = 'Group Position - Last';
 // Grouped messages example - realistic use case showing how groups work
 export const GroupedMessagesExample: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen flex flex-col gap-0'>
-    <TypingAssistantMessage text='This is the first message in a group.' sender='other' groupPosition='first' typingSpeed={20} messageId='msg-1' />
-    <TypingAssistantMessage text='This is a middle message.' sender='other' groupPosition='middle' typingSpeed={20} messageId='msg-2' />
-    <TypingAssistantMessage text='This is the last message in the group.' sender='other' groupPosition='last' typingSpeed={20} messageId='msg-3' />
+    <TypingAssistantMessage text='This is the first message in a group.' sender='other' groupPosition='first' messageId='msg-1' />
+    <TypingAssistantMessage text='This is a middle message.' sender='other' groupPosition='middle' messageId='msg-2' />
+    <TypingAssistantMessage text='This is the last message in the group.' sender='other' groupPosition='last' messageId='msg-3' />
   </div>
 );
 
@@ -182,7 +225,6 @@ export const WithTimestampAndReadStatus: Story<TypingAssistantMessageProps> = ()
       timestamp='14:23'
       showReadStatus
       isRead
-      typingSpeed={25}
     />
   </div>
 );
@@ -192,7 +234,7 @@ WithTimestampAndReadStatus.storyName = 'With Timestamp and Read Status';
 // No avatar - demonstrate ONLY showAvatar={false}
 export const NoAvatar: Story<TypingAssistantMessageProps> = () => (
   <div style={bgStyle} className='p-4 min-h-screen'>
-    <TypingAssistantMessage text='This message has no avatar displayed.' sender='other' showAvatar={false} typingSpeed={30} />
+    <TypingAssistantMessage text='This message has no avatar displayed.' sender='other' showAvatar={false} />
   </div>
 );
 
@@ -204,7 +246,6 @@ export const WithContextMenu: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='Right-click (or long press on mobile) this typing message to see the context menu!'
       sender='other'
-      typingSpeed={25}
       messageId='context-msg'
       contextMenuItems={[
         { id: 'copy', label: 'Copy', onClick: () => console.log('Copy clicked') },
@@ -224,7 +265,6 @@ export const DefaultDark: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='Hello! This is a typing animation for assistant messages. It types character by character to simulate a real-time chat experience.'
       sender='other'
-      typingSpeed={30}
       theme='dark'
     />
   </div>
@@ -237,7 +277,6 @@ export const WithActionsDark: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='This message includes action buttons that appear below the text. You can like, dislike, regenerate, or copy the message!'
       sender='other'
-      typingSpeed={25}
       theme='dark'
       actions={[
         {
@@ -276,7 +315,6 @@ export const WithFormattingDark: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='This message demonstrates **bold text**, *italic text*, and `code snippets` with typing animation. The formatting is preserved during typing!'
       sender='other'
-      typingSpeed={20}
       theme='dark'
     />
   </div>
@@ -289,7 +327,6 @@ export const LongMessageDark: Story<TypingAssistantMessageProps> = () => (
     <TypingAssistantMessage
       text='Here is a longer message to demonstrate the typing effect with more content. The typing animation smoothly reveals the text character by character, creating an engaging user experience that mimics real-time responses from an AI assistant. This is particularly useful for chat applications where you want to show that the assistant is actively generating a response.'
       sender='other'
-      typingSpeed={15}
       theme='dark'
     />
   </div>
