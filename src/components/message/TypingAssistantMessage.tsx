@@ -1,18 +1,20 @@
-import { FC, useState, useEffect, useRef, useMemo } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import AssistantMessage from './AssistantMessage';
+import TypingCursorIndicator from './TypingCursorIndicator';
 import { TypingAssistantMessageProps } from '../../types/message';
-import { getFormattedTextAtPosition, getPlainTextLength, getWordBoundaries, wrapWordsWithAnimation } from '../../utils/formatText';
+import { getFormattedTextAtPosition, getPlainTextLength } from '../../utils/formatText';
+import { DEFAULT_TYPING_SPEED } from '../../constants';
 
 /**
  * TypingAssistantMessage - AssistantMessage with typing animation
  *
- * Combines plain-text ChatGPT style with word-by-word animation.
+ * Combines plain-text ChatGPT style with a steady character-by-character animation.
  *
  * @example
  * ```tsx
  * <TypingAssistantMessage
  *   text="AI response with typing effect"
- *   typingSpeed={30}
+ *   typingSpeed={8}
  *   onComplete={() => scrollToBottom()}
  *   actions={[
  *     { id: 'copy', label: 'Copy', icon: <Copy />, onClick: () => {} }
@@ -20,30 +22,25 @@ import { getFormattedTextAtPosition, getPlainTextLength, getWordBoundaries, wrap
  * />
  * ```
  */
-const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, limitWidth, animationEnabled = true, ...messageProps }) => {
+const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({
+  text,
+  typingSpeed = DEFAULT_TYPING_SPEED,
+  onComplete,
+  isLoading = false,
+  typingCursorColor,
+  limitWidth,
+  animationEnabled = true,
+  ...messageProps
+}) => {
   const totalLength = getPlainTextLength(text);
-  const wordBoundaries = useMemo(() => getWordBoundaries(text), [text]);
-  const [prevText, setPrevText] = useState(text);
-
-  // Track which word index we are at
-  const [visibleWordIdx, setVisibleWordIdx] = useState(() => {
-    if (isLoading) return -1;
-    return animationEnabled ? -1 : wordBoundaries.length - 1;
-  });
-
+  const shouldShowLoading = isLoading && totalLength === 0;
+  const animationKey = `${text}-${typingSpeed}`;
+  const shouldAnimate = !shouldShowLoading && animationEnabled && totalLength > 0;
+  const [typingState, setTypingState] = useState({ animationKey: '', visibleLength: 0 });
   const onCompleteRef = useRef(onComplete);
+  const visibleLength = shouldAnimate ? (typingState.animationKey === animationKey ? typingState.visibleLength : 0) : shouldShowLoading ? 0 : totalLength;
 
-  // Calculate visible characters based on current word index
-  const visibleLength = visibleWordIdx === -1 ? 0 : wordBoundaries[visibleWordIdx] || 0;
-  const isTypingComplete = !isLoading && visibleLength >= totalLength;
-
-  // Reset state when text or animation mode changes
-  const [prevAnimationEnabled, setPrevAnimationEnabled] = useState(animationEnabled);
-  if (text !== prevText || animationEnabled !== prevAnimationEnabled) {
-    setPrevText(text);
-    setPrevAnimationEnabled(animationEnabled);
-    setVisibleWordIdx(animationEnabled ? -1 : wordBoundaries.length - 1);
-  }
+  const isTypingComplete = !shouldShowLoading && visibleLength >= totalLength;
 
   // Keep ref updated
   useEffect(() => {
@@ -51,49 +48,67 @@ const TypingAssistantMessage: FC<TypingAssistantMessageProps> = ({ text, typingS
   }, [onComplete]);
 
   useEffect(() => {
-    if (isLoading || !text || wordBoundaries.length === 0 || !animationEnabled) {
-      // Non-animated state is already handled by the state-sync block above
+    if (!shouldAnimate) {
+      if (!shouldShowLoading) {
+        onCompleteRef.current?.();
+      }
       return;
     }
 
-    // Word-by-word happens less frequently than character-by-character
-    const adjustedSpeed = typingSpeed * 4;
-
     const interval = setInterval(() => {
-      setVisibleWordIdx((prev) => {
-        if (prev < wordBoundaries.length - 1) {
-          return prev + 1;
-        } else {
+      setTypingState((prev) => {
+        const previousLength = prev.animationKey === animationKey ? prev.visibleLength : 0;
+        const next = Math.min(previousLength + 1, totalLength);
+
+        if (next >= totalLength) {
           clearInterval(interval);
           onCompleteRef.current?.();
-          return prev;
         }
+
+        return { animationKey, visibleLength: next };
       });
-    }, adjustedSpeed);
+    }, typingSpeed);
 
     return () => clearInterval(interval);
-  }, [text, typingSpeed, wordBoundaries, isLoading, animationEnabled]);
+  }, [animationKey, typingSpeed, totalLength, shouldShowLoading, shouldAnimate]);
 
   const rawFormattedContent = getFormattedTextAtPosition(text, visibleLength);
-  const animatedFormattedContent = wrapWordsWithAnimation(rawFormattedContent);
+
+  if (shouldShowLoading) {
+    return (
+      <AssistantMessage
+        content={
+          <span className='chat-assistant-loading' role='status' aria-label='Waiting for response'>
+            <span className='sr-only'>Waiting for response</span>
+            <TypingCursorIndicator color={typingCursorColor} className='chat-assistant-loading-cursor' />
+          </span>
+        }
+        {...messageProps}
+        className={`chat-assistant-loading-message ${messageProps.className || ''}`}
+        fullWidth={!limitWidth}
+        isLoading={false}
+        aria-label={`${messageProps['aria-label'] || 'Assistant message'}, waiting for response`}
+      />
+    );
+  }
 
   return (
     <div className={`relative ${messageProps.className || ''}`}>
       {/* Hidden 'ghost' element to reserve full space */}
-      <AssistantMessage content={text} {...messageProps} className='invisible' fullWidth={!limitWidth} isLoading={isLoading} aria-hidden='true' />
+      <AssistantMessage content={text} {...messageProps} className='invisible' fullWidth={!limitWidth} isLoading={false} aria-hidden='true' />
 
       {/* Visible element with typing animation */}
       <AssistantMessage
         content={
           <>
-            {animatedFormattedContent}
-            {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse align-middle' aria-hidden='true' />}
+            {rawFormattedContent}
+            {!isTypingComplete && !shouldShowLoading && <TypingCursorIndicator color={typingCursorColor} />}
           </>
         }
         {...messageProps}
         className='absolute top-0 left-0 w-full h-full'
         fullWidth={!limitWidth}
-        isLoading={isLoading}
+        isLoading={false}
         aria-label={`${messageProps['aria-label'] || 'Assistant message'}, ${isTypingComplete ? 'complete' : 'typing in progress'}`}
       />
     </div>
