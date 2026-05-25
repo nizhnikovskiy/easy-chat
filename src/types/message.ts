@@ -84,6 +84,11 @@ export interface TypingMessageProps extends Omit<MessageProps, 'content' | 'isLo
   typingSpeed?: number;
   onComplete?: () => void;
   /**
+   * Optional color for typing/loading cursor.
+   * Accepts any valid CSS color value.
+   */
+  typingCursorColor?: string;
+  /**
    * Whether to render skeleton loading state instead of typing animation
    * When true, displays a skeleton placeholder with pulsing dots
    */
@@ -132,6 +137,11 @@ export interface TypingAssistantMessageProps extends Omit<AssistantMessageProps,
   text: string;
   typingSpeed?: number;
   onComplete?: () => void;
+  /**
+   * Optional color for typing/loading cursor.
+   * Accepts any valid CSS color value.
+   */
+  typingCursorColor?: string;
   /**
    * If true, limits the width of the message similar to the standard AssistantMessage.
    * If false or undefined, the message stretches to the full available width.

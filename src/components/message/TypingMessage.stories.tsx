@@ -49,7 +49,6 @@ export const LongTextTyping: Story = () => (
     <TypingMessage
       text='This is a longer message to demonstrate the typing animation with more content. The animation will continue character by character until all text is displayed. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
       sender='other'
-      typingSpeed={25}
     />
   </div>
 );
@@ -62,7 +61,7 @@ export const WithCompletionCallback: Story = () => {
 
   return (
     <div style={bgStyle} className='p-8 max-w-2xl mx-auto space-y-4 min-h-screen'>
-      <TypingMessage text='When this message finishes typing, it will trigger a callback.' sender='other' typingSpeed={30} onComplete={() => setCompleted(true)} />
+      <TypingMessage text='When this message finishes typing, it will trigger a callback.' sender='other' onComplete={() => setCompleted(true)} />
       {completed && <div className='text-center p-4 bg-green-100 text-green-800 rounded-lg'>✓ Typing completed! Callback was triggered.</div>}
     </div>
   );
@@ -73,7 +72,7 @@ WithCompletionCallback.storyName = 'With Completion Callback';
 // User typing message - demonstrate sender='user'
 export const UserTypingMessage: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='Even user messages can have typing animation!' sender='user' typingSpeed={25} />
+    <TypingMessage text='Even user messages can have typing animation!' sender='user' />
   </div>
 );
 
@@ -82,7 +81,7 @@ UserTypingMessage.storyName = 'User Typing Message';
 // Single typing message
 export const ConversationWithTyping: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto space-y-4 min-h-screen'>
-    <TypingMessage text='Hello! How can I help you today?' sender='other' typingSpeed={30} />
+    <TypingMessage text='Hello! How can I help you today?' sender='other' />
   </div>
 );
 
@@ -91,9 +90,9 @@ ConversationWithTyping.storyName = 'Single Typing Message';
 // Multiple typing messages - realistic example showing several typing messages
 export const MultipleTypingMessagesExample: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto space-y-4 min-h-screen'>
-    <TypingMessage text='First message typing...' sender='other' typingSpeed={35} />
-    <TypingMessage text='Second message also typing!' sender='other' typingSpeed={35} />
-    <TypingMessage text='And a third one for good measure.' sender='other' typingSpeed={35} />
+    <TypingMessage text='First message typing...' sender='other' />
+    <TypingMessage text='Second message also typing!' sender='other' />
+    <TypingMessage text='And a third one for good measure.' sender='other' />
   </div>
 );
 
@@ -102,7 +101,7 @@ MultipleTypingMessagesExample.storyName = 'Example - Multiple Typing Messages';
 // Minimal typing - demonstrate minimal configuration
 export const MinimalTyping: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='Clean typing animation without extras.' sender='other' showAvatar={false} showUsername={false} showTimestamp={false} typingSpeed={30} />
+    <TypingMessage text='Clean typing animation without extras.' sender='other' showAvatar={false} showUsername={false} showTimestamp={false} />
   </div>
 );
 
@@ -111,7 +110,7 @@ MinimalTyping.storyName = 'Minimal Typing';
 // Custom avatar - demonstrate ONLY custom avatar
 export const WithCustomAvatar: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='Typing message with a custom avatar image!' sender='other' showAvatar={true} avatarSrc={avatar5} typingSpeed={30} />
+    <TypingMessage text='Typing message with a custom avatar image!' sender='other' showAvatar={true} avatarSrc={avatar5} />
   </div>
 );
 
@@ -120,7 +119,7 @@ WithCustomAvatar.storyName = 'With Custom Avatar';
 // Copy disabled - demonstrate ONLY copy protection
 export const WithCopyDisabled: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='This typing message text cannot be copied or selected - try it!' sender='other' typingSpeed={30} disableTextCopy={true} />
+    <TypingMessage text='This typing message text cannot be copied or selected - try it!' sender='other' disableTextCopy={true} />
   </div>
 );
 
@@ -129,7 +128,7 @@ WithCopyDisabled.storyName = 'With Copy Disabled';
 // Text Formatting with Typing Animation Stories - each demonstrates ONE formatting type
 export const FormattedTypingBold: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='This message has **bold text** that appears with typing animation!' sender='other' typingSpeed={30} />
+    <TypingMessage text='This message has **bold text** that appears with typing animation!' sender='other' />
   </div>
 );
 
@@ -137,7 +136,7 @@ FormattedTypingBold.storyName = 'Formatted Typing - Bold';
 
 export const FormattedTypingItalic: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='This message has *italic text* with typing animation!' sender='other' typingSpeed={30} />
+    <TypingMessage text='This message has *italic text* with typing animation!' sender='other' />
   </div>
 );
 
@@ -145,7 +144,7 @@ FormattedTypingItalic.storyName = 'Formatted Typing - Italic';
 
 export const FormattedTypingCode: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='You can use the `useState` hook like this: `const [value, setValue] = useState(0);`' sender='other' typingSpeed={25} />
+    <TypingMessage text='You can use the `useState` hook like this: `const [value, setValue] = useState(0);`' sender='other' />
   </div>
 );
 
@@ -153,7 +152,7 @@ FormattedTypingCode.storyName = 'Formatted Typing - Code';
 
 export const FormattedTypingLinks: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='Check out [this documentation](https://example.com) for more information!' sender='other' typingSpeed={30} />
+    <TypingMessage text='Check out [this documentation](https://example.com) for more information!' sender='other' />
   </div>
 );
 
@@ -161,7 +160,7 @@ FormattedTypingLinks.storyName = 'Formatted Typing - Links';
 
 export const FormattedTypingCombined: Story = () => (
   <div style={bgStyle} className='p-8 max-w-2xl mx-auto min-h-screen'>
-    <TypingMessage text='**Important:** You should use `formatText()` for *all* messages. See [documentation](https://example.com) and ~~avoid~~ common mistakes!' sender='other' typingSpeed={25} />
+    <TypingMessage text='**Important:** You should use `formatText()` for *all* messages. See [documentation](https://example.com) and ~~avoid~~ common mistakes!' sender='other' />
   </div>
 );
 
@@ -172,7 +171,6 @@ export const FormattedTypingLong: Story = () => (
     <TypingMessage
       text='Here is a **comprehensive guide**: First, `import` the required components. Then, follow [our documentation](https://example.com) to understand how `props` work. The **most important** thing is *never modify props* directly!'
       sender='other'
-      typingSpeed={20}
     />
   </div>
 );
@@ -210,7 +208,6 @@ export const LongTextTypingDark: Story = () => (
     <TypingMessage
       text='This is a longer message to demonstrate the typing animation with more content. The animation will continue character by character until all text is displayed. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
       sender='other'
-      typingSpeed={25}
       theme='dark'
     />
   </div>
@@ -223,7 +220,7 @@ export const WithCompletionCallbackDark: Story = () => {
 
   return (
     <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto space-y-4 min-h-screen bg-gray-900'>
-      <TypingMessage text='When this message finishes typing, it will trigger a callback.' sender='other' typingSpeed={30} onComplete={() => setCompleted(true)} theme='dark' />
+      <TypingMessage text='When this message finishes typing, it will trigger a callback.' sender='other' onComplete={() => setCompleted(true)} theme='dark' />
       {completed && <div className='text-center p-4 bg-green-900 text-green-200 rounded-lg'>✓ Typing completed! Callback was triggered.</div>}
     </div>
   );
@@ -233,7 +230,7 @@ WithCompletionCallbackDark.storyName = 'With Completion Callback - Dark';
 
 export const UserTypingMessageDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='Even user messages can have typing animation!' sender='user' typingSpeed={25} theme='dark' />
+    <TypingMessage text='Even user messages can have typing animation!' sender='user' theme='dark' />
   </div>
 );
 
@@ -241,7 +238,7 @@ UserTypingMessageDark.storyName = 'User Typing Message - Dark';
 
 export const WithCustomAvatarDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='Typing message with a custom avatar image!' sender='other' showAvatar={true} avatarSrc={avatar5} typingSpeed={30} theme='dark' />
+    <TypingMessage text='Typing message with a custom avatar image!' sender='other' showAvatar={true} avatarSrc={avatar5} theme='dark' />
   </div>
 );
 
@@ -249,7 +246,7 @@ WithCustomAvatarDark.storyName = 'With Custom Avatar - Dark';
 
 export const WithCopyDisabledDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='This typing message text cannot be copied or selected - try it!' sender='other' typingSpeed={30} disableTextCopy={true} theme='dark' />
+    <TypingMessage text='This typing message text cannot be copied or selected - try it!' sender='other' disableTextCopy={true} theme='dark' />
   </div>
 );
 
@@ -257,7 +254,7 @@ WithCopyDisabledDark.storyName = 'With Copy Disabled - Dark';
 
 export const FormattedTypingBoldDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='This message has **bold text** that appears with typing animation!' sender='other' typingSpeed={30} theme='dark' />
+    <TypingMessage text='This message has **bold text** that appears with typing animation!' sender='other' theme='dark' />
   </div>
 );
 
@@ -265,7 +262,7 @@ FormattedTypingBoldDark.storyName = 'Formatted Typing - Bold - Dark';
 
 export const FormattedTypingItalicDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='This message has *italic text* with typing animation!' sender='other' typingSpeed={30} theme='dark' />
+    <TypingMessage text='This message has *italic text* with typing animation!' sender='other' theme='dark' />
   </div>
 );
 
@@ -273,7 +270,7 @@ FormattedTypingItalicDark.storyName = 'Formatted Typing - Italic - Dark';
 
 export const FormattedTypingCodeDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='You can use the `useState` hook like this: `const [value, setValue] = useState(0);`' sender='other' typingSpeed={25} theme='dark' />
+    <TypingMessage text='You can use the `useState` hook like this: `const [value, setValue] = useState(0);`' sender='other' theme='dark' />
   </div>
 );
 
@@ -281,7 +278,7 @@ FormattedTypingCodeDark.storyName = 'Formatted Typing - Code - Dark';
 
 export const FormattedTypingLinksDark: Story = () => (
   <div style={bgStyleDark} className='p-8 max-w-2xl mx-auto min-h-screen bg-gray-900'>
-    <TypingMessage text='Check out [this documentation](https://example.com) for more information!' sender='other' typingSpeed={30} theme='dark' />
+    <TypingMessage text='Check out [this documentation](https://example.com) for more information!' sender='other' theme='dark' />
   </div>
 );
 
@@ -292,7 +289,6 @@ export const FormattedTypingCombinedDark: Story = () => (
     <TypingMessage
       text='**Important:** You should use `formatText()` for *all* messages. See [documentation](https://example.com) and ~~avoid~~ common mistakes!'
       sender='other'
-      typingSpeed={25}
       theme='dark'
     />
   </div>
@@ -305,7 +301,6 @@ export const FormattedTypingLongDark: Story = () => (
     <TypingMessage
       text='Here is a **comprehensive guide**: First, `import` the required components. Then, follow [our documentation](https://example.com) to understand how `props` work. The **most important** thing is *never modify props* directly!'
       sender='other'
-      typingSpeed={20}
       theme='dark'
     />
   </div>

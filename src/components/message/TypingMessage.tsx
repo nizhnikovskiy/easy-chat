@@ -1,20 +1,23 @@
 import { FC, useState, useEffect, useRef, useMemo } from 'react';
 import Message from './Message';
+import TypingCursorIndicator from './TypingCursorIndicator';
 import { getFormattedTextAtPosition, getPlainTextLength, getWordBoundaries, wrapWordsWithAnimation } from '../../utils/formatText';
 import { TypingMessageProps } from '../../types/message';
+import { DEFAULT_TYPING_SPEED } from '../../constants';
 
 /**
  * TypingMessage - Message with word-by-word animation
  */
-const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onComplete, isLoading = false, ...messageProps }) => {
+const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = DEFAULT_TYPING_SPEED, onComplete, isLoading = false, typingCursorColor, ...messageProps }) => {
   const [prevText, setPrevText] = useState(text);
   const wordBoundaries = useMemo(() => getWordBoundaries(text), [text]);
   const [visibleWordIdx, setVisibleWordIdx] = useState(() => (isLoading ? -1 : -1));
   const onCompleteRef = useRef(onComplete);
   const totalLength = getPlainTextLength(text);
+  const shouldShowLoading = isLoading && totalLength === 0;
 
   const visibleLength = visibleWordIdx === -1 ? 0 : wordBoundaries[visibleWordIdx] || 0;
-  const isTypingComplete = !isLoading && visibleLength >= totalLength;
+  const isTypingComplete = !shouldShowLoading && visibleLength >= totalLength;
 
   // Reset state when text changes
   if (text !== prevText) {
@@ -28,7 +31,7 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
   }, [onComplete]);
 
   useEffect(() => {
-    if (isLoading || !text || wordBoundaries.length === 0) {
+    if (shouldShowLoading || !text || wordBoundaries.length === 0) {
       return;
     }
     const adjustedSpeed = typingSpeed * 4;
@@ -46,7 +49,7 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
     }, adjustedSpeed);
 
     return () => clearInterval(interval);
-  }, [text, typingSpeed, wordBoundaries, isLoading]);
+  }, [text, typingSpeed, wordBoundaries, shouldShowLoading]);
 
   const rawFormattedContent = getFormattedTextAtPosition(text, visibleLength);
   const animatedFormattedContent = wrapWordsWithAnimation(rawFormattedContent);
@@ -55,12 +58,13 @@ const TypingMessage: FC<TypingMessageProps> = ({ text, typingSpeed = 30, onCompl
     <Message
       content={
         <>
+          {shouldShowLoading && <TypingCursorIndicator color={typingCursorColor} className='chat-assistant-loading-cursor' />}
           {animatedFormattedContent}
-          {!isTypingComplete && !isLoading && <span className='inline-block w-1 h-4 ml-0.5 bg-current animate-pulse align-middle' aria-hidden='true' />}
+          {!isTypingComplete && !shouldShowLoading && <TypingCursorIndicator color={typingCursorColor} />}
         </>
       }
       {...messageProps}
-      isLoading={isLoading}
+      isLoading={false}
       isTyping={true}
       aria-label={`${messageProps['aria-label'] || 'Message'}, ${isTypingComplete ? 'complete' : 'typing in progress'}`}
     />
