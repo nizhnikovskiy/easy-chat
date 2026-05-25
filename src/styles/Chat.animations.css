@@ -82,6 +82,17 @@
   }
 }
 
+@keyframes typingCursorBlink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
 /* Animation classes with fast, subtle timing */
 .animate-slide-in-right {
   animation: slideInFromRight 0.2s ease-out forwards;
@@ -103,13 +114,42 @@
   animation: waveform 1s ease-in-out infinite;
 }
 
+.chat-typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--chat-typing-cursor-color, currentColor);
+  vertical-align: -0.15em;
+  animation: typingCursorBlink 1s steps(1, end) infinite;
+}
+
+.chat-assistant-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 1.35rem;
+  color: inherit;
+  vertical-align: -0.15em;
+}
+
+.chat-assistant-loading-message {
+  min-height: 2rem;
+}
+
+.chat-assistant-loading-cursor {
+  margin-left: 0;
+  height: 1.1em;
+}
+
 /* Ensure smooth animations and GPU acceleration */
 .animate-slide-in-right,
 .animate-slide-in-left,
 .animate-fade-in,
 .animate-bounce-in,
 .animate-waveform,
-.animate-word-in {
+.animate-word-in,
+.chat-typing-cursor {
   will-change: transform, opacity, height;
   backface-visibility: hidden;
   perspective: 1000px;

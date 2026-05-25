@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { cloneElement, isValidElement, ReactElement, ReactNode } from 'react';
 
 /**
  * Text formatting utility for message components
@@ -251,8 +251,6 @@ export function getWordBoundaries(text: string): number[] {
  * @param nodes - React nodes to process
  * @returns Processed nodes with words wrapped in animated spans
  */
-import { cloneElement, isValidElement } from 'react';
-
 export function wrapWordsWithAnimation(nodes: ReactNode[]): ReactNode[] {
   return nodes
     .map((node, index) => {
@@ -270,14 +268,14 @@ export function wrapWordsWithAnimation(nodes: ReactNode[]): ReactNode[] {
       }
 
       if (isValidElement(node)) {
-        const children = (node.props as any).children;
+        const children = (node.props as { children?: ReactNode }).children;
         if (children) {
           const processedChildren = Array.isArray(children) ? wrapWordsWithAnimation(children) : wrapWordsWithAnimation([children]);
 
-          return cloneElement(node, {
+          return cloneElement(node as ReactElement<{ children?: ReactNode }>, {
             key: node.key || `animated-${index}`,
             children: processedChildren,
-          } as any);
+          });
         }
       }
 
